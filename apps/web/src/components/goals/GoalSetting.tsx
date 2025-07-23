@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button } from '@fitness-tracker/ui';
+import { Card, Button, Select, Textarea, Alert, AlertTitle, AlertDescription, Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@fitness-tracker/ui';
 
 export interface FitnessGoal {
   id: string;
@@ -124,6 +124,8 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
   onDeleteGoal
 }) => {
   const [showForm, setShowForm] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [goalToDelete, setGoalToDelete] = useState<string | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -418,38 +420,33 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Validation Errors */}
             {errors.length > 0 && (
-              <div className="bg-danger-50 border border-danger-200 rounded-lg p-4">
-                <div className="flex items-center space-x-2 mb-2">
-                  <span className="text-danger-600">⚠️</span>
-                  <h4 className="font-medium text-danger-800">Please fix the following errors:</h4>
-                </div>
-                <ul className="list-disc list-inside space-y-1">
-                  {errors.map((error, index) => (
-                    <li key={index} className="text-sm text-danger-700">{error}</li>
-                  ))}
-                </ul>
-              </div>
+              <Alert variant="destructive">
+                <AlertTitle>Please fix the following errors:</AlertTitle>
+                <AlertDescription>
+                  <ul className="list-disc list-inside space-y-1 mt-2">
+                    {errors.map((error, index) => (
+                      <li key={index} className="text-sm">{error}</li>
+                    ))}
+                  </ul>
+                </AlertDescription>
+              </Alert>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  🎯 Goal Type
-                </label>
-                <select
+                <Select
+                  label="🎯 Goal Type"
                   value={formData.type}
-                  onChange={(e) => {
-                    const type = e.target.value as FitnessGoal['type'];
+                  onChange={(value) => {
+                    const type = value as FitnessGoal['type'];
                     handleTypeChange(type);
                   }}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  options={GOAL_TYPES.map(type => ({
+                    value: type.value,
+                    label: type.label
+                  }))}
+                  placeholder="Select goal type"
                   required
-                >
-                  {GOAL_TYPES.map(type => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div>
@@ -473,57 +470,45 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  🏷️ Category
-                </label>
-                <select
+                <Select
+                  label="🏷️ Category"
                   value={formData.category}
-                  onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as FitnessGoal['category'] }))}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  onChange={(value) => setFormData(prev => ({ ...prev, category: value as FitnessGoal['category'] }))}
+                  options={GOAL_CATEGORIES.map(cat => ({
+                    value: cat.value,
+                    label: cat.label
+                  }))}
+                  placeholder="Select category"
                   required
-                >
-                  {GOAL_CATEGORIES.map(cat => (
-                    <option key={cat.value} value={cat.value}>
-                      {cat.label}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  💪 Difficulty
-                </label>
-                <select
+                <Select
+                  label="💪 Difficulty"
                   value={formData.difficulty}
-                  onChange={(e) => setFormData(prev => ({ ...prev, difficulty: e.target.value as FitnessGoal['difficulty'] }))}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  onChange={(value) => setFormData(prev => ({ ...prev, difficulty: value as FitnessGoal['difficulty'] }))}
+                  options={DIFFICULTY_LEVELS.map(diff => ({
+                    value: diff.value,
+                    label: diff.label
+                  }))}
+                  placeholder="Select difficulty"
                   required
-                >
-                  {DIFFICULTY_LEVELS.map(diff => (
-                    <option key={diff.value} value={diff.value}>
-                      {diff.label}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  ⚡ Priority
-                </label>
-                <select
+                <Select
+                  label="⚡ Priority"
                   value={formData.priority}
-                  onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as FitnessGoal['priority'] }))}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                  onChange={(value) => setFormData(prev => ({ ...prev, priority: value as FitnessGoal['priority'] }))}
+                  options={PRIORITY_LEVELS.map(priority => ({
+                    value: priority.value,
+                    label: priority.label
+                  }))}
+                  placeholder="Select priority"
                   required
-                >
-                  {PRIORITY_LEVELS.map(priority => (
-                    <option key={priority.value} value={priority.value}>
-                      {priority.label}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
             </div>
 
@@ -542,15 +527,12 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
-                📋 Description
-              </label>
-              <textarea
+              <Textarea
+                label="📋 Description"
                 value={formData.description}
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                 placeholder="Describe your goal in detail..."
                 rows={3}
-                className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
               />
             </div>
 
@@ -642,56 +624,62 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
             <h3 className="text-lg font-bold text-neutral-900 mb-4">🔍 Filter & Sort Goals</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">Category</label>
-                <select
+                <Select
+                  label="Category"
                   value={filterCategory}
-                  onChange={(e) => setFilterCategory(e.target.value)}
-                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                >
-                  <option value="all">All Categories</option>
-                  {GOAL_CATEGORIES.map(cat => (
-                    <option key={cat.value} value={cat.value}>{cat.label}</option>
-                  ))}
-                </select>
+                  onChange={(value) => setFilterCategory(value)}
+                  options={[
+                    { value: 'all', label: 'All Categories' },
+                    ...GOAL_CATEGORIES.map(cat => ({
+                      value: cat.value,
+                      label: cat.label
+                    }))
+                  ]}
+                  placeholder="Filter by category"
+                />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">Status</label>
-                <select
+                <Select
+                  label="Status"
                   value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                >
-                  <option value="all">All Status</option>
-                  <option value="active">Active</option>
-                  <option value="completed">Completed</option>
-                  <option value="overdue">Overdue</option>
-                </select>
+                  onChange={(value) => setFilterStatus(value)}
+                  options={[
+                    { value: 'all', label: 'All Status' },
+                    { value: 'active', label: 'Active' },
+                    { value: 'completed', label: 'Completed' },
+                    { value: 'overdue', label: 'Overdue' }
+                  ]}
+                  placeholder="Filter by status"
+                />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">Priority</label>
-                <select
+                <Select
+                  label="Priority"
                   value={filterPriority}
-                  onChange={(e) => setFilterPriority(e.target.value)}
-                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                >
-                  <option value="all">All Priorities</option>
-                  {PRIORITY_LEVELS.map(priority => (
-                    <option key={priority.value} value={priority.value}>{priority.label}</option>
-                  ))}
-                </select>
+                  onChange={(value) => setFilterPriority(value)}
+                  options={[
+                    { value: 'all', label: 'All Priorities' },
+                    ...PRIORITY_LEVELS.map(priority => ({
+                      value: priority.value,
+                      label: priority.label
+                    }))
+                  ]}
+                  placeholder="Filter by priority"
+                />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-2">Sort By</label>
-                <select
+                <Select
+                  label="Sort By"
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                >
-                  <option value="deadline">Deadline</option>
-                  <option value="priority">Priority</option>
-                  <option value="progress">Progress</option>
-                  <option value="created">Created Date</option>
-                </select>
+                  onChange={(value) => setSortBy(value as any)}
+                  options={[
+                    { value: 'deadline', label: 'Deadline' },
+                    { value: 'priority', label: 'Priority' },
+                    { value: 'progress', label: 'Progress' },
+                    { value: 'created', label: 'Created Date' }
+                  ]}
+                  placeholder="Sort goals"
+                />
               </div>
             </div>
           </div>
@@ -700,48 +688,50 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
 
       {/* Achievements */}
       {achievements.length > 0 && (
-        <Card variant="elevated" className="p-6 mb-6 bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-yellow-900">🏆 Achievements Unlocked!</h3>
-            <div className="text-2xl">🎉</div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {achievements.map((achievement) => (
-              <div
-                key={achievement.id}
-                className="p-4 bg-white rounded-lg border border-yellow-200 shadow-sm"
-              >
-                <div className="text-2xl mb-2">{achievement.title}</div>
-                <p className="text-sm text-yellow-800">{achievement.description}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+        <Alert variant="default" className="mb-6">
+          <AlertTitle className="flex items-center gap-2">
+            🏆 Achievements Unlocked! 🎉
+          </AlertTitle>
+          <AlertDescription>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3">
+              {achievements.map((achievement) => (
+                <div
+                  key={achievement.id}
+                  className="p-3 bg-white/50 rounded-lg border border-yellow-200"
+                >
+                  <div className="text-lg font-bold mb-1">{achievement.title}</div>
+                  <p className="text-sm">{achievement.description}</p>
+                </div>
+              ))}
+            </div>
+          </AlertDescription>
+        </Alert>
       )}
 
       {/* Goal Recommendations */}
       {recommendations.length > 0 && (
-        <Card variant="elevated" className="p-6 mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-blue-900">💡 Personalized Recommendations</h3>
-            <div className="text-2xl">🤖</div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {recommendations.map((rec) => (
-              <div
-                key={rec.id}
-                className="p-4 bg-white rounded-lg border border-blue-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => applyTemplate(rec.template)}
-              >
-                <div className="text-lg font-bold text-blue-900 mb-1">{rec.title}</div>
-                <p className="text-sm text-blue-800 mb-2">{rec.description}</p>
-                <div className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                  💡 {rec.reason}
+        <Alert variant="default" className="mb-6">
+          <AlertTitle className="flex items-center gap-2">
+            💡 Personalized Recommendations 🤖
+          </AlertTitle>
+          <AlertDescription>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3">
+              {recommendations.map((rec) => (
+                <div
+                  key={rec.id}
+                  className="p-3 bg-white/50 rounded-lg border border-blue-200 hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => applyTemplate(rec.template)}
+                >
+                  <div className="text-lg font-bold mb-1">{rec.title}</div>
+                  <p className="text-sm mb-2">{rec.description}</p>
+                  <div className="text-xs bg-blue-50 px-2 py-1 rounded">
+                    💡 {rec.reason}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Card>
+              ))}
+            </div>
+          </AlertDescription>
+        </Alert>
       )}
 
       {/* Goal Templates */}
@@ -850,7 +840,10 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
                       title="🗑️"
                       variant="ghost"
                       size="small"
-                      onClick={() => onDeleteGoal(goal.id)}
+                      onClick={() => {
+                        setGoalToDelete(goal.id);
+                        setShowDeleteDialog(true);
+                      }}
                       className="text-neutral-400 hover:text-danger-600"
                     />
                   </div>
@@ -930,6 +923,39 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
           })
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Goal</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this goal? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (goalToDelete) {
+                  onDeleteGoal(goalToDelete);
+                  setShowDeleteDialog(false);
+                  setGoalToDelete(null);
+                }
+              }}
+            >
+              Delete Goal
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }; 

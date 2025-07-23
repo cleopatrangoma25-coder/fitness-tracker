@@ -58,8 +58,15 @@ jobs:
       - name: Build
         run: pnpm exec turbo run build
 
-      - name: Test
+      - name: Unit Tests
         run: pnpm exec turbo run test
+
+      - name: E2E Tests
+        run: |
+          cd apps/web
+          pnpm test:e2e
+        env:
+          CI: true
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
