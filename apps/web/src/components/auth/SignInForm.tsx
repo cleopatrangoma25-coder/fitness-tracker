@@ -64,60 +64,103 @@ export function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-        <p className="text-gray-600 mt-2">Sign in to your Fitness Tracker account</p>
+    <Card variant="elevated" className="w-full max-w-md">
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center space-x-3 mb-4">
+          <div className="text-3xl">🔐</div>
+          <h2 className="text-3xl font-bold text-neutral-900">Welcome Back</h2>
+        </div>
+        <p className="text-neutral-600 text-lg">Sign in to continue your fitness journey</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <Input
-          label="Email"
-          type="email"
-          placeholder="john@example.com"
-          {...(errors.email?.message && { error: errors.email.message })}
-          {...register('email')}
-        />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Email Input */}
+        <div className="space-y-2">
+          <Input
+            label="📧 Email Address"
+            type="email"
+            placeholder="john@example.com"
+            {...(errors.email?.message && { error: errors.email.message })}
+            {...register('email')}
+          />
+        </div>
 
-        <Input
-          label="Password"
-          type="password"
-          placeholder="••••••••"
-          {...(errors.password?.message && { error: errors.password.message })}
-          {...register('password')}
-        />
+        {/* Password Input */}
+        <div className="space-y-2">
+          <Input
+            label="🔒 Password"
+            type="password"
+            placeholder="••••••••"
+            {...(errors.password?.message && { error: errors.password.message })}
+            {...register('password')}
+          />
+        </div>
 
+        {/* Status Messages */}
         {error && (
-          <div className={`text-sm p-3 rounded-lg ${
+          <div className={`text-sm p-4 rounded-lg border ${
             error.includes('sent!') 
-              ? 'text-green-600 bg-green-50' 
-              : 'text-red-600 bg-red-50'
+              ? 'text-success-600 bg-success-50 border-success-200' 
+              : 'text-danger-600 bg-danger-50 border-danger-200'
           }`}>
-            {error}
+            <div className="flex items-center space-x-2">
+              <span>{error.includes('sent!') ? '✅' : '❌'}</span>
+              <span>{error}</span>
+            </div>
           </div>
         )}
 
+        {/* Submit Button */}
         <Button
           type="submit"
-          title="Sign In"
-          isLoading={isLoading}
-          className="w-full"
+          title={isLoading ? '⏳ Signing In...' : '🚀 Sign In'}
+          variant="primary"
+          disabled={isLoading}
+          className="w-full py-4 text-lg font-bold"
         />
 
-        <div className="flex justify-between items-center text-sm">
+        {/* Action Links */}
+        <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0 sm:space-x-4 text-sm">
           <button
             type="button"
             onClick={handleForgotPassword}
-            className="text-blue-600 hover:text-blue-500"
+            className="text-primary-600 hover:text-primary-700 font-medium transition-colors"
           >
-            Forgot password?
+            🔑 Forgot password?
           </button>
           <button
             type="button"
             onClick={onSwitchToSignUp}
-            className="text-blue-600 hover:text-blue-500"
+            className="text-accent-600 hover:text-accent-700 font-medium transition-colors"
           >
-            Create account
+            ✨ Create account
+          </button>
+        </div>
+
+        {/* Social Sign-In Options */}
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-neutral-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-neutral-500">Or continue with</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-3">
+          <button
+            type="button"
+            className="flex items-center justify-center space-x-3 w-full px-4 py-3 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
+          >
+            <span className="text-xl">🔍</span>
+            <span className="font-medium text-neutral-700">Continue with Google</span>
+          </button>
+          <button
+            type="button"
+            className="flex items-center justify-center space-x-3 w-full px-4 py-3 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
+          >
+            <span className="text-xl">📘</span>
+            <span className="font-medium text-neutral-700">Continue with Facebook</span>
           </button>
         </div>
       </form>

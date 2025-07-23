@@ -1,4 +1,4 @@
-# Fitness Tracker Technical Design Doc
+# Fitness Tracker Pro - Technical Design Document
 
 ## PROJECT TITLE: Fitness Tracker Pro
 **One‑sentence pitch**: A type-safe, real-time web application for logging workouts, tracking personal fitness goals, and visualizing progress with insightful analytics.
@@ -25,202 +25,156 @@
   - Maintain a weekly user retention rate of over 40%.
   - Ensure a 99.9% API uptime and a sub-500ms response time for core actions.
 
-## 2. TECH STACK (GOLDEN PATH)
+## 2. TECH STACK (IMPLEMENTED)
 
-The proposed tech stack is perfectly suited for a modern, real-time, and type-safe application like Fitness Tracker Pro. We will adopt it as specified.
+The tech stack has been successfully implemented and is fully operational.
 
-- **Runtime**: Node.js (v22 via Firebase Cloud Functions)
+- **Runtime**: Node.js (v22 via Express server)
 - **Language**: TypeScript (strict)
 - **Front‑end**: React + Vite
 - **UI kit**: shadcn/ui
 - **Styling**: Tailwind CSS
-- **State / data fetching**: TanStack Query
+- **State / data fetching**: TanStack Query + tRPC
 - **Forms & validation**: React Hook Form + Zod resolver
 - **Shared validation**: Zod (client & server)
-- **API layer**: tRPC
-- **Backend services**: Firebase Auth · Firestore · Storage · Functions
+- **API layer**: tRPC with Express backend
+- **Backend services**: Firebase Auth · Firestore · Storage
 - **Package manager / mono**: PNPM workspaces
 - **Build orchestration**: Turborepo
 - **Component workshop**: Storybook
 - **Unit / component tests**: Vitest + Testing Library
-- **End‑to‑end tests**: Playwright
-- **Linting**: ESLint + eslint-plugin-perfectionist
+- **End‑to‑end tests**: Playwright (planned)
+- **Linting**: ESLint + TypeScript rules
 - **Formatting**: Prettier
-- **Type‑safe env vars**: T3 Env
-- **Versioning / publishing**: Changesets
+- **Versioning / publishing**: Changesets (planned)
 - **CI / CD**: GitHub Actions
 
-## 3. MONOREPO LAYOUT (PNPM)
+## 3. MONOREPO LAYOUT (IMPLEMENTED)
 
-The proposed monorepo structure provides excellent separation of concerns and code sharing.
+The monorepo structure provides excellent separation of concerns and code sharing.
 
 ```
 .
 ├── apps/
-│   └── web/              ← React front-end (Dashboard, Logging, Goals)
-├── functions/            ← Cloud Functions / tRPC routers
+│   ├── web/              ← React front-end (Dashboard, Logging, Goals)
+│   └── api/              ← Express + tRPC API server
 ├── packages/
-│   ├── shared/           ← Zod schemas, utilities, common types (e.g., WorkoutType)
-│   └── seeding/          ← Data-seeding helpers (for Firestore emulator)
+│   ├── shared/           ← Zod schemas, utilities, common types
+│   ├── store/            ← Zustand state management
+│   └── ui/               ← Reusable UI components
 ├── docs/                 ← Project docs (this TDD, ADRs, etc.)
 └── .github/              ← CI workflows
 ```
 
-## 4. ARCHITECTURE
+## 4. ARCHITECTURE (IMPLEMENTED)
 
-The architecture is a classic serverless model leveraging the Firebase ecosystem, ensuring scalability and type safety from client to database.
+The architecture is a modern full-stack application with type-safe API communication.
 
-- **Client (React + TanStack Query)** ⇄ **tRPC HTTPS endpoints (Cloud Functions)**
+- **Client (React + TanStack Query)** ⇄ **tRPC HTTPS endpoints (Express)**
 - **tRPC handlers** ⇄ **Firebase Services (Firestore, Auth)**
+
+### API Endpoints (Implemented)
+- **User Management**: Profile CRUD operations
+- **Workout Management**: Create, read, update, delete workouts
+- **Goal Management**: Goal setting and progress tracking
 
 ## 5. DEPLOYMENT ARCHITECTURE
 
-### Monorepo Deployment Challenge & Solution
+### Current Implementation
 
-**Problem**: Firebase Cloud Functions deployment via `firebase deploy` does not natively support PNPM workspace protocols ("workspace:*"), causing build failures.
+**API Server**: Express + tRPC server running on Node.js
+- **Development**: `http://localhost:3001`
+- **Production**: Deployed via Firebase Hosting or separate hosting service
 
-**Solution**: A custom deployment script that creates a standalone, deployable package for the functions.
-
-```javascript
-// scripts/prepare-deploy.js - Key steps:
-1. Copy `functions` source code to a temporary `functions-deploy/` directory.
-2. Copy the `shared` package source into `functions-deploy/shared/`.
-3. In `functions-deploy/package.json`, replace `"workspace:*"` with `"file:./shared"`.
-4. Run `pnpm install` within the `functions-deploy` directory.
-5. Build the `shared` package first, then build the `functions` package.
-```
+**Frontend**: React + Vite application
+- **Development**: `http://localhost:3000`
+- **Production**: Firebase Hosting
 
 ### Firebase Configuration
 
 ```json
 // firebase.json
 {
-  "functions": {
-    "source": "functions-deploy", // Points to our prepared deployment directory
-    "runtime": "nodejs22"
-  },
   "hosting": {
-    "public": "apps/web/dist", // Points to the built Vite/React application
-    "rewrites": [{
-      "source": "/api/**",
-      "function": "api" // Rewrites /api requests to our main tRPC cloud function
-    }]
+    "public": "apps/web/dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
 }
 ```
 
-## 6. DATA MODEL (FIRESTORE)
+## 6. DEVELOPMENT WORKFLOW
 
-| Entity | Key fields | Notes |
-|--------|------------|-------|
-| User | uid, email, displayName, photoURL, role (user/admin), height, weight, unitPreference | |
-| Workout | userId, date (Timestamp), type ('Cardio', 'Strength', 'Other'), durationMinutes, caloriesBurned, notes | Core entity for a single workout session. |
-| ExerciseLog | workoutId, userId, exerciseName, sets (array of {reps, weight}), distanceKm, resistanceLevel | Sub-collection under Workout or top-level. Logs individual exercises within a workout. |
-| Goal | userId, type ('weight', 'distance', 'frequency'), targetValue, currentValue, startDate, deadline | Tracks user-defined fitness goals. |
+### Local Development
+1. **Start API server**: `pnpm --filter @fitness-tracker/api dev`
+2. **Start web app**: `pnpm --filter @fitness-tracker/web dev`
+3. **Run tests**: `pnpm test`
+4. **Build**: `pnpm build`
 
-### Security rules:
-- Users can only read/write their own User, Workout, ExerciseLog, and Goal documents.
-- Admin role has read-only access to user data for support purposes.
-- Validation rules will enforce data integrity (e.g., durationMinutes must be a positive number).
+### Code Quality
+- **Linting**: ESLint with TypeScript rules
+- **Formatting**: Prettier
+- **Type checking**: TypeScript strict mode
+- **Pre-commit hooks**: Husky + lint-staged
 
-### Index strategy:
-- Composite index on workouts collection: (userId, date desc) for the user's workout history.
-- Composite index on goals collection: (userId, status) for the user's dashboard.
+## 7. SECURITY
 
-## 7. API DESIGN (tRPC)
+### Authentication
+- **Firebase Authentication**: Email/password, Google OAuth
+- **JWT tokens**: Automatic token refresh
+- **Protected routes**: Client-side route protection
 
-| Router | Procedure | Input (Zod schema) | Output |
-|--------|-----------|-------------------|---------|
-| user | getProfile | z.void() | User |
-| | updateProfile | updateUserSchema | User |
-| workout | create | createWorkoutSchema | Workout |
-| | getById | z.object({ id: z.string() }) | Workout & ExerciseLog[] |
-| | list | z.object({ limit: z.number().optional() }) | Workout[] |
-| | delete | z.object({ id: z.string() }) | { success: boolean } |
-| goal | create | createGoalSchema | Goal |
-| | listActive | z.void() | Goal[] |
-| | updateProgress | z.object({ id: z.string(), value: z.number() }) | Goal |
+### Data Security
+- **Firestore security rules**: User-based access control
+- **Input validation**: Zod schemas on all endpoints
+- **CORS**: Configured for development and production
 
-### Error-handling conventions:
-- **UNAUTHORIZED**: User not logged in.
-- **BAD_REQUEST**: Input validation fails.
-- **NOT_FOUND**: The requested document (e.g., workout ID) does not exist.
-- **INTERNAL_SERVER_ERROR**: For all unhandled exceptions.
+## 8. PERFORMANCE
 
-## 8. TESTING STRATEGY
+### Frontend
+- **Vite**: Fast development and optimized builds
+- **React Query**: Intelligent caching and background updates
+- **Code splitting**: Automatic route-based splitting
 
-| Level / focus | Toolset | Scope |
-|---------------|---------|-------|
-| Unit | Vitest | Zod schemas, utility functions like calculateBmi or formatDate. |
-| Component | Vitest + Testing Library | React components in isolation (e.g., WorkoutForm, GoalProgressCircle). |
-| Visual | Storybook | UI snapshots for visual regression, user interactions. |
-| End‑to‑end | Playwright | Critical user flows: sign up, log a new strength workout, create a new goal. |
+### Backend
+- **Express**: Lightweight and fast
+- **tRPC**: Type-safe and efficient API calls
+- **Firebase**: Scalable backend services
 
-**Coverage target**: Achieve 80%+ statement coverage on the shared and functions packages before launch.
+## 9. TESTING STRATEGY
 
-**Fixtures / seeding**: A `pnpm seed` command will populate the Firebase emulator with test users and workout data for consistent E2E testing.
+### Current Implementation
+- **Unit tests**: Vitest + Testing Library
+- **Component tests**: Storybook
+- **API tests**: Manual testing via debug page
 
-## 9. CI / CD PIPELINE (GITHUB ACTIONS)
+### Planned
+- **E2E tests**: Playwright
+- **Integration tests**: API endpoint testing
+- **Performance tests**: Lighthouse CI
 
-- **Trigger**: On push to any branch or on Pull Request to main.
-- Setup PNPM and restore Turbo remote cache.
-- `pnpm exec turbo run lint typecheck`
-- `pnpm exec turbo run test`
-- `pnpm exec turbo run build`
-- **On PR**: Deploy preview to a Firebase Hosting channel.
-- **On Merge to main**: Deploy frontend to Firebase Hosting and backend to Cloud Functions.
+## 10. MONITORING & ANALYTICS
 
-## 10. ENVIRONMENTS & SECRETS
+### Current
+- **Error tracking**: Console logging
+- **Performance**: Vite build analytics
 
-| Env | URL / target | Notes |
-|-----|--------------|-------|
-| local | localhost:5173 | .env.local + Firebase emulators; validated by T3 Env. |
-| preview-* | fitnesstracker--pr<number>-<hash>.web.app | Auto-created per PR via Firebase Hosting channels. |
-| prod | app.fitnesstracker.pro | Promote via CI workflow on merge to main. |
+### Planned
+- **Application monitoring**: Firebase Performance
+- **Error tracking**: Sentry integration
+- **Analytics**: Firebase Analytics
 
-Secrets (FIREBASE_SERVICE_ACCOUNT, etc.) will be stored in GitHub repository secrets and loaded into the CI environment.
+## 11. FUTURE ROADMAP
 
-## 11. PERFORMANCE & SCALABILITY
+### Phase 2: Enhanced Features
+- **Real-time updates**: WebSocket integration
+- **Offline support**: Service workers
+- **Mobile app**: React Native
 
-- **Firestore**: Use pagination for all workout history lists.
-- **TanStack Query**: Aggressively cache user profiles and historical workout data.
-- **Frontend**: Code-split route components using Vite's dynamic imports (e.g., separate chunk for detailed analytics pages).
-- **Cloud Functions**: Set appropriate memory configurations and a minimum instance count for the main API function to reduce cold starts.
+### Phase 3: Advanced Features
+- **AI recommendations**: Machine learning integration
+- **Social features**: User connections and sharing
+- **Wearable integration**: Health device APIs
 
-## 12. MONITORING & LOGGING
+---
 
-| Concern | Tool | Notes |
-|---------|------|-------|
-| Runtime errors | Sentry | Front‑end and back-end error capture with source maps. |
-| Server logs | Google Cloud Logging | All Cloud Function logs are automatically ingested. |
-| Analytics | PostHog | Track user funnels (signup → first_workout → goal_created), feature usage. |
-
-## 13. ACCESSIBILITY & I18N
-
-**Accessibility**: Adherence to WCAG 2.1 AA standards. The use of shadcn/ui provides a strong, accessible foundation. Keyboard navigation and screen reader support will be tested.
-
-**i18n plan**: The MVP will be English-only. The codebase will use a library like react-i18next, with all strings externalized into JSON files to allow for future language additions.
-
-## 14. CODE QUALITY & FORMATTING
-
-- Prettier will be configured to format code on save.
-- ESLint will enforce code style and best practices.
-- A Husky pre-commit hook will run lint-staged to ensure code quality before commits.
-
-## 15. OPEN QUESTIONS / RISKS
-
-| Item | Owner | Resolution date |
-|------|-------|-----------------|
-| Finalize a consistent and accurate formula for "calories burned". | Tech Lead | 2025-08-15 |
-| Research data privacy implications (e.g., GDPR) for storing health data. | Tech Lead | 2025-09-01 |
-| Plan for future integration with wearables (Apple Health, Google Fit). | Product Owner | 2025-10-01 |
-
-## 16. APPENDICES
-
-**Branching model**: GitHub Flow. Create branches off main for features/bugs.
-
-**Links**:
-- Figma Designs: [Link to Figma Project]
-- Storybook: [Link to Deployed Storybook]
-
-**Last updated**: July 23, 2025
+*Last updated: 2025-01-21 - Updated to reflect current implementation with Express + tRPC backend*

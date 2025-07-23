@@ -7,7 +7,8 @@ import AuthPage from './pages/AuthPage'
 import DashboardPage from './pages/DashboardPage'
 import ProfilePage from './pages/ProfilePage'
 import WorkoutPage from './pages/WorkoutPage'
-import DebugPage from './pages/DebugPage'
+import GoalsPage from './pages/GoalsPage'
+import { DebugPage } from './pages/DebugPage'
 
 function App() {
   return (
@@ -36,10 +37,18 @@ function App() {
               } 
             />
             <Route 
-              path="/workout" 
+              path="/workout/*" 
               element={
                 <ProtectedRoute>
                   <WorkoutPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/goals" 
+              element={
+                <ProtectedRoute>
+                  <GoalsPage />
                 </ProtectedRoute>
               } 
             />

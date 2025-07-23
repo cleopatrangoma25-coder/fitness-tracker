@@ -48,11 +48,30 @@ export const WorkoutSchema = z.object({
 
 export type Workout = z.infer<typeof WorkoutSchema>;
 
+// Goal schema
+export const GoalSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  type: z.enum(['WEIGHT', 'DISTANCE', 'FREQUENCY', 'STRENGTH', 'ENDURANCE']),
+  title: z.string().min(1),
+  description: z.string().optional(),
+  targetValue: z.number().min(0),
+  currentValue: z.number().min(0).default(0),
+  unit: z.string().min(1),
+  status: z.enum(['ACTIVE', 'COMPLETED', 'PAUSED']).default('ACTIVE'),
+  startDate: z.date(),
+  deadline: z.date().optional(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export type Goal = z.infer<typeof GoalSchema>;
+
 // Exercise schema
 export const ExerciseSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
-  muscleGroup: z.enum(['CHEST', 'BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS', 'CORE', 'CARDIO']),
+  muscleGroup: z.enum(['CHEST', 'BACK', 'SHOULDERS', 'BICEPS', 'TRICEPS', 'LEGS', 'GLUTES', 'HIPS', 'TUMMY', 'CORE', 'CARDIO']),
   equipment: z.array(z.string()),
   instructions: z.string().optional(),
   createdAt: z.date(),

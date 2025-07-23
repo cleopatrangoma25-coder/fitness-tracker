@@ -43,4 +43,54 @@ export interface WorkoutForm {
       weight?: number;
     }>;
   }>;
+}
+
+// Workout input types for API operations
+export interface CreateWorkoutInput {
+  userId: string;
+  name: string;
+  date: Date;
+  durationMinutes: number;
+  exercises: Array<{
+    exerciseId: string;
+    name: string;
+    sets: Array<{
+      reps: number;
+      weight?: number;
+      completed: boolean;
+    }>;
+  }>;
+}
+
+export interface UpdateWorkoutInput {
+  name?: string;
+  date?: Date;
+  durationMinutes?: number;
+  exercises?: Array<{
+    exerciseId: string;
+    name: string;
+    sets: Array<{
+      reps: number;
+      weight?: number;
+      completed: boolean;
+    }>;
+  }>;
+}
+
+export interface AddExerciseToWorkoutInput {
+  exerciseId: string;
+  name: string;
+  sets: Array<{
+    reps: number;
+    weight?: number;
+    completed: boolean;
+  }>;
+}
+
+export interface UpdateExerciseLogInput {
+  exerciseIndex: number;
+  setIndex: number;
+  reps?: number;
+  weight?: number;
+  completed?: boolean;
 } 
