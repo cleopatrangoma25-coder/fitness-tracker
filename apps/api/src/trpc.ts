@@ -149,6 +149,21 @@ const goalRouter = router({
       const updatedDoc = await ctx.db.collection('goals').doc(input.id).get()
       return { id: updatedDoc.id, ...updatedDoc.data() }
     }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const doc = await ctx.db.collection('goals').doc(input.id).get()
+      if (!doc.exists) {
+        throw new TRPCError({ code: 'NOT_FOUND' })
+      }
+      const data = doc.data()
+      if (data?.userId !== ctx.user!.uid) {
+        throw new TRPCError({ code: 'FORBIDDEN' })
+      }
+      await ctx.db.collection('goals').doc(input.id).delete()
+      return { success: true }
+    }),
 })
 
 // Main app router

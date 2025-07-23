@@ -122,12 +122,9 @@ Visit `http://localhost:3000/debug` to see the tRPC example component.
 3. **Workout Logging** - Full workout tracking functionality
 4. **Progress Analytics** - Dashboard with charts and statistics
 5. **tRPC API Integration** - Type-safe API layer
+6. **Goal Setting & Management** - Comprehensive goal tracking with validation and analytics
 
-### 🚀 In Progress
-
-6. **Goal Setting & Management** - Goal tracking features
-
-### 📋 Planned
+### 🚀 Next Milestone
 
 7. **Beta Release** - Polish, testing, and launch preparation
 

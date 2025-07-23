@@ -36,6 +36,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
   onDeleteGoal
 }) => {
   const [showForm, setShowForm] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     type: 'weight' as FitnessGoal['type'],
     title: '',
@@ -59,6 +60,14 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
       completed: false,
     };
 
+    // Validate the goal
+    const validationErrors = validateGoal(newGoal);
+    if (validationErrors.length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors([]);
     onSaveGoal(newGoal);
     setShowForm(false);
     setFormData({
@@ -69,6 +78,18 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
       unit: '',
       deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     });
+  };
+
+  const handleTypeChange = (type: FitnessGoal['type']) => {
+    const suggestion = getSuggestedGoal(type);
+    setFormData(prev => ({
+      ...prev,
+      type,
+      title: suggestion.title,
+      description: suggestion.description,
+      target: suggestion.target,
+      unit: suggestion.unit || GOAL_TYPES.find(t => t.value === type)?.unit || ''
+    }));
   };
 
   const getProgressPercentage = (goal: FitnessGoal) => {
@@ -86,6 +107,63 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
 
   const getGoalTypeInfo = (type: string) => {
     return GOAL_TYPES.find(t => t.value === type);
+  };
+
+  // Enhanced goal validation
+  const validateGoal = (goalData: Omit<FitnessGoal, 'id' | 'createdAt'>) => {
+    const errors: string[] = [];
+    
+    if (goalData.target <= 0) {
+      errors.push('Target value must be greater than 0');
+    }
+    
+    if (goalData.deadline <= new Date()) {
+      errors.push('Deadline must be in the future');
+    }
+    
+    if (goalData.title.trim().length < 3) {
+      errors.push('Goal title must be at least 3 characters long');
+    }
+    
+    return errors;
+  };
+
+  // Auto-complete goal based on type
+  const getSuggestedGoal = (type: FitnessGoal['type']) => {
+    const suggestions = {
+      weight: {
+        title: 'Reach Target Weight',
+        description: 'Achieve your target body weight through consistent diet and exercise',
+        target: 70,
+        unit: 'kg'
+      },
+      strength: {
+        title: 'Improve Bench Press',
+        description: 'Increase your bench press strength to reach your target weight',
+        target: 100,
+        unit: 'kg'
+      },
+      endurance: {
+        title: 'Complete More Reps',
+        description: 'Build endurance by increasing the number of reps you can perform',
+        target: 20,
+        unit: 'reps'
+      },
+      workout_frequency: {
+        title: 'Workout More Often',
+        description: 'Establish a consistent workout routine',
+        target: 4,
+        unit: 'workouts/week'
+      },
+      custom: {
+        title: 'Custom Fitness Goal',
+        description: 'Set your own personal fitness objective',
+        target: 1,
+        unit: ''
+      }
+    };
+    
+    return suggestions[type];
   };
 
   return (
@@ -114,6 +192,20 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
             <div className="text-2xl">💪</div>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Validation Errors */}
+            {errors.length > 0 && (
+              <div className="bg-danger-50 border border-danger-200 rounded-lg p-4">
+                <div className="flex items-center space-x-2 mb-2">
+                  <span className="text-danger-600">⚠️</span>
+                  <h4 className="font-medium text-danger-800">Please fix the following errors:</h4>
+                </div>
+                <ul className="list-disc list-inside space-y-1">
+                  {errors.map((error, index) => (
+                    <li key={index} className="text-sm text-danger-700">{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-neutral-700 mb-2">
@@ -123,11 +215,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
                   value={formData.type}
                   onChange={(e) => {
                     const type = e.target.value as FitnessGoal['type'];
-                    setFormData(prev => ({
-                      ...prev,
-                      type,
-                      unit: GOAL_TYPES.find(t => t.value === type)?.unit || ''
-                    }));
+                    handleTypeChange(type);
                   }}
                   className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                   required
@@ -199,16 +287,55 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
               />
             </div>
 
-            <div className="flex justify-end space-x-3 pt-4">
+            <div className="flex justify-between items-center pt-4">
               <Button
-                title="✕ Cancel"
-                variant="outline"
-                onClick={() => setShowForm(false)}
+                title="🎯 Auto-fill"
+                variant="ghost"
+                onClick={() => handleTypeChange(formData.type)}
                 type="button"
+                className="text-primary-600 hover:text-primary-700"
               />
-              <Button title="💾 Save Goal" variant="success" type="submit" />
+              <div className="flex space-x-3">
+                <Button
+                  title="✕ Cancel"
+                  variant="outline"
+                  onClick={() => setShowForm(false)}
+                  type="button"
+                />
+                <Button title="💾 Save Goal" variant="success" type="submit" />
+              </div>
             </div>
           </form>
+        </Card>
+      )}
+
+      {/* Goals Analytics */}
+      {goals.length > 0 && (
+        <Card variant="elevated" className="p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-primary-600">{goals.length}</div>
+              <div className="text-sm text-neutral-600">Total Goals</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-success-600">
+                {goals.filter(g => g.completed || (g.current / g.target) >= 1).length}
+              </div>
+              <div className="text-sm text-neutral-600">Completed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-warning-600">
+                {goals.filter(g => !g.completed && getDaysRemaining(g.deadline) < 0).length}
+              </div>
+              <div className="text-sm text-neutral-600">Overdue</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-neutral-600">
+                {Math.round(goals.reduce((acc, goal) => acc + getProgressPercentage(goal), 0) / goals.length)}%
+              </div>
+              <div className="text-sm text-neutral-600">Avg Progress</div>
+            </div>
+          </div>
         </Card>
       )}
 
