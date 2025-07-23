@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Card, Button } from '@fitness-tracker/ui';
 import { useAuthStore } from '@fitness-tracker/store';
 import { WorkoutService } from '../lib/workout';
+import { OnboardingFlow } from '../components/onboarding/OnboardingFlow';
 import {
   LineChart,
   Line,
@@ -62,6 +63,7 @@ export default function DashboardPage() {
     maxVolume: number;
   }>>([]);
   const [loading, setLoading] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -82,6 +84,14 @@ export default function DashboardPage() {
         setMuscleGroupStats(muscleStats);
         setWeeklyData(weeklyStats);
         setPersonalRecords(records);
+
+        // Check if user is new (no workouts yet) and show onboarding
+        if (workoutStats.totalWorkouts === 0) {
+          const hasSeenOnboarding = localStorage.getItem(`onboarding_${user.userId}`);
+          if (!hasSeenOnboarding) {
+            setShowOnboarding(true);
+          }
+        }
       } catch (error) {
         console.error('Failed to load dashboard data:', error);
       } finally {
@@ -91,6 +101,20 @@ export default function DashboardPage() {
 
     loadDashboardData();
   }, [user?.userId]);
+
+  const handleOnboardingComplete = () => {
+    if (user?.userId) {
+      localStorage.setItem(`onboarding_${user.userId}`, 'completed');
+    }
+    setShowOnboarding(false);
+  };
+
+  const handleOnboardingSkip = () => {
+    if (user?.userId) {
+      localStorage.setItem(`onboarding_${user.userId}`, 'skipped');
+    }
+    setShowOnboarding(false);
+  };
 
   const handleExerciseSelect = async (exerciseName: string) => {
     if (!user?.userId) return;
@@ -125,6 +149,11 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50">
+      <OnboardingFlow
+        isOpen={showOnboarding}
+        onComplete={handleOnboardingComplete}
+        onSkip={handleOnboardingSkip}
+      />
       {/* Hero Section */}
       <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat">
         {/* Hero Background Image */}

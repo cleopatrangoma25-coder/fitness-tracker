@@ -34,4 +34,11 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
 
 Loading.displayName = 'Loading';
 
+// Full page loading component
+export const FullPageLoading: React.FC<{ text?: string }> = ({ text = 'Loading...' }) => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <Loading size="large" text={text} />
+  </div>
+);
+
 export { Loading }; 

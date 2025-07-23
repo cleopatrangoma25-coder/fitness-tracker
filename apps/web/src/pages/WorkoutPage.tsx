@@ -6,12 +6,17 @@ import { WorkoutLog } from '../components/workout/WorkoutLog';
 import { ActiveWorkout } from '../components/workout/ActiveWorkout';
 import { WorkoutHistory } from '../components/workout/WorkoutHistory';
 import { WorkoutDetail } from '../components/workout/WorkoutDetail';
+import { FullPageLoading } from '@fitness-tracker/ui';
 
 export default function WorkoutPage() {
-  const { user } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <FullPageLoading text="Authenticating..." />;
+  }
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <FullPageLoading text="Loading user data..." />;
   }
 
   return (
