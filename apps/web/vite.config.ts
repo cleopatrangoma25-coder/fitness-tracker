@@ -19,7 +19,17 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       external: [],
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          ui: ['@fitness-tracker/ui'],
+          store: ['@fitness-tracker/store'],
+          shared: ['@fitness-tracker/shared'],
+        },
+      },
     },
+    chunkSizeWarningLimit: 1000,
   },
   define: {
     global: 'globalThis',

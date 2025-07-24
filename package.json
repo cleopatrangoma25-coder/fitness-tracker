@@ -14,7 +14,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "setup:env": "node scripts/setup-env.js",
     "deploy:staging": "node scripts/deploy-staging.js",
-    "deploy:prod": "firebase use production && firebase deploy --only hosting",
+    "deploy:prod": "node scripts/deploy-production.js",
     "verify:auth": "node scripts/verify-auth.js",
     "seed:exercises": "node scripts/seed-exercises.js"
   },

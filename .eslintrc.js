@@ -27,6 +27,9 @@ module.exports = {
     ".turbo/",
     "coverage/",
     "*.config.js",
-    "*.config.ts"
+    "*.config.ts",
+    "apps/web/.vite/",
+    "apps/web/test-results/",
+    "apps/web/playwright-report/"
   ]
 }; 

@@ -35,6 +35,7 @@ export interface SelectProps
     VariantProps<typeof selectVariants> {
   options: SelectOption[]
   placeholder?: string
+  label?: string
   onChange?: (value: string) => void
   error?: string
   success?: string
@@ -47,6 +48,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     selectSize, 
     options, 
     placeholder, 
+    label,
     onChange, 
     error,
     success,
@@ -65,6 +67,11 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 
     return (
       <div className="w-full">
+        {label && (
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {label}
+          </label>
+        )}
         <select
           ref={ref}
           className={cn(selectVariants({ variant: getVariant(), selectSize, className }))}

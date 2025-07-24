@@ -1,8 +1,8 @@
-import * as admin from 'firebase-admin'
+import admin from 'firebase-admin'
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express'
 
 // Initialize Firebase Admin if not already initialized
-if (!admin.apps.length) {
+if (!admin.apps?.length) {
   admin.initializeApp()
 }
 

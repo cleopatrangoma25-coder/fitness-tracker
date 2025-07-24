@@ -111,6 +111,41 @@ export const UpdateProfileSchema = z.object({
   }).optional(),
 });
 
+// Fitness Plan schemas
+export const PlanPhaseSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1),
+  duration: z.number().min(1), // in weeks
+  description: z.string().optional(),
+  goals: z.array(z.string()),
+  exercises: z.array(z.object({
+    id: z.string(),
+    name: z.string().min(1),
+    sets: z.number().min(1),
+    reps: z.string(),
+    rest: z.string(),
+    notes: z.string().optional(),
+    daysPerWeek: z.number().min(1).max(7),
+  })),
+});
+
+export const FitnessPlanSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  title: z.string().min(1),
+  description: z.string().optional(),
+  duration: z.number().min(1), // in weeks
+  difficulty: z.enum(['beginner', 'intermediate', 'advanced']),
+  focus: z.enum(['strength', 'cardio', 'flexibility', 'weight_loss', 'muscle_gain', 'general']),
+  phases: z.array(PlanPhaseSchema),
+  isActive: z.boolean().default(false),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export type PlanPhase = z.infer<typeof PlanPhaseSchema>;
+export type FitnessPlan = z.infer<typeof FitnessPlanSchema>;
+
 export type SignUpInput = z.infer<typeof SignUpSchema>;
 export type SignInInput = z.infer<typeof SignInSchema>;
 export type UpdateProfileInput = z.infer<typeof UpdateProfileSchema>; 

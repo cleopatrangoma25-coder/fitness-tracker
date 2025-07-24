@@ -67,7 +67,7 @@ export class WorkoutService {
       const q = query(
         collection(db, 'workouts'),
         where('userId', '==', userId),
-        orderBy('date', 'desc'),
+        orderBy('createdAt', 'desc'),
         limit(limitCount)
       );
 

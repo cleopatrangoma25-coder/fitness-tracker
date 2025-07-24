@@ -2,6 +2,92 @@ import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '@fitness-tracker/store';
 import { GoalSetting, type FitnessGoal } from '../components/goals/GoalSetting';
 import { FitnessPlan, type FitnessPlan as FitnessPlanType } from '../components/goals/FitnessPlan';
+import { GoalsService } from '../lib/goals';
+import { PlansService } from '../lib/plans';
+import type { Goal } from '@fitness-tracker/shared';
+
+// Helper function to convert Firebase Goal to UI FitnessGoal
+const convertFirebaseGoalToUI = (firebaseGoal: Goal): FitnessGoal => {
+  // Map goal type to category based on the type
+  const getCategoryFromType = (type: string): FitnessGoal['category'] => {
+    switch (type.toLowerCase()) {
+      case 'weight':
+        return 'health';
+      case 'strength':
+      case 'endurance':
+        return 'fitness';
+      case 'frequency':
+        return 'lifestyle';
+      default:
+        return 'fitness';
+    }
+  };
+
+  // Map goal type to difficulty based on target value
+  const getDifficultyFromTarget = (type: string, target: number): FitnessGoal['difficulty'] => {
+    switch (type.toLowerCase()) {
+      case 'weight':
+        return target > 100 ? 'advanced' : target > 50 ? 'intermediate' : 'beginner';
+      case 'strength':
+        return target > 150 ? 'advanced' : target > 100 ? 'intermediate' : 'beginner';
+      case 'endurance':
+        return target > 60 ? 'advanced' : target > 30 ? 'intermediate' : 'beginner';
+      case 'frequency':
+        return target > 5 ? 'advanced' : target > 3 ? 'intermediate' : 'beginner';
+      default:
+        return 'intermediate';
+    }
+  };
+
+  // Map goal type to priority based on type and target
+  const getPriorityFromType = (type: string, target: number): FitnessGoal['priority'] => {
+    switch (type.toLowerCase()) {
+      case 'weight':
+        return target > 80 ? 'high' : 'medium';
+      case 'strength':
+        return target > 120 ? 'high' : 'medium';
+      case 'endurance':
+        return target > 45 ? 'high' : 'medium';
+      case 'frequency':
+        return target > 4 ? 'high' : 'medium';
+      default:
+        return 'medium';
+    }
+  };
+
+  return {
+    id: firebaseGoal.id,
+    type: firebaseGoal.type.toLowerCase() as FitnessGoal['type'],
+    category: getCategoryFromType(firebaseGoal.type),
+    title: firebaseGoal.title,
+    description: firebaseGoal.description || '',
+    target: firebaseGoal.targetValue,
+    current: firebaseGoal.currentValue,
+    unit: firebaseGoal.unit,
+    deadline: firebaseGoal.deadline || new Date(),
+    completed: firebaseGoal.status === 'COMPLETED',
+    createdAt: firebaseGoal.createdAt,
+    difficulty: getDifficultyFromTarget(firebaseGoal.type, firebaseGoal.targetValue),
+    priority: getPriorityFromType(firebaseGoal.type, firebaseGoal.targetValue),
+    tags: [], // Default empty tags
+  };
+};
+
+// Helper function to convert UI FitnessGoal to Firebase Goal
+const convertUIGoalToFirebase = (uiGoal: Omit<FitnessGoal, 'id' | 'createdAt'>): Omit<Goal, 'id' | 'createdAt' | 'updatedAt'> => {
+  return {
+    userId: '', // Will be set by the service
+    type: uiGoal.type.toUpperCase() as Goal['type'],
+    title: uiGoal.title,
+    description: uiGoal.description,
+    targetValue: uiGoal.target,
+    currentValue: uiGoal.current,
+    unit: uiGoal.unit,
+    status: uiGoal.completed ? 'COMPLETED' : 'ACTIVE',
+    startDate: new Date(),
+    deadline: uiGoal.deadline,
+  };
+};
 
 export default function GoalsPage() {
   const { user } = useAuthStore();
@@ -10,123 +96,116 @@ export default function GoalsPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'goals' | 'plans'>('goals');
 
-  // Load goals and plans from localStorage
+  // Load goals and plans from Firebase
   useEffect(() => {
-    if (user?.userId) {
-      // Load goals
-      const savedGoals = localStorage.getItem(`goals_${user.userId}`);
-      if (savedGoals) {
+    const loadData = async () => {
+      if (user?.userId) {
         try {
-          const parsedGoals = JSON.parse(savedGoals).map((goal: any) => ({
-            ...goal,
-            deadline: new Date(goal.deadline),
-            createdAt: new Date(goal.createdAt)
-          }));
-          setGoals(parsedGoals);
+          setLoading(true);
+          
+          // Load goals from Firebase and convert to UI format
+          const firebaseGoals = await GoalsService.getGoals(user.userId);
+          const uiGoals = firebaseGoals.map(convertFirebaseGoalToUI);
+          setGoals(uiGoals);
+          
+          // Load plans from Firebase
+          const firebasePlans = await PlansService.getPlans(user.userId);
+          setPlans(firebasePlans as FitnessPlanType[]);
+          
         } catch (error) {
-          console.error('Failed to parse saved goals:', error);
+          console.error('Failed to load data from Firebase:', error);
+        } finally {
+          setLoading(false);
         }
       }
+    };
 
-      // Load plans
-      const savedPlans = localStorage.getItem(`plans_${user.userId}`);
-      if (savedPlans) {
-        try {
-          const parsedPlans = JSON.parse(savedPlans).map((plan: any) => ({
-            ...plan,
-            createdAt: new Date(plan.createdAt),
-            phases: plan.phases.map((phase: any) => ({
-              ...phase,
-              id: phase.id || Math.random().toString()
-            }))
-          }));
-          setPlans(parsedPlans);
-        } catch (error) {
-          console.error('Failed to parse saved plans:', error);
-        }
-      }
-      setLoading(false);
-    }
+    loadData();
   }, [user?.userId]);
 
-  // Save goals to localStorage
-  const saveGoals = (newGoals: FitnessGoal[]) => {
-    if (user?.userId) {
-      localStorage.setItem(`goals_${user.userId}`, JSON.stringify(newGoals));
+  const handleSaveGoal = async (goalData: Omit<FitnessGoal, 'id' | 'createdAt'>) => {
+    if (!user?.userId) return;
+    
+    try {
+      const firebaseGoalData = convertUIGoalToFirebase(goalData);
+      const newGoal = await GoalsService.createGoal({
+        ...firebaseGoalData,
+        userId: user.userId,
+      });
+      const uiGoal = convertFirebaseGoalToUI(newGoal);
+      setGoals(prev => [uiGoal, ...prev]);
+    } catch (error) {
+      console.error('Failed to save goal:', error);
     }
   };
 
-  // Save plans to localStorage
-  const savePlans = (newPlans: FitnessPlanType[]) => {
-    if (user?.userId) {
-      localStorage.setItem(`plans_${user.userId}`, JSON.stringify(newPlans));
+  const handleUpdateProgress = async (goalId: string, current: number) => {
+    try {
+      const updatedGoal = await GoalsService.updateGoalProgress(goalId, current);
+      const uiGoal = convertFirebaseGoalToUI(updatedGoal);
+      setGoals(prev => prev.map(goal => 
+        goal.id === goalId ? uiGoal : goal
+      ));
+    } catch (error) {
+      console.error('Failed to update goal progress:', error);
     }
   };
 
-  const handleSaveGoal = (goalData: Omit<FitnessGoal, 'id' | 'createdAt'>) => {
-    const newGoal: FitnessGoal = {
-      ...goalData,
-      id: Date.now().toString(),
-      createdAt: new Date()
-    };
+  const handleDeleteGoal = async (goalId: string) => {
+    try {
+      await GoalsService.deleteGoal(goalId);
+      setGoals(prev => prev.filter(goal => goal.id !== goalId));
+    } catch (error) {
+      console.error('Failed to delete goal:', error);
+    }
+  };
+
+  const handleSavePlan = async (planData: Omit<FitnessPlanType, 'id' | 'createdAt'>) => {
+    if (!user?.userId) return;
     
-    const updatedGoals = [...goals, newGoal];
-    setGoals(updatedGoals);
-    saveGoals(updatedGoals);
+    try {
+      const newPlan = await PlansService.createPlan({
+        ...planData,
+        userId: user.userId,
+      });
+      setPlans(prev => [newPlan as FitnessPlanType, ...prev]);
+    } catch (error) {
+      console.error('Failed to save plan:', error);
+    }
   };
 
-  const handleUpdateProgress = (goalId: string, current: number) => {
-    const updatedGoals = goals.map(goal => 
-      goal.id === goalId ? { ...goal, current } : goal
-    );
-    setGoals(updatedGoals);
-    saveGoals(updatedGoals);
+  const handleUpdatePlan = async (planId: string, planData: Partial<FitnessPlanType>) => {
+    try {
+      const updatedPlan = await PlansService.updatePlan(planId, planData);
+      setPlans(prev => prev.map(plan => 
+        plan.id === planId ? updatedPlan as FitnessPlanType : plan
+      ));
+    } catch (error) {
+      console.error('Failed to update plan:', error);
+    }
   };
 
-  const handleDeleteGoal = (goalId: string) => {
-    const updatedGoals = goals.filter(goal => goal.id !== goalId);
-    setGoals(updatedGoals);
-    saveGoals(updatedGoals);
+  const handleDeletePlan = async (planId: string) => {
+    try {
+      await PlansService.deletePlan(planId);
+      setPlans(prev => prev.filter(plan => plan.id !== planId));
+    } catch (error) {
+      console.error('Failed to delete plan:', error);
+    }
   };
 
-  const handleSavePlan = (planData: Omit<FitnessPlanType, 'id' | 'createdAt'>) => {
-    const newPlan: FitnessPlanType = {
-      ...planData,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-      phases: planData.phases.map(phase => ({
-        ...phase,
-        id: phase.id || Math.random().toString()
-      }))
-    };
+  const handleActivatePlan = async (planId: string) => {
+    if (!user?.userId) return;
     
-    const updatedPlans = [...plans, newPlan];
-    setPlans(updatedPlans);
-    savePlans(updatedPlans);
-  };
-
-  const handleUpdatePlan = (planId: string, planData: Partial<FitnessPlanType>) => {
-    const updatedPlans = plans.map(plan => 
-      plan.id === planId ? { ...plan, ...planData } : plan
-    );
-    setPlans(updatedPlans);
-    savePlans(updatedPlans);
-  };
-
-  const handleDeletePlan = (planId: string) => {
-    const updatedPlans = plans.filter(plan => plan.id !== planId);
-    setPlans(updatedPlans);
-    savePlans(updatedPlans);
-  };
-
-  const handleActivatePlan = (planId: string) => {
-    // Deactivate all other plans first
-    const updatedPlans = plans.map(plan => ({
-      ...plan,
-      isActive: plan.id === planId
-    }));
-    setPlans(updatedPlans);
-    savePlans(updatedPlans);
+    try {
+      const activatedPlan = await PlansService.activatePlan(planId, user.userId);
+      setPlans(prev => prev.map(plan => ({
+        ...plan,
+        isActive: plan.id === planId
+      })));
+    } catch (error) {
+      console.error('Failed to activate plan:', error);
+    }
   };
 
   if (!user) {

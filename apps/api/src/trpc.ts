@@ -1,7 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import type { Context } from './context'
-import { UserSchema, WorkoutSchema, GoalSchema } from '@fitness-tracker/shared'
+import { UserSchema, WorkoutSchema, GoalSchema, FitnessPlanSchema } from '@fitness-tracker/shared'
 
 const t = initTRPC.context<Context>().create()
 
@@ -64,7 +64,7 @@ const workoutRouter = router({
       const query = ctx.db
         .collection('workouts')
         .where('userId', '==', ctx.user!.uid)
-        .orderBy('date', 'desc')
+        .orderBy('createdAt', 'desc')
       
       if (input.limit) {
         query.limit(input.limit)
@@ -166,11 +166,123 @@ const goalRouter = router({
     }),
 })
 
+// Plan router
+const planRouter = router({
+  create: protectedProcedure
+    .input(FitnessPlanSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { id, ...planDataWithoutId } = input
+      const planData = {
+        ...planDataWithoutId,
+        userId: ctx.user!.uid,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+      const docRef = await ctx.db.collection('plans').add(planData)
+      return { id: docRef.id, ...planData }
+    }),
+
+  list: protectedProcedure.query(async ({ ctx }) => {
+    const snapshot = await ctx.db
+      .collection('plans')
+      .where('userId', '==', ctx.user!.uid)
+      .orderBy('createdAt', 'desc')
+      .get()
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+  }),
+
+  getById: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const doc = await ctx.db.collection('plans').doc(input.id).get()
+      if (!doc.exists) {
+        throw new TRPCError({ code: 'NOT_FOUND' })
+      }
+      const data = doc.data()
+      if (data?.userId !== ctx.user!.uid) {
+        throw new TRPCError({ code: 'FORBIDDEN' })
+      }
+      return { id: doc.id, ...data }
+    }),
+
+  update: protectedProcedure
+    .input(z.object({ id: z.string(), data: FitnessPlanSchema.partial() }))
+    .mutation(async ({ ctx, input }) => {
+      const doc = await ctx.db.collection('plans').doc(input.id).get()
+      if (!doc.exists) {
+        throw new TRPCError({ code: 'NOT_FOUND' })
+      }
+      const data = doc.data()
+      if (data?.userId !== ctx.user!.uid) {
+        throw new TRPCError({ code: 'FORBIDDEN' })
+      }
+      
+      await ctx.db.collection('plans').doc(input.id).update({
+        ...input.data,
+        updatedAt: new Date(),
+      })
+      
+      const updatedDoc = await ctx.db.collection('plans').doc(input.id).get()
+      return { id: updatedDoc.id, ...updatedDoc.data() }
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const doc = await ctx.db.collection('plans').doc(input.id).get()
+      if (!doc.exists) {
+        throw new TRPCError({ code: 'NOT_FOUND' })
+      }
+      const data = doc.data()
+      if (data?.userId !== ctx.user!.uid) {
+        throw new TRPCError({ code: 'FORBIDDEN' })
+      }
+      await ctx.db.collection('plans').doc(input.id).delete()
+      return { success: true }
+    }),
+
+  activate: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const doc = await ctx.db.collection('plans').doc(input.id).get()
+      if (!doc.exists) {
+        throw new TRPCError({ code: 'NOT_FOUND' })
+      }
+      const data = doc.data()
+      if (data?.userId !== ctx.user!.uid) {
+        throw new TRPCError({ code: 'FORBIDDEN' })
+      }
+      
+      // Deactivate all other plans first
+      await ctx.db.collection('plans')
+        .where('userId', '==', ctx.user!.uid)
+        .where('isActive', '==', true)
+        .get()
+        .then(snapshot => {
+          const batch = ctx.db.batch()
+          snapshot.docs.forEach(doc => {
+            batch.update(doc.ref, { isActive: false, updatedAt: new Date() })
+          })
+          return batch.commit()
+        })
+      
+      // Activate the selected plan
+      await ctx.db.collection('plans').doc(input.id).update({
+        isActive: true,
+        updatedAt: new Date(),
+      })
+      
+      const updatedDoc = await ctx.db.collection('plans').doc(input.id).get()
+      return { id: updatedDoc.id, ...updatedDoc.data() }
+    }),
+})
+
 // Main app router
 export const appRouter = router({
   user: userRouter,
   workout: workoutRouter,
   goal: goalRouter,
+  plan: planRouter,
 })
 
 export type AppRouter = typeof appRouter 

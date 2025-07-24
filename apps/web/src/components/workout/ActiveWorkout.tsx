@@ -19,6 +19,7 @@ export const ActiveWorkout: React.FC = () => {
   const [availableExercises, setAvailableExercises] = useState<Exercise[]>([]);
   const [isLoadingExercises, setIsLoadingExercises] = useState(true);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<string>('ALL');
 
   // Load exercises from database
   useEffect(() => {
@@ -314,6 +315,17 @@ export const ActiveWorkout: React.FC = () => {
     setShowTemplates(false);
   };
 
+  // Filter exercises based on selected muscle group
+  const filteredExercises = availableExercises.filter(exercise => {
+    if (selectedMuscleGroup === 'ALL') return true;
+    return exercise.muscleGroup === selectedMuscleGroup;
+  });
+
+  // Handle muscle group filter selection
+  const handleMuscleGroupSelect = (muscleGroup: string) => {
+    setSelectedMuscleGroup(muscleGroup);
+  };
+
   if (currentWorkout) {
     return <WorkoutTracker workout={currentWorkout} />;
   }
@@ -522,9 +534,9 @@ export const ActiveWorkout: React.FC = () => {
                 </div>
                 
                 <div className="flex items-center justify-between text-sm relative z-10">
-                  <span className="text-gray-600">0 exercises</span>
+                  <span className="text-gray-600">{selectedExercises.length} selected</span>
                   <span className="text-blue-600 font-medium">Recommended: 5-8 exercises</span>
-                  <span className="text-gray-600">{availableExercises.length} available</span>
+                  <span className="text-gray-600">{filteredExercises.length} available</span>
                 </div>
               </div>
               
@@ -551,8 +563,9 @@ export const ActiveWorkout: React.FC = () => {
                   ].map((group) => (
                     <button
                       key={group.id}
+                      onClick={() => handleMuscleGroupSelect(group.id)}
                       className={`group relative p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 overflow-hidden ${
-                        group.id === 'ALL' 
+                        selectedMuscleGroup === group.id
                           ? 'border-blue-300 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-md' 
                           : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
                       }`}
@@ -596,7 +609,7 @@ export const ActiveWorkout: React.FC = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {availableExercises.map((exercise, index) => {
+                  {filteredExercises.map((exercise, index) => {
                     const isSelected = selectedExercises.find(e => e.id === exercise.id);
                     const muscleGroupColors = {
                       'CHEST': 'from-red-500 to-pink-500',

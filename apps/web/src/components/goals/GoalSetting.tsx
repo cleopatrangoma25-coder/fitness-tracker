@@ -225,7 +225,8 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
 
   const getDaysRemaining = (deadline: Date) => {
     const now = new Date();
-    const diffTime = deadline.getTime() - now.getTime();
+    const deadlineDate = deadline instanceof Date ? deadline : new Date(deadline);
+    const diffTime = deadlineDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
@@ -242,7 +243,8 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
       errors.push('Target value must be greater than 0');
     }
     
-    if (goalData.deadline <= new Date()) {
+    const deadlineDate = goalData.deadline instanceof Date ? goalData.deadline : new Date(goalData.deadline);
+    if (deadlineDate <= new Date()) {
       errors.push('Deadline must be in the future');
     }
     
@@ -269,14 +271,18 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
     .sort((a, b) => {
       switch (sortBy) {
         case 'deadline':
-          return a.deadline.getTime() - b.deadline.getTime();
+          const deadlineA = a.deadline instanceof Date ? a.deadline : new Date(a.deadline);
+          const deadlineB = b.deadline instanceof Date ? b.deadline : new Date(b.deadline);
+          return deadlineA.getTime() - deadlineB.getTime();
         case 'priority':
           const priorityOrder = { high: 3, medium: 2, low: 1 };
           return priorityOrder[b.priority] - priorityOrder[a.priority];
         case 'progress':
           return getProgressPercentage(b) - getProgressPercentage(a);
         case 'created':
-          return b.createdAt.getTime() - a.createdAt.getTime();
+          const createdA = a.createdAt instanceof Date ? a.createdAt : new Date(a.createdAt);
+          const createdB = b.createdAt instanceof Date ? b.createdAt : new Date(b.createdAt);
+          return createdB.getTime() - createdA.getTime();
         default:
           return 0;
       }
@@ -895,7 +901,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
                   {/* Deadline */}
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-neutral-600">
-                      <span className="font-medium">⏰ Deadline:</span> {goal.deadline.toLocaleDateString()}
+                      <span className="font-medium">⏰ Deadline:</span> {(goal.deadline instanceof Date ? goal.deadline : new Date(goal.deadline)).toLocaleDateString()}
                     </div>
                     <div className="text-sm">
                       {isOverdue && !isCompleted && (
