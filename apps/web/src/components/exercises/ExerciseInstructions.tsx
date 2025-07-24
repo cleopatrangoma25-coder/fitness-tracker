@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, Button } from '@fitness-tracker/ui';
-import { AnimatedExercise } from './AnimatedExercise';
 
 interface ExerciseInstruction {
   name: string;
@@ -174,8 +173,7 @@ const EXERCISE_INSTRUCTIONS: { [key: string]: ExerciseInstruction } = {
 };
 
 export const ExerciseInstructions: React.FC<ExerciseInstructionsProps> = ({ exercise, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'instructions' | 'tips' | 'variations' | 'safety' | 'animation'>('instructions');
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [activeTab, setActiveTab] = useState<'instructions' | 'tips' | 'variations' | 'safety'>('instructions');
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -188,18 +186,10 @@ export const ExerciseInstructions: React.FC<ExerciseInstructionsProps> = ({ exer
 
   const tabs = [
     { id: 'instructions', label: 'Instructions', icon: '📋' },
-    { id: 'animation', label: 'Animation', icon: '🎬' },
     { id: 'tips', label: 'Tips', icon: '💡' },
     { id: 'variations', label: 'Variations', icon: '🔄' },
     { id: 'safety', label: 'Safety', icon: '⚠️' }
   ] as const;
-
-  // Check if animation is available for this exercise
-  const hasAnimation = ['Push-ups', 'Squats', 'Pull-ups', 'Plank', 'Lunges'].includes(exercise.name);
-
-  if (showAnimation) {
-    return <AnimatedExercise exerciseName={exercise.name} onClose={() => setShowAnimation(false)} />;
-  }
 
   return (
     <Card className="p-6 max-w-4xl mx-auto dark:bg-gray-800 dark:border-gray-700">
@@ -260,9 +250,6 @@ export const ExerciseInstructions: React.FC<ExerciseInstructionsProps> = ({ exer
               >
                 <span className="mr-2">{tab.icon}</span>
                 {tab.label}
-                {tab.id === 'animation' && !hasAnimation && (
-                  <span className="ml-1 text-xs text-gray-400">(Coming Soon)</span>
-                )}
               </button>
             ))}
           </nav>
@@ -283,45 +270,6 @@ export const ExerciseInstructions: React.FC<ExerciseInstructionsProps> = ({ exer
                   </li>
                 ))}
               </ol>
-            </div>
-          )}
-
-          {activeTab === 'animation' && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Exercise Animation</h3>
-              {hasAnimation ? (
-                <div className="text-center space-y-4">
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8">
-                    <div className="text-6xl mb-4">🎬</div>
-                    <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                      Watch {exercise.name} Animation
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      See a step-by-step animated demonstration of the {exercise.name} exercise.
-                    </p>
-                    <Button 
-                      onClick={() => setShowAnimation(true)}
-                      className="flex items-center gap-2 mx-auto"
-                    >
-                      <span>▶️</span>
-                      Start Animation
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center space-y-4">
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8">
-                    <div className="text-6xl mb-4">🎨</div>
-                    <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                      Animation Coming Soon
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      We're working on adding animated demonstrations for {exercise.name}. 
-                      Check back soon for interactive exercise guides!
-                    </p>
-                  </div>
-                </div>
-              )}
             </div>
           )}
 

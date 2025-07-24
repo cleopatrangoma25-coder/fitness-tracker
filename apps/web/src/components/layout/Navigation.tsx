@@ -93,16 +93,6 @@ export const Navigation: React.FC = () => {
             >
               👤 Profile
             </Link>
-            <Link
-              to="/animations"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive('/animations')
-                  ? 'text-purple-600 bg-purple-50 dark:text-purple-400 dark:bg-purple-900/20'
-                  : 'text-gray-700 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400'
-              }`}
-            >
-              🎬 Animations
-            </Link>
           </div>
 
           {/* Right Side - Theme Toggle and User Menu */}
