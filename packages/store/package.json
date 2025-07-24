@@ -1,0 +1,22 @@
+{
+  "name": "@fitness-tracker/store",
+  "version": "1.0.0",
+  "description": "Zustand state management store for the fitness tracker",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zustand": "^4.4.0",
+    "@fitness-tracker/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+} 

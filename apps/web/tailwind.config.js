@@ -1,0 +1,187 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    '../../packages/ui/src/**/*.{js,jsx,ts,tsx}'
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        // Modern fitness-inspired color palette
+        primary: {
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+        },
+        // Energetic orange for calls-to-action
+        accent: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
+        },
+        // Dashboard - Purple theme for analytics and overview
+        dashboard: {
+          50: '#faf5ff',
+          100: '#f3e8ff',
+          200: '#e9d5ff',
+          300: '#d8b4fe',
+          400: '#c084fc',
+          500: '#a855f7',
+          600: '#9333ea',
+          700: '#7c3aed',
+          800: '#6b21a8',
+          900: '#581c87',
+        },
+        // Workout - Red theme for energy and intensity
+        workout: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
+        },
+        // Goals - Green theme for growth and achievement
+        goals: {
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
+        },
+        // Profile - Blue theme for trust and professionalism
+        profile: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+        },
+        // Success - Green for positive actions
+        success: {
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
+        },
+        // Warning - Yellow for attention
+        warning: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+        },
+        // Error - Red for errors
+        error: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
+        },
+        // Neutral grays with better contrast
+        neutral: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
+        },
+        // Dark mode specific colors
+        dark: {
+          50: '#171717',
+          100: '#262626',
+          200: '#404040',
+          300: '#525252',
+          400: '#737373',
+          500: '#a3a3a3',
+          600: '#d4d4d4',
+          700: '#e5e5e5',
+          800: '#f5f5f5',
+          900: '#fafafa',
+        },
+      },
+      // Custom gradients for modern look
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-primary': 'linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+        'gradient-success': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+        // Themed gradients for different areas
+        'gradient-dashboard': 'linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)',
+        'gradient-workout': 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+        'gradient-goals': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+        'gradient-profile': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+        // Fitness-themed background images
+        'hero-fitness': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'3\'/%3E%3Ccircle cx=\'80\' cy=\'80\' r=\'2\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'4\'/%3E%3Ccircle cx=\'10\' cy=\'90\' r=\'2\'/%3E%3Ccircle cx=\'90\' cy=\'10\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+        'workout-pattern': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\'/%3E%3C/g%3E%3C/svg%3E")',
+        'goals-pattern': 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'3\'/%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'1.5\'/%3E%3C/g%3E%3C/svg%3E")',
+        'dashboard-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Crect x=\'10\' y=\'10\' width=\'20\' height=\'20\'/%3E%3Crect x=\'70\' y=\'70\' width=\'15\' height=\'15\'/%3E%3Crect x=\'40\' y=\'40\' width=\'25\' height=\'25\'/%3E%3C/g%3E%3C/svg%3E")',
+        'profile-pattern': 'url("data:image/svg+xml,%3Csvg width=\'90\' height=\'90\' viewBox=\'0 0 90 90\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpolygon points=\'45,10 80,80 10,80\'/%3E%3C/g%3E%3C/svg%3E")',
+      },
+      // Dark mode specific patterns
+      dark: {
+        'hero-fitness': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'3\'/%3E%3Ccircle cx=\'80\' cy=\'80\' r=\'2\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'4\'/%3E%3Ccircle cx=\'10\' cy=\'90\' r=\'2\'/%3E%3Ccircle cx=\'90\' cy=\'10\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+        'workout-pattern': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\'/%3E%3C/g%3E%3C/svg%3E")',
+        'goals-pattern': 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.04\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'3\'/%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'1.5\'/%3E%3C/g%3E%3C/svg%3E")',
+        'dashboard-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Crect x=\'10\' y=\'10\' width=\'20\' height=\'20\'/%3E%3Crect x=\'70\' y=\'70\' width=\'15\' height=\'15\'/%3E%3Crect x=\'40\' y=\'40\' width=\'25\' height=\'25\'/%3E%3C/g%3E%3C/svg%3E")',
+        'profile-pattern': 'url("data:image/svg+xml,%3Csvg width=\'90\' height=\'90\' viewBox=\'0 0 90 90\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.04\'%3E%3Cpolygon points=\'45,10 80,80 10,80\'/%3E%3C/g%3E%3C/svg%3E")',
+      },
+    },
+  },
+  plugins: [],
+}; 

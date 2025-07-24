@@ -1,0 +1,42 @@
+{
+  "name": "fitness-tracker",
+  "version": "1.0.0",
+  "description": "A modern, full-stack fitness tracking application with type-safe tRPC API",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "setup:env": "node scripts/setup-env.js",
+    "deploy:staging": "node scripts/deploy-staging.js",
+    "deploy:prod": "firebase use production && firebase deploy --only hosting",
+    "verify:auth": "node scripts/verify-auth.js",
+    "seed:exercises": "node scripts/seed-exercises.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0",
+    "turbo": "^1.13.0",
+    "typescript": "^5.8.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.0.0",
+    "firebase": "^12.0.0"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  }
+}

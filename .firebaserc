@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "fitness-tracker-dev-4499e",
+    "development": "fitness-tracker-dev-4499e",
+    "production": "fitness-tracker-11c7a"
+  }
+} 
