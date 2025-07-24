@@ -1,0 +1,304 @@
+/* Exercise Animation Styles */
+@keyframes pushup-down {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(20px) scaleY(0.8);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes pushup-up {
+  0% {
+    transform: translateY(20px) scaleY(0.8);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes squat-down {
+  0% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0.7);
+  }
+}
+
+@keyframes squat-up {
+  0% {
+    transform: scaleY(0.7);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes pullup-hang {
+  0%, 100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pullup-up {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pullup-down {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+@keyframes plank-hold {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes lunge-forward {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(15px);
+  }
+}
+
+@keyframes lunge-return {
+  0% {
+    transform: translateX(15px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Animation Classes */
+.animate-pushup-down {
+  animation: pushup-down 1s ease-in-out infinite;
+}
+
+.animate-pushup-up {
+  animation: pushup-up 1s ease-in-out infinite;
+}
+
+.animate-squat-down {
+  animation: squat-down 1.5s ease-in-out infinite;
+}
+
+.animate-squat-up {
+  animation: squat-up 1.5s ease-in-out infinite;
+}
+
+.animate-pullup-hang {
+  animation: pullup-hang 1s ease-in-out infinite;
+}
+
+.animate-pullup-up {
+  animation: pullup-up 1.25s ease-in-out infinite;
+}
+
+.animate-pullup-down {
+  animation: pullup-down 1.25s ease-in-out infinite;
+}
+
+.animate-plank-hold {
+  animation: plank-hold 2s ease-in-out infinite;
+}
+
+.animate-lunge-forward {
+  animation: lunge-forward 1.5s ease-in-out infinite;
+}
+
+.animate-lunge-return {
+  animation: lunge-return 1.5s ease-in-out infinite;
+}
+
+/* Exercise Container Styles */
+.exercise-animation-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.exercise-animation-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Person Figure Styles */
+.person-figure {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.person-head {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.person-body {
+  position: relative;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.person-arm {
+  position: absolute;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.person-leg {
+  position: absolute;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress Indicator */
+.progress-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background-color: #3b82f6;
+  transform: scale(1.2);
+}
+
+.progress-dot.completed {
+  background-color: #10b981;
+}
+
+.progress-dot.pending {
+  background-color: #d1d5db;
+}
+
+/* Animation Controls */
+.animation-controls {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.control-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.control-button:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+.control-button:active {
+  transform: scale(0.95);
+}
+
+.control-button.secondary {
+  background: #6b7280;
+}
+
+.control-button.secondary:hover {
+  background: #4b5563;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .exercise-animation-container {
+    min-height: 300px;
+  }
+  
+  .animation-controls {
+    bottom: 8px;
+    padding: 6px;
+  }
+  
+  .control-button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .exercise-animation-container {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+  
+  .exercise-animation-container::before {
+    background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
+  }
+  
+  .animation-controls {
+    background: rgba(31, 41, 55, 0.9);
+  }
+} 
