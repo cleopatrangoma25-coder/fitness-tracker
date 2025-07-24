@@ -8,11 +8,18 @@ export default function ProfilePage() {
   const { user } = useAuthStore();
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-black dark:text-white">Loading profile...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-profile-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-profile-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       {/* Hero Section */}
       <div className="bg-black text-white relative overflow-hidden bg-profile-pattern bg-repeat">
         {/* Hero Background Image */}

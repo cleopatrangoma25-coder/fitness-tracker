@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { app } from '../index'
+import { createTestApp } from './test-app'
 import { auth } from 'firebase-admin'
 
 // Mock Firebase Admin
@@ -10,6 +10,12 @@ jest.mock('firebase-admin', () => ({
 }))
 
 describe('Health Check Endpoints', () => {
+  let app: any
+
+  beforeAll(() => {
+    app = createTestApp()
+  })
+
   describe('GET /health', () => {
     it('should return basic health status', async () => {
       const response = await request(app)
@@ -53,6 +59,12 @@ describe('Health Check Endpoints', () => {
 
       expect(response.body.status).toBe('degraded')
       expect(response.body.checks.firebase).toBe('unhealthy')
+    })
+
+    afterEach(() => {
+      // Reset mock after each test
+      const mockListUsers = auth().listUsers as jest.MockedFunction<any>
+      mockListUsers.mockReset()
     })
   })
 

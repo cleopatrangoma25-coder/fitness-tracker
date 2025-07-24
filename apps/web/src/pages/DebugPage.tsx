@@ -2,7 +2,7 @@
 
 import { AuthDebugger } from '../components/auth/AuthDebugger'
 import { ShadcnExample } from '../components/examples/ShadcnExample'
-// import { TrpcExample } from '../components/examples/TrpcExample'
+import { TrpcExample } from '../components/examples/TrpcExample'
 
 export function DebugPage() {
   return (
@@ -20,10 +20,10 @@ export function DebugPage() {
           <ShadcnExample />
         </div>
         
-        {/* <div>
+        <div>
           <h2 className="text-2xl font-semibold mb-4">tRPC Debug</h2>
           <TrpcExample />
-        </div> */}
+        </div>
       </div>
     </div>
   )

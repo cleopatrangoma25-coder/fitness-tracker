@@ -7,13 +7,30 @@ config({ path: '.env.test' })
 // Mock Firebase Admin SDK
 jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn(),
+  apps: [],
   auth: jest.fn(() => ({
     verifyIdToken: jest.fn(),
     listUsers: jest.fn(),
   })),
   firestore: jest.fn(() => ({
-    collection: jest.fn(),
-    doc: jest.fn(),
+    collection: jest.fn(() => ({
+      doc: jest.fn(() => ({
+        get: jest.fn(),
+        set: jest.fn(),
+        update: jest.fn(),
+        delete: jest.fn(),
+      })),
+      where: jest.fn(() => ({
+        get: jest.fn(),
+      })),
+      get: jest.fn(),
+    })),
+    doc: jest.fn(() => ({
+      get: jest.fn(),
+      set: jest.fn(),
+      update: jest.fn(),
+      delete: jest.fn(),
+    })),
   })),
 }))
 

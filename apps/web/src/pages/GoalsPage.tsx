@@ -24,7 +24,7 @@ export default function GoalsPage() {
           }));
           setGoals(parsedGoals);
         } catch (error) {
-          console.error('Failed to parse saved goals:', error);
+          // Failed to parse saved goals
         }
       }
 
@@ -42,7 +42,7 @@ export default function GoalsPage() {
           }));
           setPlans(parsedPlans);
         } catch (error) {
-          console.error('Failed to parse saved plans:', error);
+          // Failed to parse saved plans
         }
       }
       setLoading(false);
@@ -131,10 +131,10 @@ export default function GoalsPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Authentication Required</h2>
-          <p className="text-gray-600">Please log in to manage your fitness goals and plans.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Authentication Required</h2>
+          <p className="text-gray-600 dark:text-gray-300">Please log in to manage your fitness goals and plans.</p>
         </div>
       </div>
     );
@@ -142,10 +142,10 @@ export default function GoalsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading your goals and plans...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading your goals and plans...</p>
         </div>
       </div>
     );
@@ -156,7 +156,7 @@ export default function GoalsPage() {
   const activePlans = plans.filter(plan => plan.isActive).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-goals-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-goals-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       {/* Hero Section */}
       <div className="bg-black text-white relative overflow-hidden bg-goals-pattern bg-repeat">
         {/* Hero Background Image */}

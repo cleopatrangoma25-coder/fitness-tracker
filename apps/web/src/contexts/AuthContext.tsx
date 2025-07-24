@@ -67,7 +67,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       // Use existing auth store login method
       // This will be integrated with your existing Firebase auth
-      console.log('Login attempt:', { email, password });
       
       // For now, simulate successful login
       const mockUser: User = {
@@ -91,7 +90,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       // Use existing auth store logout method
-      console.log('Logout attempt');
       
       setUser(null);
     } catch (error) {

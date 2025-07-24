@@ -134,10 +134,10 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-300">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-black">Loading your fitness data...</p>
+          <p className="mt-4 text-black dark:text-white">Loading your fitness data...</p>
         </div>
       </div>
     );
@@ -148,7 +148,7 @@ export default function DashboardPage() {
     : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       <OnboardingFlow
         isOpen={showOnboarding}
         onComplete={handleOnboardingComplete}

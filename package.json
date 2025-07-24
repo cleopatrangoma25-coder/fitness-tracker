@@ -14,9 +14,13 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "setup:env": "node scripts/setup-env.js",
     "deploy:staging": "node scripts/deploy-staging.js",
-    "deploy:prod": "firebase use production && firebase deploy --only hosting",
+    "deploy:prod": "node scripts/deploy-production.js",
     "verify:auth": "node scripts/verify-auth.js",
-    "seed:exercises": "node scripts/seed-exercises.js"
+    "seed:exercises": "node scripts/seed-exercises.js",
+    "security:audit": "node scripts/security-audit.js",
+    "test:coverage": "cd apps/web && pnpm test:coverage",
+    "test:e2e": "cd apps/web && pnpm test:e2e",
+    "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -8,9 +8,9 @@ export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50">
+    <div className="min-h-screen h-full w-full bg-gradient-to-br from-neutral-50 to-dashboard-50 dark:from-gray-900 dark:to-gray-800 flex flex-col transition-colors duration-300">
       {/* Hero Section */}
-      <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat">
+      <div className="w-full bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat flex-shrink-0">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-60">
           <div 
@@ -30,8 +30,8 @@ export default function AuthPage() {
           <div className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-white/30 rounded-full"></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-          <div className="text-center">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-white drop-shadow-2xl">
               💪 Fitness Tracker
             </h1>
@@ -58,9 +58,9 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* Auth Forms */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-8">
-        <div className="flex justify-center">
+      {/* Auth Forms - Centered */}
+      <div className="flex-1 flex items-center justify-center w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div className="w-full max-w-md">
           {isSignUp ? (
             <SignUpForm onSwitchToSignIn={() => setIsSignUp(false)} />
           ) : (

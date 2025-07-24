@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Card, Input } from '@fitness-tracker/ui';
+import { Button, Card, Input, VStack } from '@fitness-tracker/ui';
 import { SignInSchema, type SignInInput } from '@fitness-tracker/shared';
 import { AuthService } from '@/lib/auth';
 import { useAuthStore } from '@fitness-tracker/store';

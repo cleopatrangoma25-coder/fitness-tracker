@@ -2,14 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// Debug: Log environment variables to help with troubleshooting
-console.log('Firebase Environment Variables Debug:');
-console.log('VITE_FIREBASE_API_KEY:', import.meta.env.VITE_FIREBASE_API_KEY ? '✅ Set' : '❌ Missing');
-console.log('VITE_FIREBASE_AUTH_DOMAIN:', import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ? '✅ Set' : '❌ Missing');
-console.log('VITE_FIREBASE_PROJECT_ID:', import.meta.env.VITE_FIREBASE_PROJECT_ID ? '✅ Set' : '❌ Missing');
-console.log('VITE_FIREBASE_STORAGE_BUCKET:', import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ? '✅ Set' : '❌ Missing');
-console.log('VITE_FIREBASE_MESSAGING_SENDER_ID:', import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ? '✅ Set' : '❌ Missing');
-console.log('VITE_FIREBASE_APP_ID:', import.meta.env.VITE_FIREBASE_APP_ID ? '✅ Set' : '❌ Missing');
+// Firebase configuration validation
 
 // Validate required environment variables
 const requiredEnvVars = {
@@ -41,8 +34,7 @@ const firebaseConfig = {
   appId: requiredEnvVars.appId!,
 };
 
-console.log('✅ Firebase configuration loaded successfully');
-console.log('Project ID:', firebaseConfig.projectId);
+// Firebase configuration loaded successfully
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

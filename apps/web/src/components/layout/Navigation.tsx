@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@fitness-tracker/store';
 import { AuthService } from '../../lib/auth';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { HStack } from '@fitness-tracker/ui';
 
 export const Navigation: React.FC = () => {
   const { user, logout } = useAuthStore();

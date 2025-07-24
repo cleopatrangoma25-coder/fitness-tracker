@@ -20,13 +20,13 @@ export default function WorkoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50/80 via-orange-50/70 to-red-50/80 bg-workout-pattern bg-repeat relative">
+    <div className="min-h-screen bg-gradient-to-br from-red-50/80 via-orange-50/70 to-red-50/80 dark:from-gray-900/80 dark:via-gray-800/70 dark:to-gray-900/80 bg-workout-pattern bg-repeat relative transition-colors duration-300">
       {/* Hero Background Image */}
       <div className="absolute inset-0 opacity-60">
         <div 
           className="w-full h-full bg-cover bg-center"
           style={{
-                          backgroundImage: 'url("https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1920&h=1080&fit=crop&q=80&auto=format&sat=15&contrast=8")'
+            backgroundImage: 'url("https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1920&h=1080&fit=crop&q=80&auto=format&sat=15&contrast=8")'
           }}
         ></div>
       </div>

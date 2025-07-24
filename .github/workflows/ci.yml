@@ -74,5 +74,4 @@ jobs:
           name: build-artifacts
           path: |
             packages/*/dist
-            functions/lib
             apps/*/build 

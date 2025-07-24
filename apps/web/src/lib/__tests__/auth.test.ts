@@ -13,13 +13,25 @@ vi.mock('firebase/auth', () => ({
   onAuthStateChanged: vi.fn(),
 }))
 
-vi.mock('firebase/firestore', () => ({
-  getFirestore: vi.fn(),
-  doc: vi.fn(),
-  setDoc: vi.fn(),
-  getDoc: vi.fn(),
-  updateDoc: vi.fn(),
-}))
+vi.mock('firebase/firestore', () => {
+  const MockTimestamp = function(this: any, date: Date) {
+    this.toDate = () => date
+    this.seconds = Math.floor(date.getTime() / 1000)
+    this.nanoseconds = (date.getTime() % 1000) * 1000000
+  }
+  
+  MockTimestamp.fromDate = vi.fn((date) => new (MockTimestamp as any)(date))
+  MockTimestamp.now = vi.fn(() => new (MockTimestamp as any)(new Date()))
+  
+  return {
+    getFirestore: vi.fn(),
+    doc: vi.fn(),
+    setDoc: vi.fn(),
+    getDoc: vi.fn(),
+    updateDoc: vi.fn(),
+    Timestamp: MockTimestamp,
+  }
+})
 
 describe('AuthService', () => {
   beforeEach(() => {
@@ -32,14 +44,16 @@ describe('AuthService', () => {
         user: {
           uid: 'test-user-id',
         },
-      }
+        providerId: 'password',
+        operationType: 'signIn',
+      } as any
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.createUserWithEmailAndPassword.mockResolvedValue(mockUserCredential)
-      mockFirebaseAuth.updateProfile.mockResolvedValue(undefined)
-
-      const mockFirestore = require('firebase/firestore')
-      mockFirestore.setDoc.mockResolvedValue(undefined)
+      const { createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth')
+      const { setDoc } = await import('firebase/firestore')
+      
+      vi.mocked(createUserWithEmailAndPassword).mockResolvedValue(mockUserCredential)
+      vi.mocked(updateProfile).mockResolvedValue(undefined)
+      vi.mocked(setDoc).mockResolvedValue(undefined)
 
       const signUpData: SignUpInput = {
         email: 'test@example.com',
@@ -74,8 +88,8 @@ describe('AuthService', () => {
         message: 'Email already in use',
       }
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.createUserWithEmailAndPassword.mockRejectedValue(mockError)
+      const { createUserWithEmailAndPassword } = await import('firebase/auth')
+      vi.mocked(createUserWithEmailAndPassword).mockRejectedValue(mockError)
 
       const signUpData: SignUpInput = {
         email: 'existing@example.com',
@@ -96,8 +110,8 @@ describe('AuthService', () => {
         message: 'Password is too weak',
       }
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.createUserWithEmailAndPassword.mockRejectedValue(mockError)
+      const { createUserWithEmailAndPassword } = await import('firebase/auth')
+      vi.mocked(createUserWithEmailAndPassword).mockRejectedValue(mockError)
 
       const signUpData: SignUpInput = {
         email: 'test@example.com',
@@ -119,14 +133,22 @@ describe('AuthService', () => {
         user: {
           uid: 'test-user-id',
         },
+        providerId: 'password',
+        operationType: 'signIn',
+      } as any
+
+      const { signInWithEmailAndPassword } = await import('firebase/auth')
+      const { getDoc } = await import('firebase/firestore')
+      
+      vi.mocked(signInWithEmailAndPassword).mockResolvedValue(mockUserCredential)
+      const mockTimestamp = {
+        toDate: () => new Date(),
+        seconds: Math.floor(Date.now() / 1000),
+        nanoseconds: (Date.now() % 1000) * 1000000,
       }
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.signInWithEmailAndPassword.mockResolvedValue(mockUserCredential)
-
-      const mockFirestore = require('firebase/firestore')
-      mockFirestore.getDoc.mockResolvedValue({
-        exists: () => true,
+      vi.mocked(getDoc).mockResolvedValue({
+        exists: () => true as any,
         data: () => ({
           email: 'test@example.com',
           displayName: 'Test User',
@@ -141,7 +163,7 @@ describe('AuthService', () => {
           createdAt: new Date(),
           updatedAt: new Date(),
         }),
-      })
+      } as any)
 
       const signInData: SignInInput = {
         email: 'test@example.com',
@@ -173,8 +195,8 @@ describe('AuthService', () => {
         message: 'User not found',
       }
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.signInWithEmailAndPassword.mockRejectedValue(mockError)
+      const { signInWithEmailAndPassword } = await import('firebase/auth')
+      vi.mocked(signInWithEmailAndPassword).mockRejectedValue(mockError)
 
       const signInData: SignInInput = {
         email: 'nonexistent@example.com',
@@ -192,8 +214,8 @@ describe('AuthService', () => {
         message: 'Wrong password',
       }
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.signInWithEmailAndPassword.mockRejectedValue(mockError)
+      const { signInWithEmailAndPassword } = await import('firebase/auth')
+      vi.mocked(signInWithEmailAndPassword).mockRejectedValue(mockError)
 
       const signInData: SignInInput = {
         email: 'test@example.com',
@@ -208,8 +230,8 @@ describe('AuthService', () => {
 
   describe('sendPasswordReset', () => {
     it('should send password reset email successfully', async () => {
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.sendPasswordResetEmail.mockResolvedValue(undefined)
+      const { sendPasswordResetEmail } = await import('firebase/auth')
+      vi.mocked(sendPasswordResetEmail).mockResolvedValue(undefined)
 
       await expect(AuthService.sendPasswordReset('test@example.com')).resolves.toBeUndefined()
     })
@@ -220,8 +242,8 @@ describe('AuthService', () => {
         message: 'Network error',
       }
 
-      const mockFirebaseAuth = require('firebase/auth')
-      mockFirebaseAuth.sendPasswordResetEmail.mockRejectedValue(mockError)
+      const { sendPasswordResetEmail } = await import('firebase/auth')
+      vi.mocked(sendPasswordResetEmail).mockRejectedValue(mockError)
 
       await expect(AuthService.sendPasswordReset('test@example.com')).rejects.toThrow(
         'Network error. Please check your connection and try again.'
@@ -266,7 +288,7 @@ describe('AuthService', () => {
         },
         {
           error: 'String error',
-          expected: 'String error',
+          expected: 'An unexpected error occurred. Please try again.',
         },
       ]
 

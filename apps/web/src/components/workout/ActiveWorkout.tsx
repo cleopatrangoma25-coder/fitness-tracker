@@ -19,6 +19,7 @@ export const ActiveWorkout: React.FC = () => {
   const [availableExercises, setAvailableExercises] = useState<Exercise[]>([]);
   const [isLoadingExercises, setIsLoadingExercises] = useState(true);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<string>('ALL');
 
   // Load exercises from database
   useEffect(() => {
@@ -314,6 +315,18 @@ export const ActiveWorkout: React.FC = () => {
     setShowTemplates(false);
   };
 
+  const handleMuscleGroupFilter = (muscleGroup: string) => {
+    setSelectedMuscleGroup(muscleGroup);
+  };
+
+  // Filter exercises based on selected muscle group
+  const filteredExercises = availableExercises.filter(exercise => {
+    if (selectedMuscleGroup === 'ALL') {
+      return true;
+    }
+    return exercise.muscleGroup === selectedMuscleGroup;
+  });
+
   if (currentWorkout) {
     return <WorkoutTracker workout={currentWorkout} />;
   }
@@ -517,14 +530,14 @@ export const ActiveWorkout: React.FC = () => {
                 <div className="w-full bg-gray-200 rounded-full h-3 mb-4 relative z-10">
                   <div 
                     className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${(selectedExercises.length / Math.min(availableExercises.length, 10)) * 100}%` }}
+                    style={{ width: `${(selectedExercises.length / Math.min(filteredExercises.length, 10)) * 100}%` }}
                   ></div>
                 </div>
                 
                 <div className="flex items-center justify-between text-sm relative z-10">
-                  <span className="text-gray-600">0 exercises</span>
+                  <span className="text-gray-600">{selectedExercises.length} exercises</span>
                   <span className="text-blue-600 font-medium">Recommended: 5-8 exercises</span>
-                  <span className="text-gray-600">{availableExercises.length} available</span>
+                  <span className="text-gray-600">{filteredExercises.length} available</span>
                 </div>
               </div>
               
@@ -551,8 +564,9 @@ export const ActiveWorkout: React.FC = () => {
                   ].map((group) => (
                     <button
                       key={group.id}
+                      onClick={() => handleMuscleGroupFilter(group.id)}
                       className={`group relative p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 overflow-hidden ${
-                        group.id === 'ALL' 
+                        group.id === selectedMuscleGroup
                           ? 'border-blue-300 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-md' 
                           : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
                       }`}
@@ -564,11 +578,11 @@ export const ActiveWorkout: React.FC = () => {
                       </div>
                       
                       <div className="text-center relative z-10">
-                        <div className={`text-2xl mb-2 group-hover:scale-110 transition-transform ${group.id === 'ALL' ? 'animate-pulse' : ''}`}>
+                        <div className={`text-2xl mb-2 group-hover:scale-110 transition-transform ${group.id === selectedMuscleGroup ? 'animate-pulse' : ''}`}>
                           {group.icon}
                         </div>
                         <div className={`text-xs font-semibold ${
-                          group.id === 'ALL' ? 'text-blue-700' : 'text-gray-700'
+                          group.id === selectedMuscleGroup ? 'text-blue-700' : 'text-gray-700'
                         }`}>
                           {group.label}
                         </div>
@@ -596,7 +610,7 @@ export const ActiveWorkout: React.FC = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {availableExercises.map((exercise, index) => {
+                  {filteredExercises.map((exercise, index) => {
                     const isSelected = selectedExercises.find(e => e.id === exercise.id);
                     const muscleGroupColors = {
                       'CHEST': 'from-red-500 to-pink-500',

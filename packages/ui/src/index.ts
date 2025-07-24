@@ -15,4 +15,5 @@ export * from './components/Tabs';
 export * from './components/Checkbox';
 export * from './components/Alert';
 export * from './components/Textarea';
+export * from './components/Stack';
 export * from './utils'; 
