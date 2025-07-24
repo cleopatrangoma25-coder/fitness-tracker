@@ -22,8 +22,8 @@ function App() {
   return (
     <FirebaseAuthProvider>
       <AppAuthProvider>
-        <div className="min-h-screen bg-gray-50">
-          <Navigation />
+        <div className="min-h-screen bg-gray-50 w-full">
+          {!isAuthPage && <Navigation />}
           {isAuthPage ? (
             // Auth page gets full width without container constraints
             <main className="w-full">
@@ -34,8 +34,8 @@ function App() {
               </Suspense>
             </main>
           ) : (
-            // Other pages use the container wrapper
-            <main className="container mx-auto px-4 py-8">
+            // Other pages use full width with padding
+            <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
               <Suspense fallback={<Loading text="Loading..." />}>
                 <Routes>
                   <Route path="/" element={<HomePage />} />

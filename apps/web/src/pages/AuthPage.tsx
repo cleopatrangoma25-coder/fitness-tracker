@@ -9,7 +9,7 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-neutral-50 to-dashboard-50 flex flex-col">
-      {/* Hero Section - Full Width */}
+      {/* Hero Section - Compact */}
       <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat flex-shrink-0 w-full">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-60">
@@ -30,27 +30,27 @@ export default function AuthPage() {
           <div className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-white/30 rounded-full"></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
           <div className="text-center">
-            <h1 className="text-3xl lg:text-4xl font-bold mb-3 text-white drop-shadow-2xl">
+            <h1 className="text-2xl lg:text-3xl font-bold mb-2 text-white drop-shadow-2xl">
               💪 Fitness Tracker
             </h1>
-            <p className="text-lg text-white mb-4 drop-shadow-xl">
+            <p className="text-base text-white mb-3 drop-shadow-xl">
               Your journey to a healthier, stronger you starts here
             </p>
             
-            {/* Feature Highlights */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 text-center border border-white/30 shadow-lg">
-                <div className="text-xl mb-1 text-white drop-shadow-lg">📊</div>
+            {/* Feature Highlights - Compact */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-2xl mx-auto">
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 text-center border border-white/30 shadow-lg">
+                <div className="text-lg mb-1 text-white drop-shadow-lg">📊</div>
                 <div className="text-xs text-white font-medium drop-shadow-md">Track Progress</div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 text-center border border-white/30 shadow-lg">
-                <div className="text-xl mb-1 text-white drop-shadow-lg">🎯</div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 text-center border border-white/30 shadow-lg">
+                <div className="text-lg mb-1 text-white drop-shadow-lg">🎯</div>
                 <div className="text-xs text-white font-medium drop-shadow-md">Set Goals</div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 text-center border border-white/30 shadow-lg">
-                <div className="text-xl mb-1 text-white drop-shadow-lg">🏋️</div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 text-center border border-white/30 shadow-lg">
+                <div className="text-lg mb-1 text-white drop-shadow-lg">🏋️</div>
                 <div className="text-xs text-white font-medium drop-shadow-md">Build Strength</div>
               </div>
             </div>
@@ -58,9 +58,9 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* Auth Forms - Perfectly Centered */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 w-full">
-        <div className="w-full max-w-lg">
+      {/* Auth Forms - Perfectly Centered with More Space */}
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div className="w-full max-w-xl">
           {isSignUp ? (
             <SignUpForm onSwitchToSignIn={() => setIsSignUp(false)} />
           ) : (

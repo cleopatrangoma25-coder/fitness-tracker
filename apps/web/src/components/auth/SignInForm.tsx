@@ -64,49 +64,49 @@ export function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
   };
 
   return (
-    <Card variant="elevated" className="w-full max-w-lg mx-auto shadow-2xl border-0">
-      <div className="text-center mb-10">
-        <div className="flex items-center justify-center space-x-3 mb-6">
-          <div className="text-4xl">🔐</div>
-          <h2 className="text-4xl font-bold text-neutral-900">Welcome Back</h2>
+    <Card variant="elevated" className="w-full max-w-2xl mx-auto shadow-2xl border-0 p-8">
+      <div className="text-center mb-12">
+        <div className="flex items-center justify-center space-x-4 mb-8">
+          <div className="text-5xl">🔐</div>
+          <h2 className="text-5xl font-bold text-neutral-900">Welcome Back</h2>
         </div>
-        <p className="text-neutral-600 text-xl">Sign in to continue your fitness journey</p>
+        <p className="text-neutral-600 text-2xl">Sign in to continue your fitness journey</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
         {/* Email Input */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           <Input
             label="📧 Email Address"
             type="email"
             placeholder="john@example.com"
             {...(errors.email?.message && { error: errors.email.message })}
             {...register('email')}
-            className="text-lg"
+            className="text-xl"
           />
         </div>
 
         {/* Password Input */}
-        <div className="space-y-3">
+        <div className="space-y-4">
           <Input
             label="🔒 Password"
             type="password"
             placeholder="••••••••"
             {...(errors.password?.message && { error: errors.password.message })}
             {...register('password')}
-            className="text-lg"
+            className="text-xl"
           />
         </div>
 
         {/* Status Messages */}
         {error && (
-          <div className={`text-base p-5 rounded-xl border-2 ${
+          <div className={`text-lg p-6 rounded-xl border-2 ${
             error.includes('sent!') 
               ? 'text-success-600 bg-success-50 border-success-200' 
               : 'text-danger-600 bg-danger-50 border-danger-200'
           }`}>
-            <div className="flex items-center space-x-3">
-              <span className="text-xl">{error.includes('sent!') ? '✅' : '❌'}</span>
+            <div className="flex items-center space-x-4">
+              <span className="text-2xl">{error.includes('sent!') ? '✅' : '❌'}</span>
               <span>{error}</span>
             </div>
           </div>
@@ -118,11 +118,11 @@ export function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
           title={isLoading ? '⏳ Signing In...' : '🚀 Sign In'}
           variant="primary"
           disabled={isLoading}
-          className="w-full py-5 text-xl font-bold rounded-xl"
+          className="w-full py-6 text-2xl font-bold rounded-xl"
         />
 
         {/* Action Links */}
-        <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-6 text-base">
+        <div className="flex flex-col sm:flex-row justify-between items-center space-y-5 sm:space-y-0 sm:space-x-8 text-lg">
           <button
             type="button"
             onClick={handleForgotPassword}
@@ -144,24 +144,24 @@ export function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t-2 border-neutral-300"></div>
           </div>
-          <div className="relative flex justify-center text-base">
-            <span className="px-4 bg-white text-neutral-500 font-medium">Or continue with</span>
+          <div className="relative flex justify-center text-lg">
+            <span className="px-6 bg-white text-neutral-500 font-medium">Or continue with</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-5">
           <button
             type="button"
-            className="flex items-center justify-center space-x-4 w-full px-6 py-4 border-2 border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors text-lg font-medium"
+            className="flex items-center justify-center space-x-5 w-full px-8 py-5 border-2 border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors text-xl font-medium"
           >
-            <span className="text-2xl">🔍</span>
+            <span className="text-3xl">🔍</span>
             <span className="text-neutral-700">Continue with Google</span>
           </button>
           <button
             type="button"
-            className="flex items-center justify-center space-x-4 w-full px-6 py-4 border-2 border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors text-lg font-medium"
+            className="flex items-center justify-center space-x-5 w-full px-8 py-5 border-2 border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors text-xl font-medium"
           >
-            <span className="text-2xl">📘</span>
+            <span className="text-3xl">📘</span>
             <span className="text-neutral-700">Continue with Facebook</span>
           </button>
         </div>
