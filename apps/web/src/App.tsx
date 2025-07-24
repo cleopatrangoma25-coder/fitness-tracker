@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { AuthProvider as FirebaseAuthProvider } from './components/auth/AuthProvider'
 import { AuthProvider as AppAuthProvider } from './contexts/AuthContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
@@ -16,52 +16,66 @@ const GoalsPage = lazy(() => import('./pages/GoalsPage'))
 const DebugPage = lazy(() => import('./pages/DebugPage').then(module => ({ default: module.DebugPage })))
 
 function App() {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/auth';
+
   return (
     <FirebaseAuthProvider>
       <AppAuthProvider>
         <div className="min-h-screen bg-gray-50">
           <Navigation />
-          <main className="container mx-auto px-4 py-8">
-            <Suspense fallback={<Loading text="Loading..." />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/debug" element={<DebugPage />} />
-                <Route 
-                  path="/dashboard" 
-                  element={
-                    <ProtectedRoute>
-                      <DashboardPage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/profile" 
-                  element={
-                    <ProtectedRoute>
-                      <ProfilePage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/workout/*" 
-                  element={
-                    <ProtectedRoute>
-                      <WorkoutPage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/goals" 
-                  element={
-                    <ProtectedRoute>
-                      <GoalsPage />
-                    </ProtectedRoute>
-                  } 
-                />
-              </Routes>
-            </Suspense>
-          </main>
+          {isAuthPage ? (
+            // Auth page gets full width without container constraints
+            <main className="w-full">
+              <Suspense fallback={<Loading text="Loading..." />}>
+                <Routes>
+                  <Route path="/auth" element={<AuthPage />} />
+                </Routes>
+              </Suspense>
+            </main>
+          ) : (
+            // Other pages use the container wrapper
+            <main className="container mx-auto px-4 py-8">
+              <Suspense fallback={<Loading text="Loading..." />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/debug" element={<DebugPage />} />
+                  <Route 
+                    path="/dashboard" 
+                    element={
+                      <ProtectedRoute>
+                        <DashboardPage />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/profile" 
+                    element={
+                      <ProtectedRoute>
+                        <ProfilePage />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/workout/*" 
+                    element={
+                      <ProtectedRoute>
+                        <WorkoutPage />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/goals" 
+                    element={
+                      <ProtectedRoute>
+                        <GoalsPage />
+                      </ProtectedRoute>
+                    } 
+                  />
+                </Routes>
+              </Suspense>
+            </main>
+          )}
         </div>
       </AppAuthProvider>
     </FirebaseAuthProvider>
