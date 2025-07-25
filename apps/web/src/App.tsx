@@ -22,7 +22,7 @@ function App() {
   return (
     <FirebaseAuthProvider>
       <AppAuthProvider>
-        <div className="min-h-screen bg-gray-50 w-full">
+        <div className="min-h-screen w-full bg-gray-50">
           {!isAuthPage && <Navigation />}
           {isAuthPage ? (
             // Auth page gets full width without container constraints

@@ -60,7 +60,7 @@ export default function AuthPage() {
 
       {/* Auth Forms - Perfectly Centered with More Space */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <div className="w-full max-w-xl">
+        <div className="w-full max-w-xl mx-auto">
           {isSignUp ? (
             <SignUpForm onSwitchToSignIn={() => setIsSignUp(false)} />
           ) : (
