@@ -3,9 +3,79 @@
 import { Link } from 'react-router-dom';
 import { Button, Card } from '@fitness-tracker/ui';
 import { useAuthStore } from '@fitness-tracker/store';
+import { useState, useEffect } from 'react';
+import { WorkoutService } from '../lib/workout';
 
 export default function HomePage() {
   const { user, isAuthenticated } = useAuthStore();
+  const [userStats, setUserStats] = useState({
+    totalWorkouts: 0,
+    thisWeek: 0,
+    currentStreak: 0,
+    lastWorkout: null as Date | null,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadUserStats = async () => {
+      if (!user?.userId) return;
+      
+      try {
+        const stats = await WorkoutService.getWorkoutStats(user.userId);
+        setUserStats({
+          totalWorkouts: stats.totalWorkouts,
+          thisWeek: stats.thisWeek,
+          currentStreak: stats.currentStreak,
+          lastWorkout: stats.lastWorkout,
+        });
+      } catch (error) {
+        console.error('Failed to load user stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isAuthenticated && user) {
+      loadUserStats();
+    } else {
+      setLoading(false);
+    }
+  }, [user, isAuthenticated]);
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
+  };
+
+  const getMotivationalMessage = () => {
+    const messages = [
+      "Ready to crush your fitness goals today? 💪",
+      "Your future self is counting on today's workout! 🎯",
+      "Every rep brings you closer to your goals! 🔥",
+      "Time to make today count! 🚀",
+      "Your dedication is inspiring! Keep it up! ⭐",
+      "Today's effort is tomorrow's strength! 💪",
+      "You're building something amazing! 🏗️",
+      "Consistency beats perfection every time! 🎯"
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
+
+  const getDaysSinceLastWorkout = () => {
+    if (!userStats.lastWorkout) return null;
+    const days = Math.floor((new Date().getTime() - userStats.lastWorkout.getTime()) / (24 * 60 * 60 * 1000));
+    return days;
+  };
+
+  const getStreakMessage = () => {
+    if (userStats.currentStreak === 0) return "Start your streak today!";
+    if (userStats.currentStreak === 1) return "Great start! Keep it going!";
+    if (userStats.currentStreak < 7) return `Amazing ${userStats.currentStreak}-day streak!`;
+    if (userStats.currentStreak < 30) return `Incredible ${userStats.currentStreak}-day streak!`;
+    return `Legendary ${userStats.currentStreak}-day streak! 🔥`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50">
@@ -87,26 +157,181 @@ export default function HomePage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {isAuthenticated && user ? (
-          <div className="text-center">
-            <Card className="max-w-md mx-auto p-8">
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Welcome back, {user.displayName}! 👋
-                </h2>
-                <p className="text-gray-600 mb-6">
-                  Ready to continue your fitness journey?
-                </p>
-                <div className="space-y-3">
-                  <Link to="/dashboard">
-                    <Button title="📊 View Dashboard" className="w-full" />
-                  </Link>
-                  <Link to="/workout">
-                    <Button title="💪 Start Workout" variant="outline" className="w-full" />
-                  </Link>
-                  <Link to="/goals">
-                    <Button title="🎯 Manage Goals" variant="ghost" className="w-full" />
-                  </Link>
+          <div className="space-y-8">
+            {/* Welcome Back Hero */}
+            <div className="text-center mb-12 welcome-hero">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full mb-6">
+                <span className="text-3xl motivational-icon">👋</span>
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                {getGreeting()}, {user.displayName}!
+              </h2>
+              <p className="text-xl text-gray-600 mb-2">
+                {getMotivationalMessage()}
+              </p>
+              {userStats.currentStreak > 0 && (
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-full text-sm font-medium mt-4 streak-badge">
+                  🔥 {getStreakMessage()}
                 </div>
+              )}
+            </div>
+
+            {/* Quick Stats */}
+            {!loading && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 welcome-stats">
+                <Card className="p-6 text-center stats-card">
+                  <div className="text-3xl mb-2">📊</div>
+                  <div className="text-2xl font-bold text-gray-900">{userStats.totalWorkouts}</div>
+                  <div className="text-gray-600">Total Workouts</div>
+                </Card>
+                <Card className="p-6 text-center stats-card">
+                  <div className="text-3xl mb-2">📅</div>
+                  <div className="text-2xl font-bold text-gray-900">{userStats.thisWeek}</div>
+                  <div className="text-gray-600">This Week</div>
+                </Card>
+                <Card className="p-6 text-center stats-card">
+                  <div className="text-3xl mb-2">🔥</div>
+                  <div className="text-2xl font-bold text-gray-900">{userStats.currentStreak}</div>
+                  <div className="text-gray-600">Day Streak</div>
+                </Card>
+              </div>
+            )}
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 welcome-actions">
+              <Link to="/workout">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-red-50 to-orange-50 border-red-200">
+                  <div className="text-4xl mb-4">💪</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Start Workout</h3>
+                  <p className="text-sm text-gray-600">Begin your training session</p>
+                </Card>
+              </Link>
+              <Link to="/dashboard">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+                  <div className="text-4xl mb-4">📊</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">View Progress</h3>
+                  <p className="text-sm text-gray-600">Check your analytics</p>
+                </Card>
+              </Link>
+              <Link to="/goals">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+                  <div className="text-4xl mb-4">🎯</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Manage Goals</h3>
+                  <p className="text-sm text-gray-600">Set and track objectives</p>
+                </Card>
+              </Link>
+              <Link to="/profile">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200">
+                  <div className="text-4xl mb-4">👤</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Update Profile</h3>
+                  <p className="text-sm text-gray-600">Manage your settings</p>
+                </Card>
+              </Link>
+            </div>
+
+            {/* Recent Activity & Motivation */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Recent Activity */}
+              <Card className="p-6 welcome-activity">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-2">📈</span>
+                  Recent Activity
+                </h3>
+                {userStats.lastWorkout ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="text-2xl">💪</div>
+                        <div>
+                          <div className="font-medium text-gray-900">Last Workout</div>
+                          <div className="text-sm text-gray-600">
+                            {userStats.lastWorkout.toLocaleDateString()} at {userStats.lastWorkout.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-gray-500">
+                          {getDaysSinceLastWorkout()} days ago
+                        </div>
+                      </div>
+                    </div>
+                    {getDaysSinceLastWorkout() && getDaysSinceLastWorkout()! > 3 && (
+                      <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-yellow-600">⚠️</span>
+                          <span className="text-yellow-800 font-medium">Time for a workout!</span>
+                        </div>
+                        <p className="text-yellow-700 text-sm mt-1">
+                          It's been {getDaysSinceLastWorkout()} days since your last workout. Ready to get back on track?
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="text-4xl mb-4">🎯</div>
+                    <h4 className="text-lg font-medium text-gray-900 mb-2">Ready to Start?</h4>
+                    <p className="text-gray-600 mb-4">Begin your fitness journey with your first workout!</p>
+                    <Link to="/workout">
+                      <Button title="Start First Workout" variant="accent" />
+                    </Link>
+                  </div>
+                )}
+              </Card>
+
+              {/* Motivation & Tips */}
+              <Card className="p-6 bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200 welcome-motivation">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                  <span className="text-2xl mr-2">💡</span>
+                  Today's Motivation
+                </h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-white/50 rounded-lg">
+                    <div className="text-lg font-medium text-gray-900 mb-2">
+                      Consistency is Key
+                    </div>
+                    <p className="text-gray-700 text-sm">
+                      Small, consistent efforts compound into massive results over time. 
+                      Every workout, no matter how small, moves you closer to your goals.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="text-center p-3 bg-white/30 rounded-lg">
+                      <div className="text-2xl mb-1">🎯</div>
+                      <div className="text-xs font-medium text-gray-700">Set Clear Goals</div>
+                    </div>
+                    <div className="text-center p-3 bg-white/30 rounded-lg">
+                      <div className="text-2xl mb-1">📊</div>
+                      <div className="text-xs font-medium text-gray-700">Track Progress</div>
+                    </div>
+                    <div className="text-center p-3 bg-white/30 rounded-lg">
+                      <div className="text-2xl mb-1">🔥</div>
+                      <div className="text-xs font-medium text-gray-700">Stay Consistent</div>
+                    </div>
+                    <div className="text-center p-3 bg-white/30 rounded-lg">
+                      <div className="text-2xl mb-1">💪</div>
+                      <div className="text-xs font-medium text-gray-700">Push Limits</div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Quick Start Section */}
+            <Card className="p-8 text-center bg-gradient-to-r from-gray-50 to-gray-100 welcome-quick-start">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                What would you like to do today?
+              </h3>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/workout">
+                  <Button title="💪 Start Workout" variant="accent" size="large" />
+                </Link>
+                <Link to="/dashboard">
+                  <Button title="📊 View Dashboard" variant="outline" size="large" />
+                </Link>
+                <Link to="/goals">
+                  <Button title="🎯 Manage Goals" variant="ghost" size="large" />
+                </Link>
               </div>
             </Card>
           </div>
