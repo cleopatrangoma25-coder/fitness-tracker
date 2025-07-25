@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Modern fitness-inspired color palette
+        // Enhanced Modern fitness-inspired color palette
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',
@@ -22,8 +22,9 @@ module.exports = {
           700: '#0369a1',
           800: '#075985',
           900: '#0c4a6e',
+          950: '#082f49',
         },
-        // Energetic orange for calls-to-action
+        // Refined energetic orange for calls-to-action
         accent: {
           50: '#fff7ed',
           100: '#ffedd5',
@@ -35,8 +36,9 @@ module.exports = {
           700: '#c2410c',
           800: '#9a3412',
           900: '#7c2d12',
+          950: '#431407',
         },
-        // Dashboard - Purple theme for analytics and overview
+        // Enhanced Dashboard - Purple theme for analytics and overview
         dashboard: {
           50: '#faf5ff',
           100: '#f3e8ff',
@@ -48,8 +50,9 @@ module.exports = {
           700: '#7c3aed',
           800: '#6b21a8',
           900: '#581c87',
+          950: '#3b0764',
         },
-        // Workout - Red theme for energy and intensity
+        // Refined Workout - Red theme for energy and intensity
         workout: {
           50: '#fef2f2',
           100: '#fee2e2',
@@ -61,8 +64,9 @@ module.exports = {
           700: '#b91c1c',
           800: '#991b1b',
           900: '#7f1d1d',
+          950: '#450a0a',
         },
-        // Goals - Green theme for growth and achievement
+        // Enhanced Goals - Green theme for growth and achievement
         goals: {
           50: '#f0fdf4',
           100: '#dcfce7',
@@ -74,8 +78,9 @@ module.exports = {
           700: '#15803d',
           800: '#166534',
           900: '#14532d',
+          950: '#052e16',
         },
-        // Profile - Blue theme for trust and professionalism
+        // Enhanced Profile - Blue theme for trust and professionalism
         profile: {
           50: '#eff6ff',
           100: '#dbeafe',
@@ -87,8 +92,9 @@ module.exports = {
           700: '#1d4ed8',
           800: '#1e40af',
           900: '#1e3a8a',
+          950: '#172554',
         },
-        // Success - Green for positive actions
+        // Enhanced Success - Green for positive actions
         success: {
           50: '#f0fdf4',
           100: '#dcfce7',
@@ -100,8 +106,9 @@ module.exports = {
           700: '#15803d',
           800: '#166534',
           900: '#14532d',
+          950: '#052e16',
         },
-        // Warning - Yellow for attention
+        // Enhanced Warning - Yellow for attention
         warning: {
           50: '#fffbeb',
           100: '#fef3c7',
@@ -113,8 +120,9 @@ module.exports = {
           700: '#b45309',
           800: '#92400e',
           900: '#78350f',
+          950: '#451a03',
         },
-        // Error - Red for errors
+        // Enhanced Error - Red for errors
         error: {
           50: '#fef2f2',
           100: '#fee2e2',
@@ -126,8 +134,9 @@ module.exports = {
           700: '#b91c1c',
           800: '#991b1b',
           900: '#7f1d1d',
+          950: '#450a0a',
         },
-        // Neutral grays with better contrast
+        // Enhanced Neutral grays with better contrast
         neutral: {
           50: '#fafafa',
           100: '#f5f5f5',
@@ -139,8 +148,9 @@ module.exports = {
           700: '#404040',
           800: '#262626',
           900: '#171717',
+          950: '#0a0a0a',
         },
-        // Dark mode specific colors
+        // Enhanced Dark mode specific colors
         dark: {
           50: '#171717',
           100: '#262626',
@@ -152,34 +162,161 @@ module.exports = {
           700: '#e5e5e5',
           800: '#f5f5f5',
           900: '#fafafa',
+          950: '#ffffff',
+        },
+        // New: Sophisticated color palette for better blending
+        surface: {
+          50: '#fafafa',
+          100: '#f4f4f5',
+          200: '#e4e4e7',
+          300: '#d4d4d8',
+          400: '#a1a1aa',
+          500: '#71717a',
+          600: '#52525b',
+          700: '#3f3f46',
+          800: '#27272a',
+          900: '#18181b',
+          950: '#09090b',
+        },
+        // New: Accent colors for better harmony
+        teal: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+          950: '#042f2e',
+        },
+        indigo: {
+          50: '#eef2ff',
+          100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#6366f1',
+          600: '#4f46e5',
+          700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
+          950: '#1e1b4b',
         },
       },
-      // Custom gradients for modern look
+      // Enhanced Custom gradients for modern look
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-primary': 'linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-        'gradient-success': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-        // Themed gradients for different areas
-        'gradient-dashboard': 'linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)',
-        'gradient-workout': 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-        'gradient-goals': 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-        'gradient-profile': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-        // Fitness-themed background images
-        'hero-fitness': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'3\'/%3E%3Ccircle cx=\'80\' cy=\'80\' r=\'2\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'4\'/%3E%3Ccircle cx=\'10\' cy=\'90\' r=\'2\'/%3E%3Ccircle cx=\'90\' cy=\'10\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
-        'workout-pattern': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\'/%3E%3C/g%3E%3C/svg%3E")',
-        'goals-pattern': 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'3\'/%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'1.5\'/%3E%3C/g%3E%3C/svg%3E")',
-        'dashboard-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Crect x=\'10\' y=\'10\' width=\'20\' height=\'20\'/%3E%3Crect x=\'70\' y=\'70\' width=\'15\' height=\'15\'/%3E%3Crect x=\'40\' y=\'40\' width=\'25\' height=\'25\'/%3E%3C/g%3E%3C/svg%3E")',
-        'profile-pattern': 'url("data:image/svg+xml,%3Csvg width=\'90\' height=\'90\' viewBox=\'0 0 90 90\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpolygon points=\'45,10 80,80 10,80\'/%3E%3C/g%3E%3C/svg%3E")',
+        'gradient-primary': 'linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)',
+        'gradient-success': 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+        // Enhanced themed gradients for different areas
+        'gradient-dashboard': 'linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #6366f1 100%)',
+        'gradient-workout': 'linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
+        'gradient-goals': 'linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%)',
+        'gradient-profile': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)',
+        // New: Sophisticated gradients for better blending
+        'gradient-surface': 'linear-gradient(135deg, #fafafa 0%, #f4f4f5 50%, #e4e4e7 100%)',
+        'gradient-glass': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%)',
+        'gradient-dark-glass': 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.02) 100%)',
+        'gradient-hero': 'linear-gradient(135deg, #0ea5e9 0%, #3b82f6 25%, #6366f1 50%, #8b5cf6 75%, #a855f7 100%)',
+        'gradient-sunset': 'linear-gradient(135deg, #f97316 0%, #ea580c 25%, #dc2626 50%, #be185d 75%, #a855f7 100%)',
+        'gradient-ocean': 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 25%, #14b8a6 50%, #22c55e 75%, #84cc16 100%)',
+        // Enhanced Fitness-themed background images
+        'hero-fitness': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'3\'/%3E%3Ccircle cx=\'80\' cy=\'80\' r=\'2\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'4\'/%3E%3Ccircle cx=\'10\' cy=\'90\' r=\'2\'/%3E%3Ccircle cx=\'90\' cy=\'10\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+        'workout-pattern': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.02\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\'/%3E%3C/g%3E%3C/svg%3E")',
+        'goals-pattern': 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'3\'/%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'1.5\'/%3E%3C/g%3E%3C/svg%3E")',
+        'dashboard-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.02\'%3E%3Crect x=\'10\' y=\'10\' width=\'20\' height=\'20\'/%3E%3Crect x=\'70\' y=\'70\' width=\'15\' height=\'15\'/%3E%3Crect x=\'40\' y=\'40\' width=\'25\' height=\'25\'/%3E%3C/g%3E%3C/svg%3E")',
+        'profile-pattern': 'url("data:image/svg+xml,%3Csvg width=\'90\' height=\'90\' viewBox=\'0 0 90 90\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpolygon points=\'45,10 80,80 10,80\'/%3E%3C/g%3E%3C/svg%3E")',
       },
-      // Dark mode specific patterns
+      // Enhanced Dark mode specific patterns
       dark: {
-        'hero-fitness': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'3\'/%3E%3Ccircle cx=\'80\' cy=\'80\' r=\'2\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'4\'/%3E%3Ccircle cx=\'10\' cy=\'90\' r=\'2\'/%3E%3Ccircle cx=\'90\' cy=\'10\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
-        'workout-pattern': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\'/%3E%3C/g%3E%3C/svg%3E")',
-        'goals-pattern': 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.04\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'3\'/%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'1.5\'/%3E%3C/g%3E%3C/svg%3E")',
-        'dashboard-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Crect x=\'10\' y=\'10\' width=\'20\' height=\'20\'/%3E%3Crect x=\'70\' y=\'70\' width=\'15\' height=\'15\'/%3E%3Crect x=\'40\' y=\'40\' width=\'25\' height=\'25\'/%3E%3C/g%3E%3C/svg%3E")',
-        'profile-pattern': 'url("data:image/svg+xml,%3Csvg width=\'90\' height=\'90\' viewBox=\'0 0 90 90\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.04\'%3E%3Cpolygon points=\'45,10 80,80 10,80\'/%3E%3C/g%3E%3C/svg%3E")',
+        'hero-fitness': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'3\'/%3E%3Ccircle cx=\'80\' cy=\'80\' r=\'2\'/%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'4\'/%3E%3Ccircle cx=\'10\' cy=\'90\' r=\'2\'/%3E%3Ccircle cx=\'90\' cy=\'10\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+        'workout-pattern': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.02\'%3E%3Cpath d=\'M30 0l30 30-30 30L0 30z\'/%3E%3C/g%3E%3C/svg%3E")',
+        'goals-pattern': 'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3Ccircle cx=\'60\' cy=\'60\' r=\'3\'/%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'1.5\'/%3E%3C/g%3E%3C/svg%3E")',
+        'dashboard-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.02\'%3E%3Crect x=\'10\' y=\'10\' width=\'20\' height=\'20\'/%3E%3Crect x=\'70\' y=\'70\' width=\'15\' height=\'15\'/%3E%3Crect x=\'40\' y=\'40\' width=\'25\' height=\'25\'/%3E%3C/g%3E%3C/svg%3E")',
+        'profile-pattern': 'url("data:image/svg+xml,%3Csvg width=\'90\' height=\'90\' viewBox=\'0 0 90 90\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'0.03\'%3E%3Cpolygon points=\'45,10 80,80 10,80\'/%3E%3C/g%3E%3C/svg%3E")',
+      },
+      // Enhanced spacing system
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+      // Enhanced border radius system
+      borderRadius: {
+        '4xl': '2rem',
+        '5xl': '2.5rem',
+      },
+      // Enhanced shadow system
+      boxShadow: {
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        'strong': '0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 2px 10px -2px rgba(0, 0, 0, 0.05)',
+        'glow': '0 0 20px rgba(59, 130, 246, 0.15)',
+        'glow-accent': '0 0 20px rgba(249, 115, 22, 0.15)',
+        'glow-success': '0 0 20px rgba(34, 197, 94, 0.15)',
+        'glow-purple': '0 0 20px rgba(168, 85, 247, 0.15)',
+      },
+      // Enhanced animation system
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'fade-in-up': 'fadeInUp 0.6s ease-out',
+        'fade-in-down': 'fadeInDown 0.6s ease-out',
+        'slide-in-left': 'slideInLeft 0.6s ease-out',
+        'slide-in-right': 'slideInRight 0.6s ease-out',
+        'scale-in': 'scaleIn 0.3s ease-out',
+        'bounce-gentle': 'bounceGentle 2s infinite',
+        'pulse-gentle': 'pulseGentle 3s infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+      },
+      // Enhanced keyframes
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeInDown: {
+          '0%': { opacity: '0', transform: 'translateY(-20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        bounceGentle: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
+        pulseGentle: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
+        },
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+      // Enhanced backdrop blur
+      backdropBlur: {
+        'xs': '2px',
+        '4xl': '72px',
       },
     },
   },
