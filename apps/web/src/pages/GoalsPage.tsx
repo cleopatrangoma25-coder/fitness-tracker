@@ -250,11 +250,11 @@ export default function GoalsPage() {
         
         {/* Background Illustrations */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-6 right-6 w-36 h-36 bg-white/30 rounded-full"></div>
-          <div className="absolute bottom-6 left-6 w-28 h-28 bg-white/30 rounded-full"></div>
-          <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-white/30 rounded-full"></div>
-          <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-white/30 rounded-full"></div>
-          <div className="absolute bottom-1/3 right-1/3 w-16 h-16 bg-white/30 rounded-full"></div>
+          <div className="absolute top-6 right-6 w-36 h-36 bg-white/30 rounded-full floating floating-delay-1"></div>
+          <div className="absolute bottom-6 left-6 w-28 h-28 bg-white/30 rounded-full floating floating-delay-2"></div>
+          <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-white/30 rounded-full floating floating-delay-3"></div>
+          <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-white/30 rounded-full floating floating-delay-1"></div>
+          <div className="absolute bottom-1/3 right-1/3 w-16 h-16 bg-white/30 rounded-full floating floating-delay-2"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">

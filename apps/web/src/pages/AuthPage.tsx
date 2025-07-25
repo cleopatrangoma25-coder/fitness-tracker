@@ -23,11 +23,11 @@ export default function AuthPage() {
         
         {/* Background Illustrations */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-8 right-8 w-40 h-40 bg-white/30 rounded-full"></div>
-          <div className="absolute bottom-8 left-8 w-32 h-32 bg-white/30 rounded-full"></div>
-          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white/30 rounded-full"></div>
-          <div className="absolute top-1/4 right-1/4 w-28 h-28 bg-white/30 rounded-full"></div>
-          <div className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-white/30 rounded-full"></div>
+          <div className="absolute top-8 right-8 w-40 h-40 bg-white/30 rounded-full floating floating-delay-1"></div>
+          <div className="absolute bottom-8 left-8 w-32 h-32 bg-white/30 rounded-full floating floating-delay-2"></div>
+          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-white/30 rounded-full floating floating-delay-3"></div>
+          <div className="absolute top-1/4 right-1/4 w-28 h-28 bg-white/30 rounded-full floating floating-delay-1"></div>
+          <div className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-white/30 rounded-full floating floating-delay-2"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
