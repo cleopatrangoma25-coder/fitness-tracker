@@ -144,6 +144,8 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
     tags: [] as string[],
   });
 
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -172,6 +174,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
     setErrors([]);
     onSaveGoal(newGoal);
     setShowForm(false);
+    // Reset form data after successful save
     setFormData({
       type: 'weight',
       category: 'fitness',
@@ -215,6 +218,14 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
       tags: template.tags,
     });
     setShowForm(true);
+    
+    // Scroll to form after a short delay to ensure it's rendered
+    setTimeout(() => {
+      const formElement = document.querySelector('[data-testid="goal-form"]');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const getProgressPercentage = (goal: FitnessGoal) => {
@@ -413,9 +424,9 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
         />
       </div>
 
-      {/* Add Goal Form */}
+            {/* Add Goal Form */}
       {showForm && (
-        <Card variant="elevated" className="p-8">
+        <Card variant="elevated" className="p-8" data-testid="goal-form">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-xl font-bold text-neutral-900">🎯 Create New Goal</h3>
