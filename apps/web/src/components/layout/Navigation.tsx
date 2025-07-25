@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@fitness-tracker/store';
 import { AuthService } from '../../lib/auth';
-import { ThemeToggle } from '../ui/ThemeToggle';
+import { ThemeToggle } from './ThemeToggle';
 
 export const Navigation: React.FC = () => {
   const { user, logout } = useAuthStore();

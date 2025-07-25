@@ -1,8 +1,6 @@
 'use client';
 
 import { AuthDebugger } from '../components/auth/AuthDebugger'
-import { ShadcnExample } from '../components/examples/ShadcnExample'
-// import { TrpcExample } from '../components/examples/TrpcExample'
 
 export function DebugPage() {
   return (
@@ -16,14 +14,14 @@ export function DebugPage() {
         </div>
         
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Shadcn UI Components Demo</h2>
-          <ShadcnExample />
+          <h2 className="text-2xl font-semibold mb-4">Debug Information</h2>
+          <div className="p-4 bg-gray-100 rounded-lg">
+            <p className="text-gray-700">
+              This page is for debugging authentication and other features.
+              The example components have been removed as part of the cleanup.
+            </p>
+          </div>
         </div>
-        
-        {/* <div>
-          <h2 className="text-2xl font-semibold mb-4">tRPC Debug</h2>
-          <TrpcExample />
-        </div> */}
       </div>
     </div>
   )
