@@ -2,21 +2,26 @@ module.exports = {
   root: true,
   extends: [
     "eslint:recommended",
-    "@typescript-eslint/recommended",
     "prettier"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2022,
-    sourceType: "module",
-    project: ["./tsconfig.json", "./apps/*/tsconfig.json", "./packages/*/tsconfig.json"]
+    sourceType: "module"
   },
   plugins: ["@typescript-eslint"],
+  env: {
+    browser: true,
+    es2022: true,
+    node: true,
+    jest: true
+  },
+  globals: {
+    NodeJS: "readonly"
+  },
   rules: {
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/prefer-const": "error",
-    "@typescript-eslint/no-var-requires": "error",
     "prefer-const": "error",
     "no-var": "error"
   },

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Card, Button } from '@fitness-tracker/ui';
 import { useAuthStore } from '@fitness-tracker/store';
 import { WorkoutService } from '../lib/workout';
-import { OnboardingFlow } from '../components/onboarding/OnboardingFlow';
+import { OnboardingFlow } from '../components/stacks/__index';
 import {
   LineChart,
   Line,

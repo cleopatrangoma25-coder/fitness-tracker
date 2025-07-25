@@ -2,10 +2,12 @@
 
 import { Routes, Route } from 'react-router-dom';
 import { useAuthStore } from '@fitness-tracker/store';
-import { WorkoutLog } from '../components/workout/WorkoutLog';
-import { ActiveWorkout } from '../components/workout/ActiveWorkout';
-import { WorkoutHistory } from '../components/workout/WorkoutHistory';
-import { WorkoutDetail } from '../components/workout/WorkoutDetail';
+import { 
+  WorkoutLog,
+  ActiveWorkout,
+  WorkoutHistory,
+  WorkoutDetail 
+} from '../components/stacks/__index';
 import { FullPageLoading } from '@fitness-tracker/ui';
 
 export default function WorkoutPage() {

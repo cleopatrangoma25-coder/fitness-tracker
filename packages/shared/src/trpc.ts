@@ -1,5 +1,3 @@
-import { z } from 'zod'
-
 // Define the router type that can be shared between client and server
 export interface AppRouter {
   user: {

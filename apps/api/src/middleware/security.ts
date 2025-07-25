@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
-import cors from 'cors'
 
 // Rate limiting configuration
 export const createRateLimiter = (windowMs: number = 15 * 60 * 1000, max: number = 100) => {
@@ -103,7 +102,7 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction) =
 }
 
 // Error handling middleware
-export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction) => {
   console.error('Error:', err)
   
   // Don't expose internal errors in production

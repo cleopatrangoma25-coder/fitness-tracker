@@ -20,7 +20,7 @@ export default function ProfilePage() {
           <div 
             className="w-full h-full bg-cover bg-center"
             style={{
-              backgroundImage: 'url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&h=1080&fit=crop&q=80&auto=format&sat=15&contrast=8")'
+              backgroundImage: 'url("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=1080&fit=crop&q=80&auto=format&sat=15&contrast=8")'
             }}
           ></div>
         </div>
