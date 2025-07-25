@@ -273,10 +273,10 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
 }) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'text-green-600 bg-green-100';
-      case 'Intermediate': return 'text-yellow-600 bg-yellow-100';
-      case 'Advanced': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'Beginner': return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/20';
+      case 'Intermediate': return 'text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/20';
+      case 'Advanced': return 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/20';
+      default: return 'text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800';
     }
   };
 
@@ -292,9 +292,9 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
   return (
     <div className="space-y-8">
       {/* Hero Section */}
-      <div className="text-center bg-gradient-to-r from-blue-400/80 via-indigo-400/70 to-purple-400/80 rounded-2xl p-8 text-white relative overflow-hidden bg-hero-fitness bg-repeat">
+      <div className="text-center bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-2xl p-8 text-white relative overflow-hidden bg-hero-fitness bg-repeat shadow-2xl">
         {/* Background Image */}
-        <div className="absolute inset-0 opacity-35">
+        <div className="absolute inset-0 opacity-20">
           <div 
             className="w-full h-full bg-cover bg-center rounded-2xl"
             style={{
@@ -304,29 +304,29 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
         </div>
         
         {/* Background Illustration */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-4 right-4 w-32 h-32 bg-white/20 rounded-full"></div>
-          <div className="absolute bottom-4 left-4 w-24 h-24 bg-white/20 rounded-full"></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/20 rounded-full"></div>
-          <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-white/20 rounded-full"></div>
+        <div className="absolute inset-0 opacity-15">
+          <div className="absolute top-4 right-4 w-32 h-32 bg-white/30 rounded-full"></div>
+          <div className="absolute bottom-4 left-4 w-24 h-24 bg-white/30 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/30 rounded-full"></div>
+          <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-white/30 rounded-full"></div>
         </div>
         
         <div className="max-w-2xl mx-auto relative z-10">
-          <h1 className="text-4xl font-bold mb-4 animate-pulse drop-shadow-2xl">
+          <h1 className="text-4xl font-bold mb-4 animate-pulse drop-shadow-2xl text-white">
             🚀 Ready to Transform Your Fitness?
           </h1>
-          <p className="text-xl mb-6 opacity-90 drop-shadow-xl">
+          <p className="text-xl mb-6 text-white drop-shadow-xl font-medium">
             Choose your perfect workout template and start your fitness journey today!
           </p>
           <div className="flex justify-center space-x-4 text-sm">
-            <div className="bg-white/25 rounded-full px-4 py-2 border border-white/40 shadow-lg drop-shadow-md">
-              <span className="font-semibold">⚡ Quick Workouts</span>
+            <div className="bg-white/40 rounded-full px-4 py-2 border border-white/60 shadow-lg drop-shadow-md backdrop-blur-sm">
+              <span className="font-semibold text-white">⚡ Quick Workouts</span>
             </div>
-            <div className="bg-white/25 rounded-full px-4 py-2 border border-white/40 shadow-lg drop-shadow-md">
-              <span className="font-semibold">🏋️ Full Sessions</span>
+            <div className="bg-white/40 rounded-full px-4 py-2 border border-white/60 shadow-lg drop-shadow-md backdrop-blur-sm">
+              <span className="font-semibold text-white">🏋️ Full Sessions</span>
             </div>
-            <div className="bg-white/25 rounded-full px-4 py-2 border border-white/40 shadow-lg drop-shadow-md">
-              <span className="font-semibold">🎯 Goal-Focused</span>
+            <div className="bg-white/40 rounded-full px-4 py-2 border border-white/60 shadow-lg drop-shadow-md backdrop-blur-sm">
+              <span className="font-semibold text-white">🎯 Goal-Focused</span>
             </div>
           </div>
         </div>
@@ -340,12 +340,12 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
               <span className="text-2xl">⚡</span>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">Quick Workouts</h3>
-              <p className="text-gray-600">Perfect for busy schedules - 15-30 minutes</p>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-300">Quick Workouts</h3>
+              <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Perfect for busy schedules - 15-30 minutes</p>
             </div>
           </div>
           <div className="hidden md:block">
-            <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+            <div className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300">
               {WORKOUT_TEMPLATES.filter(t => t.estimatedDuration <= 30).length} Templates Available
             </div>
           </div>
@@ -359,8 +359,8 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
             return (
               <div
                 key={template.id}
-                className={`group relative bg-white border-2 border-gray-100 rounded-2xl p-6 hover:border-blue-300 hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 ${
-                  isPopular ? 'ring-2 ring-blue-200' : ''
+                className={`group relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-2xl p-6 hover:border-blue-300 dark:hover:border-blue-500 hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 ${
+                  isPopular ? 'ring-2 ring-blue-200 dark:ring-blue-500' : ''
                 }`}
                 onClick={() => onSelectTemplate(template)}
                 style={{
@@ -376,20 +376,20 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
                 )}
                 
                 <div className="flex justify-between items-start mb-4">
-                  <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {template.name}
                   </h4>
                   <div className="flex flex-col items-end">
-                    <span className="text-lg font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                    <span className="text-lg font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full transition-colors duration-300">
                       {template.estimatedDuration}min
                     </span>
-                    <span className="text-xs text-gray-500 mt-1">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-300">
                       {availableExercises.length} exercises
                     </span>
                   </div>
                 </div>
                 
-                <p className="text-gray-600 mb-4 leading-relaxed">{template.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed transition-colors duration-300">{template.description}</p>
                 
                 <div className="flex justify-between items-center mb-4">
                   <span className={`text-xs font-semibold px-3 py-1 rounded-full ${getDifficultyColor(template.difficulty)}`}>
@@ -397,18 +397,18 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
                   </span>
                   <div className="flex space-x-1">
                     {template.exercises.slice(0, 3).map((exercise, idx) => (
-                      <div key={idx} className="w-2 h-2 bg-blue-300 rounded-full"></div>
+                      <div key={idx} className="w-2 h-2 bg-blue-300 dark:bg-blue-400 rounded-full transition-colors duration-300"></div>
                     ))}
                     {template.exercises.length > 3 && (
-                      <span className="text-xs text-gray-400">+{template.exercises.length - 3}</span>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 transition-colors duration-300">+{template.exercises.length - 3}</span>
                     )}
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3">
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-3 transition-colors duration-300">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium text-gray-700">Ready to start?</span>
-                    <span className="text-blue-600 font-semibold group-hover:translate-x-1 transition-transform">
+                    <span className="font-medium text-gray-700 dark:text-gray-300 transition-colors duration-300">Ready to start?</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold group-hover:translate-x-1 transition-transform transition-colors duration-300">
                       Let's Go! →
                     </span>
                   </div>
@@ -427,12 +427,12 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
               <span className="text-2xl">🏋️</span>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">Standard Workouts</h3>
-              <p className="text-gray-600">Complete training sessions - 45-75 minutes</p>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-300">Standard Workouts</h3>
+              <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Complete training sessions - 45-75 minutes</p>
             </div>
           </div>
           <div className="hidden md:block">
-            <div className="bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
+            <div className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300">
               {WORKOUT_TEMPLATES.filter(t => t.estimatedDuration > 30).length} Templates Available
             </div>
           </div>
@@ -445,27 +445,27 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
             return (
               <div
                 key={template.id}
-                className="group relative bg-white border-2 border-gray-100 rounded-2xl p-6 hover:border-green-300 hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+                className="group relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-2xl p-6 hover:border-green-300 dark:hover:border-green-500 hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
                 onClick={() => onSelectTemplate(template)}
                 style={{
                   animationDelay: `${index * 100}ms`
                 }}
               >
                 <div className="flex justify-between items-start mb-4">
-                  <h4 className="font-bold text-lg text-gray-900 group-hover:text-green-600 transition-colors">
+                  <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                     {template.name}
                   </h4>
                   <div className="flex flex-col items-end">
-                    <span className="text-lg font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                    <span className="text-lg font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full transition-colors duration-300">
                       {template.estimatedDuration}min
                     </span>
-                    <span className="text-xs text-gray-500 mt-1">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-300">
                       {availableExercises.length} exercises
                     </span>
                   </div>
                 </div>
                 
-                <p className="text-gray-600 mb-4 leading-relaxed">{template.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed transition-colors duration-300">{template.description}</p>
                 
                 <div className="flex justify-between items-center mb-4">
                   <span className={`text-xs font-semibold px-3 py-1 rounded-full ${getDifficultyColor(template.difficulty)}`}>
@@ -473,18 +473,18 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
                   </span>
                   <div className="flex space-x-1">
                     {template.exercises.slice(0, 3).map((exercise, idx) => (
-                      <div key={idx} className="w-2 h-2 bg-green-300 rounded-full"></div>
+                      <div key={idx} className="w-2 h-2 bg-green-300 dark:bg-green-400 rounded-full transition-colors duration-300"></div>
                     ))}
                     {template.exercises.length > 3 && (
-                      <span className="text-xs text-gray-400">+{template.exercises.length - 3}</span>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 transition-colors duration-300">+{template.exercises.length - 3}</span>
                     )}
                   </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-3 transition-colors duration-300">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium text-gray-700">Ready for a challenge?</span>
-                    <span className="text-green-600 font-semibold group-hover:translate-x-1 transition-transform">
+                    <span className="font-medium text-gray-700 dark:text-gray-300 transition-colors duration-300">Ready for a challenge?</span>
+                    <span className="text-green-600 dark:text-green-400 font-semibold group-hover:translate-x-1 transition-transform transition-colors duration-300">
                       Let's Go! →
                     </span>
                   </div>
