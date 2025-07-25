@@ -92,7 +92,7 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
       <div className="flex items-center justify-center p-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading exercises...</p>
+          <p className="text-gray-600 dark:text-gray-300">Loading exercises...</p>
         </div>
       </div>
     );
@@ -105,7 +105,7 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">🏋️ Create Workout</h2>
-            <p className="text-gray-600 dark:text-gray-400">Set up your workout session</p>
+            <p className="text-gray-600 dark:text-gray-300">Set up your workout session</p>
           </div>
           <div className="text-3xl">💪</div>
         </div>
@@ -205,7 +205,7 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
                       <h4 className="font-medium text-gray-900 dark:text-white">
                         {exercise.name}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         {exercise.muscleGroup}
                       </p>
                     </div>

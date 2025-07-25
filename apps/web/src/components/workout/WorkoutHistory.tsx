@@ -86,7 +86,7 @@ export const WorkoutHistory: React.FC = () => {
             />
           </div>
           <div className="flex items-end">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {filteredWorkouts.length} workout{filteredWorkouts.length !== 1 ? 's' : ''} found
             </div>
           </div>
@@ -97,13 +97,13 @@ export const WorkoutHistory: React.FC = () => {
       <div className="space-y-4">
         {paginatedWorkouts.length === 0 ? (
           <Card className="p-8 text-center">
-            <div className="text-gray-500 mb-4">
+            <div className="text-gray-500 dark:text-gray-400 mb-4">
               <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No workouts found</h3>
-            <p className="text-gray-500">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No workouts found</h3>
+            <p className="text-gray-500 dark:text-gray-400">
               {searchTerm ? 'Try adjusting your search terms.' : 'Start your fitness journey by creating your first workout!'}
             </p>
           </Card>
@@ -121,28 +121,28 @@ export const WorkoutHistory: React.FC = () => {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">{workout.name}</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{workout.name}</h3>
                       {isCompleted && (
-                        <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                        <span className="px-2 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-full">
                           Completed
                         </span>
                       )}
                     </div>
-                    <p className="text-gray-600 text-sm mb-3">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
                       {new Date(workout.createdAt).toLocaleDateString()} • {workout.exercises.length} exercises
                     </p>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <div className="font-medium text-gray-900">{stats.totalSets}</div>
-                        <div className="text-gray-500">Total Sets</div>
+                        <div className="font-medium text-gray-900 dark:text-white">{stats.totalSets}</div>
+                        <div className="text-gray-500 dark:text-gray-400">Total Sets</div>
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900">{stats.completedSets}</div>
-                        <div className="text-gray-500">Completed</div>
+                        <div className="font-medium text-gray-900 dark:text-white">{stats.completedSets}</div>
+                        <div className="text-gray-500 dark:text-gray-400">Completed</div>
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900">{stats.totalReps}</div>
-                        <div className="text-gray-500">Total Reps</div>
+                        <div className="font-medium text-gray-900 dark:text-white">{stats.totalReps}</div>
+                        <div className="text-gray-500 dark:text-gray-400">Total Reps</div>
                       </div>
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export const WorkoutHistory: React.FC = () => {
                     <div className="text-2xl font-bold text-blue-600">
                       {formatDuration(workout.durationMinutes)}
                     </div>
-                    <div className="text-xs text-gray-500">Duration</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">Duration</div>
                   </div>
                 </div>
               </Card>
@@ -163,7 +163,7 @@ export const WorkoutHistory: React.FC = () => {
       {totalPages > 1 && (
         <Card className="p-4">
           <div className="flex justify-between items-center">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               Page {currentPage} of {totalPages}
             </div>
             <div className="flex gap-2">

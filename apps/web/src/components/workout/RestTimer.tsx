@@ -69,7 +69,7 @@ export const RestTimer: React.FC<RestTimerProps> = ({
         <div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Rest Time</h2>
           {exerciseName && (
-            <p className="text-gray-600">Just completed: {exerciseName}</p>
+            <p className="text-gray-600 dark:text-gray-300">Just completed: {exerciseName}</p>
           )}
           {nextExercise && (
             <p className="text-blue-600 font-medium">Next: {nextExercise}</p>

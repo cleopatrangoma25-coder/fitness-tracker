@@ -23,7 +23,7 @@ export const WorkoutDetail: React.FC = () => {
           />
         </div>
         <Card className="p-8 text-center">
-          <p className="text-gray-500">The workout you're looking for doesn't exist.</p>
+          <p className="text-gray-500 dark:text-gray-400">The workout you're looking for doesn't exist.</p>
         </Card>
       </div>
     );
@@ -81,19 +81,19 @@ export const WorkoutDetail: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600">{workout.exercises.length}</div>
-            <div className="text-sm text-gray-500">Exercises</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Exercises</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600">{stats.totalSets}</div>
-            <div className="text-sm text-gray-500">Total Sets</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Total Sets</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-purple-600">{stats.totalReps}</div>
-            <div className="text-sm text-gray-500">Total Reps</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Total Reps</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-orange-600">{formatDuration(workout.durationMinutes)}</div>
-            <div className="text-sm text-gray-500">Duration</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Duration</div>
           </div>
         </div>
       </Card>
@@ -103,10 +103,10 @@ export const WorkoutDetail: React.FC = () => {
         <h2 className="text-lg font-semibold mb-4">Progress Summary</h2>
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-gray-600">Completion Rate</span>
+            <span className="text-gray-600 dark:text-gray-300">Completion Rate</span>
             <span className="font-medium">{completionRate}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
             <div 
               className="bg-green-600 h-2 rounded-full transition-all duration-300"
               style={{ width: `${completionRate}%` }}
@@ -114,12 +114,12 @@ export const WorkoutDetail: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-gray-600">Completed Sets:</span>
+              <span className="text-gray-600 dark:text-gray-300">Completed Sets:</span>
               <span className="ml-2 font-medium text-green-600">{stats.completedSets}</span>
             </div>
             <div>
-              <span className="text-gray-600">Remaining Sets:</span>
-              <span className="ml-2 font-medium text-gray-600">{stats.totalSets - stats.completedSets}</span>
+              <span className="text-gray-600 dark:text-gray-300">Remaining Sets:</span>
+              <span className="ml-2 font-medium text-gray-600 dark:text-gray-300">{stats.totalSets - stats.completedSets}</span>
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ export const WorkoutDetail: React.FC = () => {
 
       {/* Exercise Details */}
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-900">Exercises</h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Exercises</h2>
         {workout.exercises.map((exercise, exerciseIndex) => {
           const exerciseStats = {
             totalSets: exercise.sets.length,
@@ -140,17 +140,17 @@ export const WorkoutDetail: React.FC = () => {
             <Card key={exerciseIndex} className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{exercise.name}</h3>
-                  <p className="text-sm text-gray-600">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{exercise.name}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     {exerciseStats.totalSets} sets • {exerciseStats.totalReps} reps
                     {exerciseStats.totalWeight > 0 && ` • ${exerciseStats.totalWeight}kg total weight`}
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-gray-600 dark:text-gray-300">
                     {exerciseStats.completedSets}/{exerciseStats.totalSets} completed
                   </div>
-                  <div className="w-16 bg-gray-200 rounded-full h-1 mt-1">
+                  <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-1 mt-1">
                     <div 
                       className="bg-blue-600 h-1 rounded-full"
                       style={{ width: `${(exerciseStats.completedSets / exerciseStats.totalSets) * 100}%` }}
@@ -164,12 +164,12 @@ export const WorkoutDetail: React.FC = () => {
                   <div
                     key={setIndex}
                     className={`flex justify-between items-center p-3 rounded-lg border ${
-                      set.completed ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
+                      set.completed ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
                     }`}
                   >
                     <div className="flex items-center gap-4">
-                      <span className="font-medium text-gray-900">Set {setIndex + 1}</span>
-                      <div className="text-sm text-gray-600">
+                      <span className="font-medium text-gray-900 dark:text-white">Set {setIndex + 1}</span>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">
                         {set.reps} reps
                         {set.weight && ` • ${set.weight}kg`}
                       </div>
@@ -183,7 +183,7 @@ export const WorkoutDetail: React.FC = () => {
                           <span className="text-sm font-medium">Completed</span>
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-500">Not completed</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Not completed</span>
                       )}
                     </div>
                   </div>
@@ -196,23 +196,23 @@ export const WorkoutDetail: React.FC = () => {
 
       {/* Workout Metadata */}
       <Card className="p-6">
-        <h2 className="text-lg font-semibold mb-4">Workout Information</h2>
+        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Workout Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-gray-600">Created:</span>
-            <span className="ml-2">{new Date(workout.createdAt).toLocaleString()}</span>
+            <span className="text-gray-600 dark:text-gray-300">Created:</span>
+            <span className="ml-2 text-gray-900 dark:text-white">{new Date(workout.createdAt).toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-gray-600">Last Updated:</span>
-            <span className="ml-2">{new Date(workout.updatedAt).toLocaleString()}</span>
+            <span className="text-gray-600 dark:text-gray-300">Last Updated:</span>
+            <span className="ml-2 text-gray-900 dark:text-white">{new Date(workout.updatedAt).toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-gray-600">Date:</span>
-            <span className="ml-2">{new Date(workout.date).toLocaleDateString()}</span>
+            <span className="text-gray-600 dark:text-gray-300">Date:</span>
+            <span className="ml-2 text-gray-900 dark:text-white">{new Date(workout.date).toLocaleDateString()}</span>
           </div>
           <div>
-            <span className="text-gray-600">Duration:</span>
-            <span className="ml-2">{formatDuration(workout.durationMinutes)}</span>
+            <span className="text-gray-600 dark:text-gray-300">Duration:</span>
+            <span className="ml-2 text-gray-900 dark:text-white">{formatDuration(workout.durationMinutes)}</span>
           </div>
         </div>
       </Card>

@@ -22,7 +22,7 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
             )}
           />
           {text && (
-            <p className="text-gray-600 mt-4 text-center">
+            <p className="text-gray-600 dark:text-gray-300 mt-4 text-center">
               {text}
             </p>
           )}

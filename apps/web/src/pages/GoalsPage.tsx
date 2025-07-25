@@ -213,7 +213,7 @@ export default function GoalsPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Authentication Required</h2>
-          <p className="text-gray-600">Please log in to manage your fitness goals and plans.</p>
+          <p className="text-gray-600 dark:text-gray-300">Please log in to manage your fitness goals and plans.</p>
         </div>
       </div>
     );
@@ -224,7 +224,7 @@ export default function GoalsPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading your goals and plans...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading your goals and plans...</p>
         </div>
       </div>
     );

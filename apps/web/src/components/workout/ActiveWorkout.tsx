@@ -516,12 +516,12 @@ export const ActiveWorkout: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold text-gray-900">Select Your Exercises</h3>
-                      <p className="text-gray-600">Build your perfect workout routine</p>
+                      <p className="text-gray-600 dark:text-gray-300">Build your perfect workout routine</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-blue-600">{selectedExercises.length}</div>
-                    <div className="text-sm text-gray-600">Selected</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Selected</div>
                   </div>
                 </div>
                 
@@ -534,9 +534,9 @@ export const ActiveWorkout: React.FC = () => {
                 </div>
                 
                 <div className="flex items-center justify-between text-sm relative z-10">
-                  <span className="text-gray-600">{selectedExercises.length} selected</span>
+                  <span className="text-gray-600 dark:text-gray-300">{selectedExercises.length} selected</span>
                   <span className="text-blue-600 font-medium">Recommended: 5-8 exercises</span>
-                  <span className="text-gray-600">{filteredExercises.length} available</span>
+                                      <span className="text-gray-600 dark:text-gray-300">{filteredExercises.length} available</span>
                 </div>
               </div>
               
