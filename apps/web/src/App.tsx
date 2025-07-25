@@ -15,6 +15,7 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
 const WorkoutPage = lazy(() => import('./pages/WorkoutPage'))
 const GoalsPage = lazy(() => import('./pages/GoalsPage'))
+const HealthPage = lazy(() => import('./pages/HealthPage'))
 const DebugPage = lazy(() => import('./pages/DebugPage').then(module => ({ default: module.DebugPage })))
 
 function App() {
@@ -72,6 +73,14 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <GoalsPage />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/health" 
+                    element={
+                      <ProtectedRoute>
+                        <HealthPage />
                       </ProtectedRoute>
                     } 
                   />

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button, Input } from '@fitness-tracker/ui';
 import type { Exercise } from '@fitness-tracker/shared';
 import { WorkoutService } from '../../lib/workout';
+import { ExerciseInstructions } from './ExerciseInstructions';
 
 interface WorkoutCreationProps {
-  onWorkoutCreated: (workoutName: string, exercises: Exercise[]) => void;
+  onWorkoutCreated: (workoutName: string, exercises: Exercise[], timerSettings: { exerciseDuration: number; restDuration: number }) => void;
   onCancel: () => void;
 }
 
@@ -17,6 +18,10 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
   const [availableExercises, setAvailableExercises] = useState<Exercise[]>([]);
   const [isLoadingExercises, setIsLoadingExercises] = useState(true);
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<string>('ALL');
+  const [showInstructions, setShowInstructions] = useState(false);
+  const [selectedExerciseForInstructions, setSelectedExerciseForInstructions] = useState<Exercise | null>(null);
+  const [exerciseTimerDuration, setExerciseTimerDuration] = useState(120); // 2 minutes default
+  const [restTimerDuration, setRestTimerDuration] = useState(90); // 90 seconds default
 
   // Load exercises from database
   useEffect(() => {
@@ -77,8 +82,17 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
 
   const handleStartWorkout = () => {
     if (workoutName.trim() && selectedExercises.length > 0) {
-      onWorkoutCreated(workoutName, selectedExercises);
+      onWorkoutCreated(workoutName, selectedExercises, {
+        exerciseDuration: exerciseTimerDuration,
+        restDuration: restTimerDuration
+      });
     }
+  };
+
+  const handleShowInstructions = (exercise: Exercise, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent exercise selection
+    setSelectedExerciseForInstructions(exercise);
+    setShowInstructions(true);
   };
 
   const filteredExercises = selectedMuscleGroup === 'ALL' 
@@ -123,6 +137,55 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
             onChange={(e) => setWorkoutName(e.target.value)}
             className="w-full"
           />
+        </div>
+
+        {/* Timer Settings */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">⏱️ Timer Settings</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="exercise-timer" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Exercise Timer Duration
+              </label>
+              <div className="flex items-center space-x-2">
+                <input
+                  id="exercise-timer"
+                  type="number"
+                  min="30"
+                  max="600"
+                  step="30"
+                  value={exerciseTimerDuration}
+                  onChange={(e) => setExerciseTimerDuration(parseInt(e.target.value) || 120)}
+                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+                <span className="text-sm text-gray-600 dark:text-gray-300">seconds</span>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Recommended time per exercise ({Math.floor(exerciseTimerDuration / 60)}m {exerciseTimerDuration % 60}s)
+              </p>
+            </div>
+            <div>
+              <label htmlFor="rest-timer" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Rest Timer Duration
+              </label>
+              <div className="flex items-center space-x-2">
+                <input
+                  id="rest-timer"
+                  type="number"
+                  min="30"
+                  max="300"
+                  step="15"
+                  value={restTimerDuration}
+                  onChange={(e) => setRestTimerDuration(parseInt(e.target.value) || 90)}
+                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+                <span className="text-sm text-gray-600 dark:text-gray-300">seconds</span>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Rest time between sets ({Math.floor(restTimerDuration / 60)}m {restTimerDuration % 60}s)
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Quick Templates */}
@@ -201,22 +264,37 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
                   onClick={() => handleExerciseToggle(exercise)}
                 >
                   <div className="flex items-center justify-between">
-                    <div>
+                    <div className="flex-1">
                       <h4 className="font-medium text-gray-900 dark:text-white">
                         {exercise.name}
                       </h4>
                       <p className="text-sm text-gray-600 dark:text-gray-300">
                         {exercise.muscleGroup}
                       </p>
-                    </div>
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                      isSelected
-                        ? 'border-red-500 bg-red-500'
-                        : 'border-gray-300 dark:border-gray-500'
-                    }`}>
-                      {isSelected && (
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      {exercise.instructions && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-1">
+                          {exercise.instructions}
+                        </p>
                       )}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => handleShowInstructions(exercise, e)}
+                        className="text-xs px-2 py-1"
+                      >
+                        📖
+                      </Button>
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        isSelected
+                          ? 'border-red-500 bg-red-500'
+                          : 'border-gray-300 dark:border-gray-500'
+                      }`}>
+                        {isSelected && (
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -243,6 +321,21 @@ export const WorkoutCreation: React.FC<WorkoutCreationProps> = ({
           </Button>
         </div>
       </Card>
+
+      {/* Exercise Instructions Modal */}
+      {showInstructions && selectedExerciseForInstructions && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <ExerciseInstructions
+              exerciseName={selectedExerciseForInstructions.name}
+              onClose={() => {
+                setShowInstructions(false);
+                setSelectedExerciseForInstructions(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }; 

@@ -6,6 +6,8 @@ import { WorkoutService } from '../../lib/workout';
 import { WorkoutTemplates, type WorkoutTemplate } from './WorkoutTemplates';
 import { RestTimer } from './RestTimer';
 import { ExerciseInstructions } from './ExerciseInstructions';
+import { ExerciseTimer } from './ExerciseTimer';
+import { useNotifications } from '../../hooks/useNotifications';
 import type { Workout, Exercise } from '@fitness-tracker/shared';
 
 
@@ -247,7 +249,7 @@ export const ActiveWorkout: React.FC = () => {
     loadExercises();
   }, []);
 
-  const handleStartWorkout = async () => {
+  const handleStartWorkout = async (timerSettings?: { exerciseDuration: number; restDuration: number }) => {
     if (!user) {
       alert('Please log in to start a workout');
       navigate('/auth');
@@ -278,6 +280,12 @@ export const ActiveWorkout: React.FC = () => {
       };
 
       const newWorkout = await WorkoutService.createWorkout(workoutData);
+      
+      // Store timer settings in the workout store or pass them to the workout tracker
+      if (timerSettings) {
+        // You could store these in the workout object or in a separate state
+        console.log('Timer settings:', timerSettings);
+      }
       
       addWorkout(newWorkout);
       setCurrentWorkout(newWorkout);
@@ -750,11 +758,11 @@ export const ActiveWorkout: React.FC = () => {
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-6">
               <Button
                 variant="success"
-                onClick={handleStartWorkout}
+                onClick={() => handleStartWorkout()}
                 disabled={isCreating || !workoutName.trim() || selectedExercises.length === 0}
                 className="flex-1 py-4 text-lg font-bold">
-          isCreating ? '⏳ Starting Workout...' : '🚀 Start Workout'
-        </Button>
+                {isCreating ? '⏳ Starting Workout...' : '🚀 Start Workout'}
+              </Button>
               {selectedExercises.length === 0 && (
                 <div className="text-center text-neutral-500 text-sm">
                   Please select at least one exercise to start your workout
@@ -776,6 +784,7 @@ interface WorkoutTrackerProps {
 const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
   const navigate = useNavigate();
   const { updateWorkout } = useWorkoutStore();
+  const { sendWorkoutCompletionNotification } = useNotifications();
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [currentSetIndex, setCurrentSetIndex] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -783,6 +792,9 @@ const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
   const [showRestTimer, setShowRestTimer] = useState(false);
   const [restDuration, setRestDuration] = useState(90); // 90 seconds default
   const [showInstructions, setShowInstructions] = useState(false);
+  const [showExerciseTimer, setShowExerciseTimer] = useState(false);
+  const [exerciseTimerPaused, setExerciseTimerPaused] = useState(false);
+  const [exerciseDuration, setExerciseDuration] = useState(120); // 2 minutes default
 
   const handleSetComplete = async (exerciseIndex: number, setIndex: number) => {
     if (!workout.exercises[exerciseIndex] || !workout.exercises[exerciseIndex].sets[setIndex]) {
@@ -811,6 +823,7 @@ const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
           setShowRestTimer(true);
         } else {
           // Workout completed
+          sendWorkoutCompletionNotification(workout.name);
           alert('Congratulations! Workout completed!');
           navigate('/workout');
         }
@@ -853,6 +866,22 @@ const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
     }
   };
 
+  const handleExerciseTimerComplete = () => {
+    setShowExerciseTimer(false);
+    setExerciseTimerPaused(false);
+    // Continue with the workout - user can complete sets manually
+  };
+
+  const handleExerciseTimerSkip = () => {
+    setShowExerciseTimer(false);
+    setExerciseTimerPaused(false);
+    // Continue with the workout
+  };
+
+  const handleExerciseTimerPause = () => {
+    setExerciseTimerPaused(!exerciseTimerPaused);
+  };
+
   const handleFinishWorkout = () => {
     navigate('/workout');
   };
@@ -876,6 +905,22 @@ const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
       <ExerciseInstructions
         exerciseName={currentExercise.name}
         onClose={() => setShowInstructions(false)}
+      />
+    );
+  }
+
+  // Show exercise timer if active
+  if (showExerciseTimer) {
+    return (
+      <ExerciseTimer
+        exerciseName={currentExercise.name}
+        recommendedDuration={exerciseDuration}
+        onComplete={handleExerciseTimerComplete}
+        onSkip={handleExerciseTimerSkip}
+        onPause={handleExerciseTimerPause}
+        isPaused={exerciseTimerPaused}
+        currentSet={currentSetIndex + 1}
+        totalSets={currentExercise.sets.length}
       />
     );
   }
@@ -1023,11 +1068,19 @@ const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
                 <div className="text-2xl">💪</div>
                 <h2 className="text-2xl font-bold text-neutral-900">{currentExercise.name}</h2>
               </div>
-              <Button
-                title="📖 View Instructions"
-                variant="outline"
-                onClick={() => setShowInstructions(true)}
-              />
+              <div className="flex items-center space-x-3">
+                <Button
+                  title="⏱️ Start Exercise Timer"
+                  variant="outline"
+                  onClick={() => setShowExerciseTimer(true)}
+                  className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
+                />
+                <Button
+                  title="📖 View Instructions"
+                  variant="outline"
+                  onClick={() => setShowInstructions(true)}
+                />
+              </div>
             </div>
             
             <div className="space-y-4">

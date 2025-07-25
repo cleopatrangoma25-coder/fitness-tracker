@@ -146,8 +146,11 @@ export default function HomePage() {
               <Button variant="glass" size="lg" asChild>
                 <Link to="/workout">Start Workout</Link>
               </Button>
-              <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/20">
-                View Progress
+              <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/20" asChild>
+                <Link to="/health">Health Tracking</Link>
+              </Button>
+              <Button variant="outline" size="lg" className="text-white border-white hover:bg-white/20" asChild>
+                <Link to="/dashboard">View Progress</Link>
               </Button>
             </div>
           </div>
@@ -188,7 +191,7 @@ export default function HomePage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <Card variant="glassmorphism" interactive animated className="p-6 text-center">
             <div className="text-4xl mb-4">🏋️‍♂️</div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Start Workout</h3>
@@ -204,6 +207,15 @@ export default function HomePage() {
             <p className="text-gray-600 dark:text-gray-400 mb-4">Define and track your fitness objectives</p>
             <Button variant="success" asChild>
               <Link to="/goals">Create Goals</Link>
+            </Button>
+          </Card>
+          
+          <Card variant="glassmorphism" interactive animated className="p-6 text-center">
+            <div className="text-4xl mb-4">🏥</div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Health Tracking</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">Monitor your health metrics and wellness</p>
+            <Button variant="danger" asChild>
+              <Link to="/health">Track Health</Link>
             </Button>
           </Card>
           

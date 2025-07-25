@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Button } from '@fitness-tracker/ui';
 import { useWorkoutStore } from '@fitness-tracker/store';
 import type { Workout } from '@fitness-tracker/shared';
+import { ExerciseInstructions } from './ExerciseInstructions';
 
 export const WorkoutDetail: React.FC = () => {
   const { workoutId } = useParams<{ workoutId: string }>();
   const navigate = useNavigate();
   const { workouts } = useWorkoutStore();
+  const [showInstructions, setShowInstructions] = useState(false);
+  const [selectedExerciseForInstructions, setSelectedExerciseForInstructions] = useState<string>('');
 
   const workout = workouts.find(w => w.id === workoutId);
 
@@ -53,6 +56,11 @@ export const WorkoutDetail: React.FC = () => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     return `${hours} hour${hours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+  };
+
+  const handleShowInstructions = (exerciseName: string) => {
+    setSelectedExerciseForInstructions(exerciseName);
+    setShowInstructions(true);
   };
 
   const stats = getWorkoutStats(workout);
@@ -146,15 +154,23 @@ export const WorkoutDetail: React.FC = () => {
                     {exerciseStats.totalWeight > 0 && ` • ${exerciseStats.totalWeight}kg total weight`}
                   </p>
                 </div>
-                <div className="text-right">
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
-                    {exerciseStats.completedSets}/{exerciseStats.totalSets} completed
-                  </div>
-                  <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-1 mt-1">
-                    <div 
-                      className="bg-blue-600 h-1 rounded-full"
-                      style={{ width: `${(exerciseStats.completedSets / exerciseStats.totalSets) * 100}%` }}
-                    ></div>
+                <div className="flex items-center space-x-3">
+                  <Button
+                    title="📖 View Instructions"
+                    variant="outline"
+                    size="small"
+                    onClick={() => handleShowInstructions(exercise.name)}
+                  />
+                  <div className="text-right">
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                      {exerciseStats.completedSets}/{exerciseStats.totalSets} completed
+                    </div>
+                    <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-1 mt-1">
+                      <div 
+                        className="bg-blue-600 h-1 rounded-full"
+                        style={{ width: `${(exerciseStats.completedSets / exerciseStats.totalSets) * 100}%` }}
+                      ></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -216,6 +232,21 @@ export const WorkoutDetail: React.FC = () => {
           </div>
         </div>
       </Card>
+
+      {/* Exercise Instructions Modal */}
+      {showInstructions && selectedExerciseForInstructions && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <ExerciseInstructions
+              exerciseName={selectedExerciseForInstructions}
+              onClose={() => {
+                setShowInstructions(false);
+                setSelectedExerciseForInstructions('');
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }; 

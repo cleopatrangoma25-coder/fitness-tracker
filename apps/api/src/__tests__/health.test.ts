@@ -1,12 +1,21 @@
 import request from 'supertest'
 import { app } from '../index'
-import { auth } from 'firebase-admin'
+import admin from 'firebase-admin'
 
 // Mock Firebase Admin
 jest.mock('firebase-admin', () => ({
-  auth: jest.fn(() => ({
-    listUsers: jest.fn()
-  }))
+  __esModule: true,
+  default: {
+    initializeApp: jest.fn(),
+    apps: [],
+    auth: jest.fn(() => ({
+      listUsers: jest.fn(),
+      verifyIdToken: jest.fn()
+    })),
+    firestore: jest.fn(() => ({
+      collection: jest.fn()
+    }))
+  }
 }))
 
 describe('Health Check Endpoints', () => {
@@ -27,7 +36,7 @@ describe('Health Check Endpoints', () => {
   describe('GET /health/detailed', () => {
     it('should return detailed health status with all checks', async () => {
       // Mock successful Firebase connection
-      const mockListUsers = auth().listUsers as jest.MockedFunction<any>
+      const mockListUsers = admin.auth().listUsers as jest.MockedFunction<any>
       mockListUsers.mockResolvedValueOnce({ users: [] })
 
       const response = await request(app)
@@ -44,7 +53,7 @@ describe('Health Check Endpoints', () => {
 
     it('should return degraded status when Firebase is unhealthy', async () => {
       // Mock failed Firebase connection
-      const mockListUsers = auth().listUsers as jest.MockedFunction<any>
+      const mockListUsers = admin.auth().listUsers as jest.MockedFunction<any>
       mockListUsers.mockRejectedValueOnce(new Error('Firebase connection failed'))
 
       const response = await request(app)

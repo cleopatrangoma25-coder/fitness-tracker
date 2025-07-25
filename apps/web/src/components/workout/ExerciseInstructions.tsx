@@ -129,6 +129,179 @@ const EXERCISE_INSTRUCTIONS: { [key: string]: ExerciseInstruction } = {
     muscles: ['Biceps', 'Forearms'],
     equipment: ['Dumbbells'],
     difficulty: 'Beginner'
+  },
+  'Dumbbell Flyes': {
+    name: 'Dumbbell Flyes',
+    steps: [
+      'Lie on bench with dumbbells held above chest',
+      'Lower dumbbells in wide arc motion',
+      'Keep slight bend in elbows throughout',
+      'Return to starting position with control',
+      'Focus on chest muscle contraction'
+    ],
+    tips: [
+      'Don\'t let elbows go too low',
+      'Keep core engaged for stability',
+      'Control the movement in both directions',
+      'Feel the stretch in your chest'
+    ],
+    muscles: ['Chest', 'Shoulders'],
+    equipment: ['Dumbbells', 'Bench'],
+    difficulty: 'Intermediate'
+  },
+  'Bent-over Rows': {
+    name: 'Bent-over Rows',
+    steps: [
+      'Stand with feet shoulder-width apart',
+      'Bend at waist, keeping back straight',
+      'Hold barbell with overhand grip',
+      'Pull bar to lower chest area',
+      'Lower bar back down with control'
+    ],
+    tips: [
+      'Keep your back straight throughout',
+      'Squeeze shoulder blades together',
+      'Don\'t use momentum to swing the weight',
+      'Keep the bar close to your body'
+    ],
+    muscles: ['Back', 'Biceps', 'Shoulders'],
+    equipment: ['Barbell'],
+    difficulty: 'Intermediate'
+  },
+  'Overhead Press': {
+    name: 'Overhead Press',
+    steps: [
+      'Stand with barbell at shoulder level',
+      'Grip bar slightly wider than shoulders',
+      'Press bar overhead until arms extended',
+      'Lower bar back to shoulder level',
+      'Keep core engaged for stability'
+    ],
+    tips: [
+      'Don\'t lean back excessively',
+      'Keep your core tight',
+      'Press straight up, not forward',
+      'Control the descent'
+    ],
+    muscles: ['Shoulders', 'Triceps', 'Core'],
+    equipment: ['Barbell'],
+    difficulty: 'Intermediate'
+  },
+  'Lateral Raises': {
+    name: 'Lateral Raises',
+    steps: [
+      'Stand with dumbbells at your sides',
+      'Raise dumbbells out to sides',
+      'Keep slight bend in elbows',
+      'Raise to shoulder level',
+      'Lower back down with control'
+    ],
+    tips: [
+      'Don\'t swing the weights',
+      'Keep your core engaged',
+      'Focus on shoulder muscle contraction',
+      'Control the movement in both directions'
+    ],
+    muscles: ['Shoulders'],
+    equipment: ['Dumbbells'],
+    difficulty: 'Beginner'
+  },
+  'Lunges': {
+    name: 'Lunges',
+    steps: [
+      'Stand with feet hip-width apart',
+      'Step forward with one leg',
+      'Lower until both knees bent at 90 degrees',
+      'Push back to starting position',
+      'Alternate legs for each rep'
+    ],
+    tips: [
+      'Keep your torso upright',
+      'Don\'t let front knee go past toes',
+      'Keep back knee close to ground',
+      'Focus on balance and control'
+    ],
+    muscles: ['Quadriceps', 'Glutes', 'Hamstrings', 'Core'],
+    equipment: [],
+    difficulty: 'Beginner'
+  },
+  'Plank': {
+    name: 'Plank',
+    steps: [
+      'Start in push-up position',
+      'Lower onto forearms',
+      'Keep body in straight line',
+      'Engage core muscles',
+      'Hold position for desired time'
+    ],
+    tips: [
+      'Don\'t let hips sag or rise',
+      'Keep your neck neutral',
+      'Breathe steadily throughout',
+      'Focus on core engagement'
+    ],
+    muscles: ['Core', 'Shoulders', 'Glutes'],
+    equipment: [],
+    difficulty: 'Beginner'
+  },
+  'Crunches': {
+    name: 'Crunches',
+    steps: [
+      'Lie on back with knees bent',
+      'Place hands behind head',
+      'Lift shoulders off ground',
+      'Engage abdominal muscles',
+      'Lower back down with control'
+    ],
+    tips: [
+      'Don\'t pull on your neck',
+      'Focus on abdominal contraction',
+      'Keep lower back on ground',
+      'Breathe steadily throughout'
+    ],
+    muscles: ['Core', 'Abdominals'],
+    equipment: [],
+    difficulty: 'Beginner'
+  },
+  'Burpees': {
+    name: 'Burpees',
+    steps: [
+      'Start in standing position',
+      'Squat down and place hands on ground',
+      'Jump feet back to plank position',
+      'Perform a push-up (optional)',
+      'Jump feet back to squat position',
+      'Jump up with arms overhead'
+    ],
+    tips: [
+      'Maintain good form throughout',
+      'Land softly from jumps',
+      'Keep core engaged',
+      'Start slow and build speed'
+    ],
+    muscles: ['Full Body', 'Cardio'],
+    equipment: [],
+    difficulty: 'Intermediate'
+  },
+  'Jump Rope': {
+    name: 'Jump Rope',
+    steps: [
+      'Hold rope handles at hip level',
+      'Stand with feet shoulder-width apart',
+      'Swing rope over head',
+      'Jump as rope approaches feet',
+      'Land softly on balls of feet',
+      'Maintain consistent rhythm'
+    ],
+    tips: [
+      'Keep elbows close to body',
+      'Jump just high enough to clear rope',
+      'Land softly to reduce impact',
+      'Start slow and build speed'
+    ],
+    muscles: ['Cardio', 'Calves', 'Shoulders'],
+    equipment: ['Jump rope'],
+    difficulty: 'Beginner'
   }
 };
 

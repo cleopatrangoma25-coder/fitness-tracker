@@ -155,11 +155,11 @@ export default function DashboardPage() {
         onSkip={handleOnboardingSkip}
       />
       {/* Hero Section */}
-      <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat">
+      <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat rounded-3xl mx-4 mt-4 shadow-2xl">
         {/* Hero Background Image */}
-        <div className="absolute inset-0 opacity-60">
+        <div className="absolute inset-0 opacity-60 rounded-3xl">
           <div 
-            className="w-full h-full bg-cover bg-center"
+            className="w-full h-full bg-cover bg-center rounded-3xl"
             style={{
               backgroundImage: 'url("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=1080&fit=crop&q=80&auto=format&sat=15&contrast=8")'
             }}
@@ -167,7 +167,7 @@ export default function DashboardPage() {
         </div>
         
         {/* Background Illustrations */}
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-10 rounded-3xl">
           <div className="absolute top-6 right-6 w-36 h-36 bg-white/30 rounded-full floating floating-delay-1"></div>
           <div className="absolute bottom-6 left-6 w-28 h-28 bg-white/30 rounded-full floating floating-delay-2"></div>
           <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-white/30 rounded-full floating floating-delay-3"></div>
@@ -215,6 +215,9 @@ export default function DashboardPage() {
               <Link to="/goals">
                 <Button title="🎯 View Goals" variant="outline" className="text-white border-white/40 hover:bg-white/10" />
               </Link>
+              <Link to="/health">
+                <Button title="🏥 Health Tracking" variant="outline" className="text-white border-white/40 hover:bg-white/10" />
+              </Link>
             </div>
           </div>
         </div>
@@ -225,7 +228,7 @@ export default function DashboardPage() {
         {/* Performance Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Current Streak */}
-          <Card variant="accent" className="p-6 relative overflow-hidden">
+          <Card variant="accent" className="p-6 relative overflow-hidden rounded-2xl">
             <div className="absolute top-0 right-0 w-20 h-20 bg-accent-200 rounded-full -translate-y-10 translate-x-10 opacity-20"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
@@ -243,7 +246,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Longest Streak */}
-          <Card variant="success" className="p-6 relative overflow-hidden">
+          <Card variant="success" className="p-6 relative overflow-hidden rounded-2xl">
             <div className="absolute top-0 right-0 w-20 h-20 bg-success-200 rounded-full -translate-y-10 translate-x-10 opacity-20"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
@@ -261,7 +264,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Average Workouts */}
-          <Card variant="primary" className="p-6 relative overflow-hidden">
+          <Card variant="primary" className="p-6 relative overflow-hidden rounded-2xl">
             <div className="absolute top-0 right-0 w-20 h-20 bg-primary-200 rounded-full -translate-y-10 translate-x-10 opacity-20"></div>
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
@@ -277,10 +280,72 @@ export default function DashboardPage() {
           </Card>
         </div>
 
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <Card variant="elevated" className="p-6 rounded-2xl shadow-lg">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-bold text-neutral-900">⚡ Quick Actions</h2>
+                <p className="text-sm text-black">Access your most important features</p>
+              </div>
+              <div className="text-2xl">🚀</div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Link to="/workout" className="group">
+                <div className="p-4 bg-gradient-to-br from-accent-50 to-accent-100 rounded-2xl border border-accent-200 hover:border-accent-300 transition-all duration-200 group-hover:shadow-md">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-2xl">💪</div>
+                    <div>
+                      <div className="font-semibold text-accent-700">Start Workout</div>
+                      <div className="text-sm text-accent-600">Begin your training</div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link to="/health" className="group">
+                <div className="p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl border border-red-200 hover:border-red-300 transition-all duration-200 group-hover:shadow-md">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-2xl">🏥</div>
+                    <div>
+                      <div className="font-semibold text-red-700">Health Tracking</div>
+                      <div className="text-sm text-red-600">Monitor your health</div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link to="/goals" className="group">
+                <div className="p-4 bg-gradient-to-br from-goals-50 to-goals-100 rounded-2xl border border-goals-200 hover:border-goals-300 transition-all duration-200 group-hover:shadow-md">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-2xl">🎯</div>
+                    <div>
+                      <div className="font-semibold text-goals-700">View Goals</div>
+                      <div className="text-sm text-goals-600">Track your progress</div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link to="/profile" className="group">
+                <div className="p-4 bg-gradient-to-br from-profile-50 to-profile-100 rounded-2xl border border-profile-200 hover:border-profile-300 transition-all duration-200 group-hover:shadow-md">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-2xl">👤</div>
+                    <div>
+                      <div className="font-semibold text-profile-700">Profile</div>
+                      <div className="text-sm text-profile-600">Manage settings</div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </Card>
+        </div>
+
         {/* Analytics Dashboard */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Weekly Progress Chart */}
-          <Card variant="elevated" className="p-6">
+          <Card variant="elevated" className="p-6 rounded-2xl">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-xl font-bold text-neutral-900">📈 Weekly Progress</h2>
@@ -334,7 +399,7 @@ export default function DashboardPage() {
           </Card>
 
           {/* Muscle Group Distribution */}
-          <Card variant="elevated" className="p-6">
+          <Card variant="elevated" className="p-6 rounded-2xl">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-xl font-bold text-neutral-900">💪 Muscle Group Focus</h2>
