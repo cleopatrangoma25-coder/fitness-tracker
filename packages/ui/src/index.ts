@@ -10,6 +10,7 @@ export * from './components/EmptyState';
 export * from './components/ErrorBoundary';
 export * from './components/Input';
 export * from './components/Loading';
+export * from './components/Logo';
 export * from './components/Progress';
 export * from './components/Select';
 export * from './components/Table';

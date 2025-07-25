@@ -117,12 +117,13 @@ export function SignUpForm({ onSwitchToSignIn }: SignUpFormProps) {
 
         {/* Submit Button */}
         <Button
-          title={isLoading ? '⏳ Creating Account...' : '🚀 Create Account'}
           type="submit"
           variant="accent"
           disabled={isLoading}
           className="w-full py-4 text-lg font-bold"
-        />
+        >
+          {isLoading ? '⏳ Creating Account...' : '🚀 Create Account'}
+        </Button>
 
         {/* Action Links */}
         <div className="text-center text-sm">

@@ -94,11 +94,11 @@ export const RestTimer: React.FC<RestTimerProps> = ({
         {/* Controls */}
         <div className="flex justify-center space-x-4">
           <Button
-            title={isPaused ? "Resume" : "Pause"}
             variant="outline"
             onClick={handlePause}
-            disabled={!isActive || timeLeft === 0}
-          />
+            disabled={!isActive || timeLeft === 0}>
+          isPaused ? "Resume" : "Pause"
+        </Button>
           <Button
             title="Skip Rest"
             variant="outline"

@@ -235,10 +235,10 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               disabled={currentStep === 0}
             />
             <Button
-              title={isLastStep ? "Get Started" : "Next"}
               variant="primary"
-              onClick={handleNext}
-            />
+              onClick={handleNext}>
+          isLastStep ? "Get Started" : "Next"
+        </Button>
           </div>
         </div>
       </Card>

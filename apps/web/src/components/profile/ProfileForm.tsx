@@ -203,12 +203,12 @@ export function ProfileForm() {
         {/* Submit Button */}
         <div className="flex justify-end space-x-4 pt-4">
           <Button
-            title={isLoading ? '⏳ Updating Profile...' : '💾 Save Changes'}
             type="submit"
             variant="success"
             disabled={isLoading}
-            className="px-8 py-3"
-          />
+            className="px-8 py-3">
+          isLoading ? '⏳ Updating Profile...' : '💾 Save Changes'
+        </Button>
         </div>
       </form>
     </Card>

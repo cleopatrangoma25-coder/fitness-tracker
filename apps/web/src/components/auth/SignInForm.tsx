@@ -115,11 +115,12 @@ export function SignInForm({ onSwitchToSignUp }: SignInFormProps) {
         {/* Submit Button */}
         <Button
           type="submit"
-          title={isLoading ? '⏳ Signing In...' : '🚀 Sign In'}
           variant="primary"
           disabled={isLoading}
           className="w-full py-6 text-2xl font-bold rounded-xl"
-        />
+        >
+          {isLoading ? '⏳ Signing In...' : '🚀 Sign In'}
+        </Button>
 
         {/* Action Links */}
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-5 sm:space-y-0 sm:space-x-8 text-lg">

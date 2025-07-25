@@ -59,8 +59,12 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  title?: string; // Backward compatibility
   loading?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -72,11 +76,23 @@ export const Button: React.FC<ButtonProps> = ({
   loading = false,
   disabled,
   children,
+  title, // Backward compatibility
+  leftIcon,
+  rightIcon,
+  fullWidth = false,
   ...props
 }) => {
+  // Use children if provided, otherwise use title for backward compatibility
+  const content = children || title;
+  
   return (
     <button
-      className={cn(buttonVariants({ variant, size, animated, glow }), className)}
+      className={cn(
+        buttonVariants({ variant, size, animated, glow }), 
+        fullWidth && 'w-full',
+        loading && 'cursor-not-allowed',
+        className
+      )}
       disabled={disabled || loading}
       {...props}
     >
@@ -102,7 +118,13 @@ export const Button: React.FC<ButtonProps> = ({
           ></path>
         </svg>
       )}
-      {children}
+      {!loading && leftIcon && (
+        <span className="mr-2">{leftIcon}</span>
+      )}
+      {content}
+      {!loading && rightIcon && (
+        <span className="ml-2">{rightIcon}</span>
+      )}
     </button>
   );
 }; 

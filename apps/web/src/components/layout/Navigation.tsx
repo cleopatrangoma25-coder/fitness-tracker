@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@fitness-tracker/store';
 import { AuthService } from '../../lib/auth';
 import { ThemeToggle } from './ThemeToggle';
+import { Logo } from '@fitness-tracker/ui';
 
 export const Navigation: React.FC = () => {
   const { user, logout } = useAuthStore();
@@ -52,11 +53,8 @@ export const Navigation: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
           <div className="flex items-center space-x-4">
-            <Link to="/dashboard" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">FT</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">Fitness Tracker</span>
+            <Link to="/dashboard" className="flex items-center">
+              <Logo variant="text" size="md" />
             </Link>
           </div>
 

@@ -27,10 +27,11 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <p className="text-gray-600 mb-6 max-w-md mx-auto">{description}</p>
       {action && (
         <Button
-          title={action.label}
           variant={action.variant || 'primary'}
           onClick={action.onClick}
-        />
+        >
+          {action.label}
+        </Button>
       )}
     </div>
   );

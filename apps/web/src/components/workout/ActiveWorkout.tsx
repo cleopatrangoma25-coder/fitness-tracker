@@ -749,12 +749,12 @@ export const ActiveWorkout: React.FC = () => {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-6">
               <Button
-                title={isCreating ? '⏳ Starting Workout...' : '🚀 Start Workout'}
                 variant="success"
                 onClick={handleStartWorkout}
                 disabled={isCreating || !workoutName.trim() || selectedExercises.length === 0}
-                className="flex-1 py-4 text-lg font-bold"
-              />
+                className="flex-1 py-4 text-lg font-bold">
+          isCreating ? '⏳ Starting Workout...' : '🚀 Start Workout'
+        </Button>
               {selectedExercises.length === 0 && (
                 <div className="text-center text-neutral-500 text-sm">
                   Please select at least one exercise to start your workout

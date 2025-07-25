@@ -67,7 +67,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <Button 
                   onClick={this.handleReset}
                   variant="primary"
-                  fullWidth
+                  className="w-full"
                 >
                   Try Again
                 </Button>
@@ -75,7 +75,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <Button 
                   onClick={() => window.location.reload()}
                   variant="outline"
-                  fullWidth
+                  className="w-full"
                 >
                   Refresh Page
                 </Button>

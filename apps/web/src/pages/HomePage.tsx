@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Button } from '@fitness-tracker/ui';
+import { Card, Button, Logo } from '@fitness-tracker/ui';
 import { useAuthStore } from '@fitness-tracker/store';
 import { WorkoutService } from '../lib/workout';
 import { OnboardingFlow } from '../components/stacks/__index';
@@ -66,6 +66,9 @@ export default function HomePage() {
       <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-surface-50 to-neutral-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <Card variant="hero" className="text-center p-12 animate-fade-in-up">
+            <div className="flex justify-center mb-8">
+              <Logo variant="full" size="xl" className="text-white" />
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
               Welcome to Fitness Tracker
             </h1>
