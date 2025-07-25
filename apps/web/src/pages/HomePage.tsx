@@ -78,7 +78,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-dashboard-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       {/* Hero Section */}
       <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat">
         {/* Hero Background Image */}
@@ -155,7 +155,7 @@ export default function HomePage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
         {isAuthenticated && user ? (
           <div className="space-y-8">
             {/* Welcome Back Hero */}
@@ -163,10 +163,10 @@ export default function HomePage() {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full mb-6">
                 <span className="text-3xl motivational-icon">👋</span>
               </div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
                 {getGreeting()}, {user.displayName}!
               </h2>
-              <p className="text-xl text-gray-600 mb-2">
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-2 transition-colors duration-300">
                 {getMotivationalMessage()}
               </p>
               {userStats.currentStreak > 0 && (
@@ -179,20 +179,20 @@ export default function HomePage() {
             {/* Quick Stats */}
             {!loading && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 welcome-stats">
-                <Card className="p-6 text-center stats-card">
+                <Card className="p-6 text-center stats-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
                   <div className="text-3xl mb-2">📊</div>
-                  <div className="text-2xl font-bold text-gray-900">{userStats.totalWorkouts}</div>
-                  <div className="text-gray-600">Total Workouts</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{userStats.totalWorkouts}</div>
+                  <div className="text-gray-600 dark:text-gray-400">Total Workouts</div>
                 </Card>
-                <Card className="p-6 text-center stats-card">
+                <Card className="p-6 text-center stats-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
                   <div className="text-3xl mb-2">📅</div>
-                  <div className="text-2xl font-bold text-gray-900">{userStats.thisWeek}</div>
-                  <div className="text-gray-600">This Week</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{userStats.thisWeek}</div>
+                  <div className="text-gray-600 dark:text-gray-400">This Week</div>
                 </Card>
-                <Card className="p-6 text-center stats-card">
+                <Card className="p-6 text-center stats-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
                   <div className="text-3xl mb-2">🔥</div>
-                  <div className="text-2xl font-bold text-gray-900">{userStats.currentStreak}</div>
-                  <div className="text-gray-600">Day Streak</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{userStats.currentStreak}</div>
+                  <div className="text-gray-600 dark:text-gray-400">Day Streak</div>
                 </Card>
               </div>
             )}
@@ -200,31 +200,31 @@ export default function HomePage() {
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 welcome-actions">
               <Link to="/workout">
-                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-red-50 to-orange-50 border-red-200">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border-red-200 dark:border-red-700 transition-colors duration-300">
                   <div className="text-4xl mb-4">💪</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Start Workout</h3>
-                  <p className="text-sm text-gray-600">Begin your training session</p>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Start Workout</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Begin your training session</p>
                 </Card>
               </Link>
               <Link to="/dashboard">
-                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-700 transition-colors duration-300">
                   <div className="text-4xl mb-4">📊</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">View Progress</h3>
-                  <p className="text-sm text-gray-600">Check your analytics</p>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">View Progress</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Check your analytics</p>
                 </Card>
               </Link>
               <Link to="/goals">
-                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-700 transition-colors duration-300">
                   <div className="text-4xl mb-4">🎯</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Manage Goals</h3>
-                  <p className="text-sm text-gray-600">Set and track objectives</p>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Manage Goals</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Set and track objectives</p>
                 </Card>
               </Link>
               <Link to="/profile">
-                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200">
+                <Card className="p-6 text-center quick-action-card cursor-pointer bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 border-purple-200 dark:border-purple-700 transition-colors duration-300">
                   <div className="text-4xl mb-4">👤</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Update Profile</h3>
-                  <p className="text-sm text-gray-600">Manage your settings</p>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Update Profile</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Manage your settings</p>
                 </Card>
               </Link>
             </div>
@@ -232,8 +232,8 @@ export default function HomePage() {
             {/* Recent Activity & Motivation */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Recent Activity */}
-              <Card className="p-6 welcome-activity">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+              <Card className="p-6 welcome-activity bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center transition-colors duration-300">
                   <span className="text-2xl mr-2">📈</span>
                   Recent Activity
                 </h3>
@@ -280,8 +280,8 @@ export default function HomePage() {
               </Card>
 
               {/* Motivation & Tips */}
-              <Card className="p-6 bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200 welcome-motivation">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+              <Card className="p-6 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 border-primary-200 dark:border-primary-700 welcome-motivation transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center transition-colors duration-300">
                   <span className="text-2xl mr-2">💡</span>
                   Today's Motivation
                 </h3>
@@ -318,8 +318,8 @@ export default function HomePage() {
             </div>
 
             {/* Quick Start Section */}
-            <Card className="p-8 text-center bg-gradient-to-r from-gray-50 to-gray-100 welcome-quick-start">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <Card className="p-8 text-center bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 welcome-quick-start transition-colors duration-300">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">
                 What would you like to do today?
               </h3>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -338,36 +338,36 @@ export default function HomePage() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 transition-colors duration-300">
                 Why Choose Fitness Tracker?
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="text-2xl">🎯</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Smart Goal Setting</h3>
-                    <p className="text-gray-600">Set personalized fitness goals and track your progress with intelligent insights</p>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Smart Goal Setting</h3>
+                    <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Set personalized fitness goals and track your progress with intelligent insights</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="text-2xl">📊</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Detailed Analytics</h3>
-                    <p className="text-gray-600">Get comprehensive analytics and visualizations of your fitness journey</p>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Detailed Analytics</h3>
+                    <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Get comprehensive analytics and visualizations of your fitness journey</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="text-2xl">🏋️</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Workout Tracking</h3>
-                    <p className="text-gray-600">Log your workouts, track exercises, and monitor your strength progression</p>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Workout Tracking</h3>
+                    <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Log your workouts, track exercises, and monitor your strength progression</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
                   <div className="text-2xl">🌟</div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Motivation & Support</h3>
-                    <p className="text-gray-600">Stay motivated with progress tracking, streaks, and achievement celebrations</p>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Motivation & Support</h3>
+                    <p className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Stay motivated with progress tracking, streaks, and achievement celebrations</p>
                   </div>
                 </div>
               </div>

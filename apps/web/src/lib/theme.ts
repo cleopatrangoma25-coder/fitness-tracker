@@ -44,12 +44,15 @@ class ThemeManager {
 
   private applyTheme(): void {
     const root = document.documentElement;
+    const body = document.body;
     
     if (this.currentTheme === 'dark') {
       root.classList.add('dark');
+      body.classList.add('dark');
       root.setAttribute('data-theme', 'dark');
     } else {
       root.classList.remove('dark');
+      body.classList.remove('dark');
       root.setAttribute('data-theme', 'light');
     }
   }
