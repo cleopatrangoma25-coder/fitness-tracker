@@ -12,7 +12,7 @@ const convertFirebaseGoalToUI = (firebaseGoal: Goal): FitnessGoal => {
   const getCategoryFromType = (type: string): FitnessGoal['category'] => {
     switch (type.toLowerCase()) {
       case 'weight':
-        return 'health';
+        return 'lifestyle';
       case 'strength':
       case 'endurance':
         return 'fitness';

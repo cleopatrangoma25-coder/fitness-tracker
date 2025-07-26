@@ -9,6 +9,7 @@ import { GoalsService } from '@/lib/goals';
 import { PlansService } from '@/lib/plans';
 import { WorkoutService } from '@/lib/workout';
 
+
 export function AuthDebugger() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -120,6 +121,7 @@ export function AuthDebugger() {
       let goalsResult = 'Goals: ';
       let plansResult = 'Plans: ';
       let workoutsResult = 'Workouts: ';
+
       
       try {
         const goals = await GoalsService.getGoals(user.userId);
@@ -144,6 +146,8 @@ export function AuthDebugger() {
         workoutsResult += `ERROR: ${error.message}`;
         console.error('Workouts error details:', error);
       }
+      
+
 
       setResult(`Data Access Results:
 ${goalsResult}
@@ -338,6 +342,8 @@ User ID: ${user.userId}`);
         results.push(`Plan: ${plan.title} (ID: ${plan.id})`);
       }
 
+
+
       setResult(`✅ Comprehensive test data created successfully!
 
 Created:
@@ -356,6 +362,8 @@ Error details: ${JSON.stringify(error, null, 2)}`);
       setIsLoading(false);
     }
   };
+
+
 
   const testSimpleFirestore = async () => {
     if (!user?.userId) {
@@ -461,6 +469,7 @@ Error details: ${JSON.stringify(error, null, 2)}`);
             disabled={isLoading}
             variant="outline"
           />
+
           <Button 
             title="Test Simple Firestore" 
             onClick={testSimpleFirestore}

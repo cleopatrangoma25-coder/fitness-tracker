@@ -215,9 +215,7 @@ export default function DashboardPage() {
               <Link to="/goals">
                 <Button title="🎯 View Goals" variant="outline" className="text-white border-white/40 hover:bg-white/10" />
               </Link>
-              <Link to="/health">
-                <Button title="🏥 Health Tracking" variant="outline" className="text-white border-white/40 hover:bg-white/10" />
-              </Link>
+
             </div>
           </div>
         </div>
@@ -303,17 +301,7 @@ export default function DashboardPage() {
                 </div>
               </Link>
               
-              <Link to="/health" className="group">
-                <div className="p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl border border-red-200 hover:border-red-300 transition-all duration-200 group-hover:shadow-md">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl">🏥</div>
-                    <div>
-                      <div className="font-semibold text-red-700">Health Tracking</div>
-                      <div className="text-sm text-red-600">Monitor your health</div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+
               
               <Link to="/goals" className="group">
                 <div className="p-4 bg-gradient-to-br from-goals-50 to-goals-100 rounded-2xl border border-goals-200 hover:border-goals-300 transition-all duration-200 group-hover:shadow-md">

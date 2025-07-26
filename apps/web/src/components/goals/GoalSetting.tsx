@@ -4,7 +4,7 @@ import { Card, Button, Select, Textarea, Alert, AlertTitle, AlertDescription, Di
 export interface FitnessGoal {
   id: string;
   type: 'weight' | 'strength' | 'endurance' | 'workout_frequency' | 'custom';
-  category: 'fitness' | 'health' | 'performance' | 'lifestyle' | 'competition';
+  category: 'fitness' | 'performance' | 'lifestyle' | 'competition';
   title: string;
   description: string;
   target: number;
@@ -44,7 +44,7 @@ const GOAL_TYPES = [
 
 const GOAL_CATEGORIES = [
   { value: 'fitness', label: '🏃‍♂️ Fitness', description: 'General fitness goals' },
-  { value: 'health', label: '❤️ Health', description: 'Health and wellness goals' },
+
   { value: 'performance', label: '⚡ Performance', description: 'Athletic performance goals' },
   { value: 'lifestyle', label: '🌱 Lifestyle', description: 'Lifestyle and habit goals' },
   { value: 'competition', label: '🏆 Competition', description: 'Competition and challenge goals' },
@@ -68,12 +68,12 @@ const GOAL_TEMPLATES = [
     title: 'Weight Loss Journey',
     description: 'Lose weight and improve overall health',
     type: 'weight' as FitnessGoal['type'],
-    category: 'health' as FitnessGoal['category'],
+    category: 'lifestyle' as FitnessGoal['category'],
     target: 70,
     unit: 'kg',
     difficulty: 'intermediate' as FitnessGoal['difficulty'],
     priority: 'high' as FitnessGoal['priority'],
-    tags: ['weight loss', 'health', 'fitness'],
+    tags: ['weight loss', 'lifestyle', 'fitness'],
     deadline: 90, // days
   },
   {
@@ -354,17 +354,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
       });
     }
     
-    // If mostly fitness goals, recommend health goals
-    const fitnessGoals = goals.filter(g => g.category === 'fitness');
-    if (fitnessGoals.length > 0 && goals.filter(g => g.category === 'health').length === 0) {
-      recommendations.push({
-        id: 'add-health',
-        title: 'Focus on Health',
-        description: 'Add health-focused goals to your routine',
-        template: GOAL_TEMPLATES.find(t => t.id === 'weight-loss')!,
-        reason: 'Improve overall wellness'
-      });
-    }
+
     
     return recommendations;
   };
@@ -765,10 +755,10 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
               onClick={() => applyTemplate(template)}
             >
               <div className="text-2xl mb-2">
-                {template.category === 'health' ? '❤️' :
-                 template.category === 'fitness' ? '🏃‍♂️' :
+                {template.category === 'fitness' ? '🏃‍♂️' :
                  template.category === 'performance' ? '⚡' :
-                 template.category === 'lifestyle' ? '🌱' : '🏆'}
+                 template.category === 'lifestyle' ? '🌱' :
+                 template.category === 'competition' ? '🏆' : '🎯'}
               </div>
               <h4 className="font-bold text-neutral-900 mb-1">{template.title}</h4>
               <p className="text-sm text-neutral-600 mb-3">{template.description}</p>

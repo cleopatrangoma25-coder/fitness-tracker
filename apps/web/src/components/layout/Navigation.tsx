@@ -90,16 +90,7 @@ export const Navigation: React.FC = () => {
             >
               🎯 Goals
             </Link>
-            <Link
-              to="/health"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                isActive('/health')
-                  ? 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20'
-                  : 'text-gray-700 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-400'
-              }`}
-            >
-              🏥 Health
-            </Link>
+
             <Link
               to="/profile"
               className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
