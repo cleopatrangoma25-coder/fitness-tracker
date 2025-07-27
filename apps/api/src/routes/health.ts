@@ -47,7 +47,7 @@ router.get('/health/detailed', async (req: Request, res: Response) => {
     try {
       await auth().listUsers(1)
       health.checks.firebase = 'healthy'
-    } catch (error) {
+    } catch {
       health.checks.firebase = 'unhealthy'
       health.status = 'degraded'
     }
@@ -76,9 +76,9 @@ router.get('/health/detailed', async (req: Request, res: Response) => {
     health.checks.disk = 'healthy' // In a real app, you'd check actual disk space
 
     res.status(200).json(health)
-  } catch (error) {
+  } catch {
     health.status = 'unhealthy'
-    health.error = error instanceof Error ? error.message : 'Unknown error'
+    health.error = 'Unknown error'
     res.status(503).json(health)
   }
 })

@@ -5,7 +5,7 @@ import { WorkoutFormSchema } from '@fitness-tracker/shared';
 const router: Router = Router();
 
 // In-memory storage (replace with database in production)
-let workouts: any[] = [
+const workouts: any[] = [
   {
     id: '1',
     name: 'Morning Cardio',

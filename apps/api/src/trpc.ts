@@ -47,6 +47,7 @@ const workoutRouter = router({
   create: protectedProcedure
     .input(WorkoutSchema)
     .mutation(async ({ ctx, input }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id, ...workoutDataWithoutId } = input
       const workoutData = {
         ...workoutDataWithoutId,
@@ -109,6 +110,7 @@ const goalRouter = router({
   create: protectedProcedure
     .input(GoalSchema)
     .mutation(async ({ ctx, input }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id, ...goalDataWithoutId } = input
       const goalData = {
         ...goalDataWithoutId,
@@ -171,6 +173,7 @@ const planRouter = router({
   create: protectedProcedure
     .input(FitnessPlanSchema)
     .mutation(async ({ ctx, input }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id, ...planDataWithoutId } = input
       const planData = {
         ...planDataWithoutId,

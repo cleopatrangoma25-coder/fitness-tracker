@@ -5,7 +5,7 @@ import { ProfileFormSchema, SettingsFormSchema } from '@fitness-tracker/shared';
 const router: Router = Router();
 
 // In-memory storage (replace with database in production)
-let profiles: any[] = [
+const profiles: any[] = [
   {
     id: 'user1',
     firstName: 'John',
@@ -132,7 +132,7 @@ router.patch('/:userId/stats', (req, res) => {
     };
     
     return res.json(profiles[profileIndex]);
-  } catch (error) {
+  } catch {
     return res.status(500).json({ error: 'Internal server error' });
   }
 });

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@fitness-tracker/store';
 import { AuthService } from '@/lib/auth';
@@ -15,7 +15,7 @@ export function ProtectedRoute({ children, redirectTo = '/auth' }: ProtectedRout
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  const { user, setUser } = useAuthStore();
+  const { setUser } = useAuthStore();
 
   useEffect(() => {
     const unsubscribe = AuthService.onAuthStateChange(async (firebaseUser) => {
