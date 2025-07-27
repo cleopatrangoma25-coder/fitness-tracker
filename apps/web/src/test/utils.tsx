@@ -2,7 +2,7 @@ import React from 'react'
 import type { ReactElement } from 'react'
 import { render, type RenderOptions } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider } from '../components/auth/AuthProvider'
+import { AuthProvider } from '../components/stacks/__index'
 
 // Custom render function with providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {

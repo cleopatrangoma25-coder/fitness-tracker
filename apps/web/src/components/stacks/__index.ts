@@ -28,5 +28,7 @@ export * from '../workout/WorkoutHistory';
 export * from '../workout/WorkoutLog';
 export * from '../workout/WorkoutTemplates';
 export * from '../workout/ExerciseInstructions';
+export * from '../workout/ExerciseTimer';
 export * from '../workout/RestTimer';
-export * from '../onboarding/OnboardingFlow'; 
+export * from '../onboarding/OnboardingFlow';
+export * from '../notifications/NotificationSettings'; 

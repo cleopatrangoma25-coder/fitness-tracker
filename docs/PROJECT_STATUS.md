@@ -90,6 +90,21 @@ Fitness Tracker Pro is a modern, full-stack fitness tracking application built w
 fitness-tracker/
 ├── apps/
 │   ├── web/                 # React + Vite frontend
+│   │   └── src/
+│   │       ├── components/
+│   │       │   ├── auth/          # Authentication components
+│   │       │   ├── dashboard/     # Dashboard components
+│   │       │   ├── goals/         # Goal management components
+│   │       │   ├── layout/        # Layout and navigation components
+│   │       │   ├── notifications/ # Notification components
+│   │       │   ├── onboarding/    # Onboarding components
+│   │       │   ├── profile/       # Profile management components
+│   │       │   ├── stacks/        # Stack-based component exports (centralized)
+│   │       │   └── workout/       # Workout management components
+│   │       ├── pages/             # Page components
+│   │       ├── hooks/             # Custom React hooks
+│   │       ├── lib/               # Service libraries
+│   │       └── contexts/          # React contexts
 │   └── api/                 # Express + tRPC backend
 ├── packages/
 │   ├── shared/             # Shared types and schemas

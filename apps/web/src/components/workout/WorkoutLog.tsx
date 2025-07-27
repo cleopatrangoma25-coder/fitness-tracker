@@ -30,7 +30,7 @@ export const WorkoutLog: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Hero Section */}
-      <div className="bg-black text-white rounded-2xl p-8 relative overflow-hidden">
+      <div className="bg-black text-white rounded-3xl p-8 relative overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 opacity-60">
           <div 

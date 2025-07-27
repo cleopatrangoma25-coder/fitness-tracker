@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthDebugger } from '../components/auth/AuthDebugger'
+import { AuthDebugger } from '../components/stacks/__index'
 
 export function DebugPage() {
   return (

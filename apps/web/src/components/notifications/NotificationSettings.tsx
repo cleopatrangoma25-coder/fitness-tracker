@@ -51,12 +51,14 @@ export const NotificationSettings: React.FC = () => {
       const granted = await notificationService.requestPermission();
       if (granted) {
         setPermissionStatus('granted');
-        setIsSupported(true);
         // Test notification
         notificationService.testNotification();
+      } else {
+        setPermissionStatus(notificationService.getPermissionStatus());
       }
     } catch (error) {
       console.error('Error requesting permission:', error);
+      setPermissionStatus(notificationService.getPermissionStatus());
     } finally {
       setIsLoading(false);
     }
@@ -136,6 +138,17 @@ export const NotificationSettings: React.FC = () => {
     });
   };
 
+  const handleDebugTest = () => {
+    const testResult = notificationService.testNotificationSupport();
+    console.log('Notification Support Test:', testResult);
+    
+    if (testResult.issues.length > 0) {
+      alert(`Notification Issues Found:\n\n${testResult.issues.join('\n')}`);
+    } else {
+      alert('✅ All notification requirements are met!');
+    }
+  };
+
   const getPermissionStatusColor = () => {
     switch (permissionStatus) {
       case 'granted': return 'text-green-600';
@@ -154,7 +167,7 @@ export const NotificationSettings: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="p-6">
+      <Card className="p-6 rounded-3xl">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">🔔 Notification Settings</h2>
@@ -164,7 +177,7 @@ export const NotificationSettings: React.FC = () => {
         </div>
 
         {/* Permission Status */}
-        <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white">Notification Permission</h3>
@@ -176,6 +189,34 @@ export const NotificationSettings: React.FC = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {isSupported ? '✅ Notifications supported' : '❌ Notifications not supported'}
               </p>
+              {!isSupported && (
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 space-y-1">
+                  <p>• Notification API: {'Notification' in window ? '✅ Available' : '❌ Not available'}</p>
+                  <p>• Service Worker: {'serviceWorker' in navigator ? '✅ Available' : '❌ Not available'}</p>
+                  <p>• Secure Context: {window.isSecureContext ? '✅ HTTPS/secure' : '❌ HTTP/insecure'}</p>
+                </div>
+              )}
+              {isSupported && permissionStatus === 'default' && (
+                <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+                  💡 Click "Enable Notifications" to start receiving notifications
+                </p>
+              )}
+              {isSupported && permissionStatus === 'denied' && (
+                <p className="text-xs text-red-600 dark:text-red-400 mt-2">
+                  ⚠️ Notifications were denied. Please enable them in your browser settings.
+                </p>
+              )}
+              {isSupported && permissionStatus === 'denied' && (
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-2 p-3 bg-gray-50 dark:bg-gray-800 rounded">
+                  <p className="font-medium mb-2">How to enable notifications:</p>
+                  <ol className="list-decimal list-inside space-y-1">
+                    <li>Click the lock/info icon in your browser's address bar</li>
+                    <li>Find "Notifications" in the site settings</li>
+                    <li>Change from "Block" to "Allow"</li>
+                    <li>Refresh the page</li>
+                  </ol>
+                </div>
+              )}
             </div>
             {permissionStatus !== 'granted' && (
               <Button
@@ -184,7 +225,19 @@ export const NotificationSettings: React.FC = () => {
                 variant="primary"
                 size="sm"
               >
-                {isLoading ? 'Requesting...' : 'Enable Notifications'}
+                {isLoading ? 'Requesting...' : 
+                  permissionStatus === 'denied' ? 'Re-enable Notifications' : 
+                  'Enable Notifications'}
+              </Button>
+            )}
+            {!isSupported && (
+              <Button
+                onClick={handleDebugTest}
+                variant="outline"
+                size="sm"
+                className="ml-2"
+              >
+                Debug
               </Button>
             )}
           </div>
@@ -195,11 +248,11 @@ export const NotificationSettings: React.FC = () => {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Notification Types</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.workoutReminders}
                 onChange={(e) => handleSettingChange('workoutReminders', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Workout Reminders</label>
@@ -207,11 +260,11 @@ export const NotificationSettings: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.goalUpdates}
                 onChange={(e) => handleSettingChange('goalUpdates', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Goal Updates</label>
@@ -219,11 +272,11 @@ export const NotificationSettings: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.achievements}
                 onChange={(e) => handleSettingChange('achievements', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Achievements</label>
@@ -231,11 +284,11 @@ export const NotificationSettings: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.stepGoals}
                 onChange={(e) => handleSettingChange('stepGoals', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Step Goals</label>
@@ -243,11 +296,11 @@ export const NotificationSettings: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.dailyMotivation}
                 onChange={(e) => handleSettingChange('dailyMotivation', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Daily Motivation</label>
@@ -255,11 +308,11 @@ export const NotificationSettings: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.mealReminders}
                 onChange={(e) => handleSettingChange('mealReminders', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Meal Reminders</label>
@@ -267,11 +320,11 @@ export const NotificationSettings: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-2xl">
               <Checkbox
                 checked={settings.weeklyReports}
                 onChange={(e) => handleSettingChange('weeklyReports', e.target.checked)}
-                disabled={!isSupported}
+                disabled={!notificationService.isNotificationEnabled()}
               />
               <div className="flex-1">
                 <label className="font-medium text-gray-900 dark:text-white">Weekly Reports</label>
@@ -282,7 +335,7 @@ export const NotificationSettings: React.FC = () => {
         </div>
 
         {/* Test Notifications */}
-        {isSupported && permissionStatus === 'granted' && (
+        {notificationService.isNotificationEnabled() && (
           <div className="mt-8">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">🧪 Test Notifications</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -333,6 +386,14 @@ export const NotificationSettings: React.FC = () => {
                 className="text-xs"
               >
                 Meal
+              </Button>
+              <Button
+                onClick={handleDebugTest}
+                variant="outline"
+                size="sm"
+                className="text-xs bg-yellow-50 border-yellow-200 text-yellow-700 hover:bg-yellow-100"
+              >
+                Debug Test
               </Button>
             </div>
           </div>

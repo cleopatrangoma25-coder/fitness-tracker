@@ -680,12 +680,12 @@ export default function DashboardPage() {
 
         {/* Goals Section */}
         <div className="mt-8">
-          <Card className="p-6">
+          <Card className="p-6 rounded-3xl">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Goals</h2>
             {user.goals && user.goals.length > 0 ? (
               <div className="space-y-2">
                 {user.goals.map((goal, index) => (
-                  <div key={index} className="flex items-center p-3 bg-blue-50 rounded-lg">
+                  <div key={index} className="flex items-center p-3 bg-blue-50 rounded-2xl">
                     <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
                     <span className="text-gray-900">{goal}</span>
                   </div>

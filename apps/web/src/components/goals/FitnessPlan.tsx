@@ -250,7 +250,7 @@ export const FitnessPlan: React.FC<FitnessPlanProps> = ({
 
       {/* Create Plan Form */}
       {showForm && (
-        <Card variant="elevated" className="p-8">
+        <Card variant="elevated" className="p-8 rounded-3xl">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-xl font-bold text-neutral-900">🎯 Create Your Fitness Plan</h3>
@@ -579,7 +579,7 @@ export const FitnessPlan: React.FC<FitnessPlanProps> = ({
       {/* Plans List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {plans.map((plan) => (
-          <Card key={plan.id} variant="elevated" className="p-6 hover:shadow-lg transition-shadow">
+          <Card key={plan.id} variant="elevated" className="p-6 hover:shadow-lg transition-shadow rounded-3xl">
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-lg font-bold text-neutral-900">{plan.title}</h3>
               <div className="flex space-x-2">
@@ -640,7 +640,7 @@ export const FitnessPlan: React.FC<FitnessPlanProps> = ({
 
       {/* Plan Detail Modal */}
       {selectedPlan && (
-        <Card variant="elevated" className="p-8">
+        <Card variant="elevated" className="p-8 rounded-3xl">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-xl font-bold text-neutral-900">{selectedPlan.title}</h3>

@@ -7,6 +7,7 @@ A modern, full-stack fitness tracking application that helps users track workout
 - **Frontend**: React + Vite + shadcn/ui + Tailwind CSS
 - **Backend**: Express + tRPC API + Firebase (Authentication, Firestore, Hosting)
 - **State Management**: Zustand + TanStack Query (via tRPC)
+- **Component Architecture**: Stack-based organization with centralized exports
 - **Monorepo**: PNPM workspaces + Turborepo
 - **Deployment**: Firebase Hosting
 - **CI/CD**: GitHub Actions
@@ -17,6 +18,21 @@ A modern, full-stack fitness tracking application that helps users track workout
 fitness-tracker/
 ├── apps/
 │   ├── web/                 # React + Vite web application
+│   │   └── src/
+│   │       ├── components/
+│   │       │   ├── auth/          # Authentication components
+│   │       │   ├── dashboard/     # Dashboard components
+│   │       │   ├── goals/         # Goal management components
+│   │       │   ├── layout/        # Layout and navigation components
+│   │       │   ├── notifications/ # Notification components
+│   │       │   ├── onboarding/    # Onboarding components
+│   │       │   ├── profile/       # Profile management components
+│   │       │   ├── stacks/        # Stack-based component exports (centralized)
+│   │       │   └── workout/       # Workout management components
+│   │       ├── pages/             # Page components
+│   │       ├── hooks/             # Custom React hooks
+│   │       ├── lib/               # Service libraries
+│   │       └── contexts/          # React contexts
 │   └── api/                 # Express + tRPC API server
 ├── packages/
 │   ├── shared/             # Shared utilities, schemas, and types
@@ -29,6 +45,26 @@ fitness-tracker/
 ├── docs/                   # Technical documentation
 └── .github/                # CI/CD workflows
 ```
+
+## 🏗️ Component Architecture
+
+The application uses a **stack-based component architecture** that provides excellent separation of concerns and maintainability:
+
+- **Domain-Based Organization**: Components organized by feature (auth, workout, goals, etc.)
+- **Stack-Based Exports**: Centralized component exports through `stacks/__index.ts`
+- **Consistent Imports**: All pages import from the stack index for maintainability
+- **Type Safety**: Full TypeScript support with proper interfaces
+
+### Import Pattern
+```typescript
+// ✅ Stack-based imports (recommended)
+import { SignInForm, WorkoutLog, Navigation } from '../components/stacks/__index';
+
+// ❌ Direct imports (avoid)
+import { SignInForm } from '../components/auth/SignInForm';
+```
+
+For detailed information, see [Component Architecture Guide](docs/COMPONENT_ARCHITECTURE.md).
 
 ## 🚀 Quick Start
 
@@ -123,10 +159,11 @@ Visit `http://localhost:3000/debug` to see the tRPC example component.
 4. **Progress Analytics** - Dashboard with charts and statistics
 5. **tRPC API Integration** - Type-safe API layer
 6. **Goal Setting & Management** - Comprehensive goal tracking with validation and analytics
+7. **Code Organization & Cleanup** - Stack-based component architecture with centralized exports
 
 ### 🚀 Next Milestone
 
-7. **Beta Release** - Polish, testing, and launch preparation
+8. **Beta Release** - Polish, testing, and launch preparation
 
 ## 🔧 Technology Stack
 
@@ -157,7 +194,9 @@ Visit `http://localhost:3000/debug` to see the tRPC example component.
 ## 📚 Documentation
 
 - [Technical Design Document](docs/technical-design-doc.md) - Architecture and design decisions
+- [Component Architecture](docs/COMPONENT_ARCHITECTURE.md) - Stack-based component organization
 - [TODO & Milestones](docs/TODO.md) - Development roadmap
+- [Implementation Summary](docs/IMPLEMENTATION_SUMMARY.md) - Feature implementation details
 - [tRPC Setup Guide](docs/TRPC_SETUP.md) - API development guide
 - [Firebase Setup](FIREBASE_SETUP.md) - Firebase configuration
 - [Deployment Guide](DEPLOYMENT.md) - Deployment instructions

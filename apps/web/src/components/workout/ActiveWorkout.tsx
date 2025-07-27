@@ -388,7 +388,7 @@ export const ActiveWorkout: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-workout-50">
       {/* Hero Section */}
-      <div className="bg-black text-white relative overflow-hidden">
+      <div className="bg-black text-white relative overflow-hidden mx-4 mt-4 rounded-3xl">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-60">
           <div 

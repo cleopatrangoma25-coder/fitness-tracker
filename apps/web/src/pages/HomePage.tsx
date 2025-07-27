@@ -111,7 +111,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-surface-50 to-neutral-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
       {/* Hero Section */}
-      <div className="bg-gradient-hero text-white relative overflow-hidden bg-dashboard-pattern bg-repeat">
+      <div className="bg-gradient-hero text-white relative overflow-hidden bg-dashboard-pattern bg-repeat mx-4 mt-4 rounded-3xl">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-40">
           <div 

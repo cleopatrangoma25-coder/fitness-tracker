@@ -58,6 +58,21 @@ The monorepo structure provides excellent separation of concerns and code sharin
 .
 ├── apps/
 │   ├── web/              ← React front-end (Dashboard, Logging, Goals)
+│   │   └── src/
+│   │       ├── components/
+│   │       │   ├── auth/          ← Authentication components
+│   │       │   ├── dashboard/     ← Dashboard components
+│   │       │   ├── goals/         ← Goal management components
+│   │       │   ├── layout/        ← Layout and navigation components
+│   │       │   ├── notifications/ ← Notification components
+│   │       │   ├── onboarding/    ← Onboarding components
+│   │       │   ├── profile/       ← Profile management components
+│   │       │   ├── stacks/        ← Stack-based component exports (centralized)
+│   │       │   └── workout/       ← Workout management components
+│   │       ├── pages/             ← Page components
+│   │       ├── hooks/             ← Custom React hooks
+│   │       ├── lib/               ← Service libraries
+│   │       └── contexts/          ← React contexts
 │   └── api/              ← Express + tRPC API server
 ├── packages/
 │   ├── shared/           ← Zod schemas, utilities, common types

@@ -110,28 +110,28 @@ export function ProfileDisplay() {
             
             <div className="space-y-4">
               {user.height && (
-                <div className="bg-gradient-to-r from-primary-50 to-primary-100 p-4 rounded-lg border border-primary-200">
+                <div className="bg-gradient-to-r from-primary-50 to-primary-100 p-4 rounded-2xl border border-primary-200">
                   <h4 className="text-sm font-medium text-primary-700 mb-1">📏 Height</h4>
                   <p className="text-primary-900 font-bold text-lg">{user.height} cm</p>
                 </div>
               )}
               
               {user.weight && (
-                <div className="bg-gradient-to-r from-accent-50 to-accent-100 p-4 rounded-lg border border-accent-200">
+                <div className="bg-gradient-to-r from-accent-50 to-accent-100 p-4 rounded-2xl border border-accent-200">
                   <h4 className="text-sm font-medium text-accent-700 mb-1">⚖️ Weight</h4>
                   <p className="text-accent-900 font-bold text-lg">{user.weight} kg</p>
                 </div>
               )}
               
               {user.fitnessLevel && (
-                <div className="bg-gradient-to-r from-success-50 to-success-100 p-4 rounded-lg border border-success-200">
+                <div className="bg-gradient-to-r from-success-50 to-success-100 p-4 rounded-2xl border border-success-200">
                   <h4 className="text-sm font-medium text-success-700 mb-1">🏃‍♂️ Fitness Level</h4>
                   <p className="text-success-900 font-bold text-lg capitalize">{user.fitnessLevel.toLowerCase()}</p>
                 </div>
               )}
               
               {!user.height && !user.weight && !user.fitnessLevel && (
-                <div className="bg-neutral-50 p-4 rounded-lg text-center">
+                <div className="bg-neutral-50 p-4 rounded-2xl text-center">
                   <p className="text-neutral-600">No fitness information set yet</p>
                   <p className="text-sm text-neutral-500 mt-1">Add your details to get personalized recommendations</p>
                 </div>
@@ -150,7 +150,7 @@ export function ProfileDisplay() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {user.goals.map((goal, index) => (
-                <div key={index} className="bg-gradient-to-r from-success-50 to-success-100 p-4 rounded-lg border border-success-200">
+                <div key={index} className="bg-gradient-to-r from-success-50 to-success-100 p-4 rounded-2xl border border-success-200">
                   <div className="flex items-center space-x-2">
                     <span className="text-success-600">🎯</span>
                     <span className="text-success-900 font-medium">{goal}</span>
@@ -167,21 +167,21 @@ export function ProfileDisplay() {
             <div className="text-2xl">⚙️</div>
             <h3 className="text-xl font-bold text-neutral-900">Preferences</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-neutral-50 p-4 rounded-lg">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-neutral-50 p-4 rounded-2xl">
               <h4 className="text-sm font-medium text-neutral-500 mb-1">📏 Units</h4>
               <p className="text-neutral-900 font-medium">
                 {user.preferences?.units === 'METRIC' ? 'Metric (kg, cm)' : 'Imperial (lbs, ft)'}
               </p>
             </div>
-            <div className="bg-neutral-50 p-4 rounded-lg">
-              <h4 className="text-sm font-medium text-neutral-500 mb-1">🔔 Notifications</h4>
+                          <div className="bg-neutral-50 p-4 rounded-2xl">
+                <h4 className="text-sm font-medium text-neutral-500 mb-1">🔔 Notifications</h4>
               <p className="text-neutral-900 font-medium">
                 {user.preferences?.notifications ? '✅ Enabled' : '❌ Disabled'}
               </p>
             </div>
-            <div className="bg-neutral-50 p-4 rounded-lg">
-              <h4 className="text-sm font-medium text-neutral-500 mb-1">🔒 Privacy</h4>
+                          <div className="bg-neutral-50 p-4 rounded-2xl">
+                <h4 className="text-sm font-medium text-neutral-500 mb-1">🔒 Privacy</h4>
               <p className="text-neutral-900 font-medium capitalize">
                 {user.preferences?.privacy?.toLowerCase()}
               </p>

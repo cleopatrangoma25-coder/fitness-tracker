@@ -774,7 +774,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
       {/* Goals List */}
       <div className="space-y-6">
         {goals.length === 0 ? (
-          <Card variant="elevated" className="p-12 text-center">
+          <Card variant="elevated" className="p-12 text-center rounded-3xl">
             <div className="text-neutral-500">
               <div className="text-6xl mb-4">🎯</div>
               <h3 className="text-xl font-bold text-neutral-900 mb-2">No goals set yet</h3>
@@ -793,7 +793,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
               <Card 
                 key={goal.id} 
                 variant={isCompleted ? "success" : isOverdue ? "warning" : "elevated"}
-                className="p-6 hover:shadow-xl transition-all duration-300"
+                className="p-6 hover:shadow-xl transition-all duration-300 rounded-3xl"
               >
                 <div className="space-y-6">
                   {/* Goal Header */}

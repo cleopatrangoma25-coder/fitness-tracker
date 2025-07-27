@@ -21,7 +21,7 @@ export const useNotifications = () => {
 
   // Send workout completion notification
   const sendWorkoutCompletionNotification = useCallback((workoutName: string) => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.achievements) return;
@@ -42,7 +42,7 @@ export const useNotifications = () => {
 
   // Send goal progress notification
   const sendGoalProgressNotification = useCallback((goalId: string, currentProgress: number, targetProgress: number) => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.goalUpdates) return;
@@ -76,7 +76,7 @@ export const useNotifications = () => {
 
   // Send step goal notification
   const sendStepGoalNotification = useCallback((currentSteps: number, targetSteps: number) => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.stepGoals) return;
@@ -93,7 +93,7 @@ export const useNotifications = () => {
 
   // Send daily motivation
   const sendDailyMotivation = useCallback(() => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.dailyMotivation) return;
@@ -110,7 +110,7 @@ export const useNotifications = () => {
 
   // Send meal reminder
   const sendMealReminder = useCallback((mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack') => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.mealReminders) return;
@@ -127,7 +127,7 @@ export const useNotifications = () => {
 
   // Schedule workout reminder
   const scheduleWorkoutReminder = useCallback((time: string, days: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']) => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.workoutReminders) return;
@@ -151,7 +151,7 @@ export const useNotifications = () => {
 
   // Send weekly report notification
   const sendWeeklyReportNotification = useCallback(() => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.weeklyReports) return;
@@ -170,7 +170,7 @@ export const useNotifications = () => {
 
   // Check for achievements
   const checkAchievements = useCallback(() => {
-    if (!notificationService.isNotificationSupported()) return;
+    if (!notificationService.isNotificationEnabled()) return;
 
     const settings = notificationService.getNotificationSettings();
     if (!settings.achievements) return;
@@ -226,6 +226,7 @@ export const useNotifications = () => {
     sendWeeklyReportNotification,
     checkAchievements,
     isSupported: notificationService.isNotificationSupported(),
+    isEnabled: notificationService.isNotificationEnabled(),
     permissionStatus: notificationService.getPermissionStatus()
   };
 }; 

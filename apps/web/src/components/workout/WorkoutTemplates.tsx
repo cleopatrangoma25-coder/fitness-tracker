@@ -292,7 +292,7 @@ export const WorkoutTemplates: React.FC<WorkoutTemplatesProps> = ({
   return (
     <div className="space-y-8">
       {/* Hero Section */}
-      <div className="text-center bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-2xl p-8 text-white relative overflow-hidden bg-hero-fitness bg-repeat shadow-2xl">
+      <div className="text-center bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-8 text-white relative overflow-hidden bg-hero-fitness bg-repeat shadow-2xl">
         {/* Background Image */}
         <div className="absolute inset-0 opacity-20">
           <div 

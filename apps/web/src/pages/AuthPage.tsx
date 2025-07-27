@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SignInForm } from '@/components/auth/SignInForm';
-import { SignUpForm } from '@/components/auth/SignUpForm';
+import { SignInForm, SignUpForm } from '@/components/stacks/__index';
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -10,7 +9,7 @@ export default function AuthPage() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-neutral-50 to-dashboard-50 flex flex-col">
       {/* Hero Section - Compact */}
-      <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat flex-shrink-0 w-full">
+      <div className="bg-black text-white relative overflow-hidden bg-dashboard-pattern bg-repeat flex-shrink-0 w-full mx-4 mt-4 rounded-3xl">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-60">
           <div 

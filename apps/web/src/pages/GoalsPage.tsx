@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '@fitness-tracker/store';
-import { GoalSetting, type FitnessGoal } from '../components/goals/GoalSetting';
-import { FitnessPlan, type FitnessPlan as FitnessPlanType } from '../components/goals/FitnessPlan';
+import { GoalSetting, type FitnessGoal } from '../components/stacks/__index';
+import { FitnessPlan, type FitnessPlan as FitnessPlanType } from '../components/stacks/__index';
 import { GoalsService } from '../lib/goals';
 import { PlansService } from '../lib/plans';
 import type { Goal } from '@fitness-tracker/shared';
@@ -237,7 +237,7 @@ export default function GoalsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-goals-50">
       {/* Hero Section */}
-      <div className="bg-black text-white relative overflow-hidden bg-goals-pattern bg-repeat">
+      <div className="bg-black text-white relative overflow-hidden bg-goals-pattern bg-repeat mx-4 mt-4 rounded-3xl">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-60">
           <div 
@@ -268,21 +268,21 @@ export default function GoalsPage() {
             
             {/* Summary Stats */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 shadow-lg">
+              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-4 text-center border border-white/30 shadow-lg">
                 <div className="text-2xl font-bold text-white drop-shadow-lg">{goals.length}</div>
                 <div className="text-sm text-white font-medium drop-shadow-md">Total Goals</div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 shadow-lg">
+              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-4 text-center border border-white/30 shadow-lg">
                 <div className="text-2xl font-bold text-white drop-shadow-lg">
                   {goals.filter(g => g.completed || (g.current / g.target) >= 1).length}
                 </div>
                 <div className="text-sm text-white font-medium drop-shadow-md">Goals Completed</div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 shadow-lg">
+              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-4 text-center border border-white/30 shadow-lg">
                 <div className="text-2xl font-bold text-white drop-shadow-lg">{totalPlans}</div>
                 <div className="text-sm text-white font-medium drop-shadow-md">Fitness Plans</div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 shadow-lg">
+              <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-4 text-center border border-white/30 shadow-lg">
                 <div className="text-2xl font-bold text-white drop-shadow-lg">{activePlans}</div>
                 <div className="text-sm text-white font-medium drop-shadow-md">Active Plans</div>
               </div>
@@ -295,7 +295,7 @@ export default function GoalsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-8">
         {/* Tab Navigation */}
         <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-xl p-1 shadow-lg border border-neutral-200">
+          <div className="bg-white rounded-3xl p-1 shadow-lg border border-neutral-200">
             <button
               onClick={() => setActiveTab('goals')}
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
@@ -321,7 +321,7 @@ export default function GoalsPage() {
 
         {/* Active Plan Banner */}
         {activePlan && (
-          <div className="mb-8 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6">
+          <div className="mb-8 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-3xl p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="text-3xl">🏃‍♂️</div>

@@ -38,6 +38,41 @@ This document summarizes the comprehensive implementation of enterprise-grade fe
 
 ### **Validation Schemas** (`packages/shared/src/validation.ts`)
 
+---
+
+## 🧹 **3. Code Organization & Cleanup (Latest)**
+
+### **Stack-Based Component Architecture**
+
+#### **Component Organization** (`apps/web/src/components/`)
+- **Domain-Based Structure**: Components organized by feature/domain (auth, workout, goals, etc.)
+- **Stack-Based Exports**: Centralized component exports through `stacks/__index.ts`
+- **Consistent Imports**: All pages import from the stack index for maintainability
+
+#### **Cleanup Achievements**
+- **Removed Extraneous Elements**: Eliminated duplicate `features/` directory that was duplicating stack functionality
+- **Centralized Management**: All component exports go through the stack index (`../components/stacks/__index`)
+- **Consistent Patterns**: All imports follow the same stack-based pattern
+- **Improved Maintainability**: Single source of truth for component organization
+
+#### **Updated Import Structure**
+```typescript
+// Before: Direct imports
+import { SignInForm } from '../components/auth/SignInForm';
+import { WorkoutLog } from '../components/workout/WorkoutLog';
+
+// After: Stack-based imports
+import { SignInForm, WorkoutLog } from '../components/stacks/__index';
+```
+
+#### **Component Stack Organization**
+- **UI Stack**: Reusable UI components from `@fitness-tracker/ui`
+- **Layout Stack**: Navigation and theme components
+- **Auth Stack**: Authentication and authorization components
+- **Feature Stacks**: Domain-specific components (dashboard, goals, profile, workout, etc.)
+
+### **Validation Schemas** (`packages/shared/src/validation.ts`)
+
 #### **Workout Validation**
 ```typescript
 WorkoutFormSchema: {

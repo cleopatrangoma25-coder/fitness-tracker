@@ -39,11 +39,50 @@ class NotificationService {
   private permission: NotificationPermission = 'default';
 
   constructor() {
-    this.isSupported = 'Notification' in window && 'serviceWorker' in navigator;
+    this.isSupported = 'Notification' in window && 'serviceWorker' in navigator && window.isSecureContext;
+    this.permission = this.getCurrentPermissionStatus();
+    
+    // Debug logging
+    console.log('NotificationService initialized:', {
+      isSupported: this.isSupported,
+      hasNotificationAPI: 'Notification' in window,
+      hasServiceWorker: 'serviceWorker' in navigator,
+      isSecureContext: window.isSecureContext,
+      permission: this.permission
+    });
+    
     if (this.isSupported) {
-      this.messaging = getMessaging(app);
-      this.setupMessageListener();
+      try {
+        this.messaging = getMessaging(app);
+        this.setupMessageListener();
+      } catch (error) {
+        console.error('Error initializing Firebase messaging:', error);
+        this.isSupported = false;
+      }
     }
+  }
+
+  /**
+   * Check if the app is running in a secure context (required for notifications)
+   */
+  isSecureContext(): boolean {
+    return window.isSecureContext;
+  }
+
+  /**
+   * Get the current permission status from the browser
+   */
+  private getCurrentPermissionStatus(): NotificationPermission {
+    if (!this.isSupported) {
+      return 'denied';
+    }
+    
+    // Check if permission is already granted
+    if (Notification.permission) {
+      return Notification.permission;
+    }
+    
+    return 'default';
   }
 
   /**
@@ -56,14 +95,18 @@ class NotificationService {
     }
 
     try {
+      console.log('Requesting notification permission...');
       const permission = await Notification.requestPermission();
       this.permission = permission;
       
+      console.log('Permission request result:', permission);
+      
       if (permission === 'granted') {
+        console.log('Permission granted, getting FCM token...');
         await this.getFCMToken();
         return true;
       } else {
-        console.warn('Notification permission denied');
+        console.warn('Notification permission denied or defaulted');
         return false;
       }
     } catch (error) {
@@ -333,16 +376,32 @@ class NotificationService {
   }
 
   /**
-   * Check if notifications are supported and permitted
+   * Check if notifications are supported by the browser
    */
   isNotificationSupported(): boolean {
+    return this.isSupported;
+  }
+
+  /**
+   * Check if notifications are both supported and permitted
+   */
+  isNotificationEnabled(): boolean {
     return this.isSupported && this.permission === 'granted';
+  }
+
+  /**
+   * Check if notifications are supported but permission hasn't been granted
+   */
+  isNotificationSupportedButNotGranted(): boolean {
+    return this.isSupported && this.permission !== 'granted';
   }
 
   /**
    * Get current notification permission status
    */
   getPermissionStatus(): NotificationPermission {
+    // Update permission status from browser
+    this.permission = this.getCurrentPermissionStatus();
     return this.permission;
   }
 
@@ -378,6 +437,63 @@ class NotificationService {
       mealReminders: false,
       stepGoals: true
     };
+  }
+
+  /**
+   * Comprehensive test of notification support and functionality
+   */
+  testNotificationSupport(): {
+    isSupported: boolean;
+    hasNotificationAPI: boolean;
+    hasServiceWorker: boolean;
+    isSecureContext: boolean;
+    permission: NotificationPermission;
+    canSendNotifications: boolean;
+    issues: string[];
+  } {
+    const issues: string[] = [];
+    
+    const hasNotificationAPI = 'Notification' in window;
+    const hasServiceWorker = 'serviceWorker' in navigator;
+    const isSecureContext = window.isSecureContext;
+    const permission = this.getCurrentPermissionStatus();
+    const canSendNotifications = this.isNotificationEnabled();
+    
+    if (!hasNotificationAPI) {
+      issues.push('Notification API not available in this browser');
+    }
+    
+    if (!hasServiceWorker) {
+      issues.push('Service Worker not available in this browser');
+    }
+    
+    if (!isSecureContext) {
+      issues.push('Not running in a secure context (HTTPS required)');
+    }
+    
+    if (permission === 'denied') {
+      issues.push('Notification permission denied by user');
+    }
+    
+    return {
+      isSupported: this.isSupported,
+      hasNotificationAPI,
+      hasServiceWorker,
+      isSecureContext,
+      permission,
+      canSendNotifications,
+      issues
+    };
+  }
+
+  /**
+   * Get instructions for enabling notifications when denied
+   */
+  getEnableInstructions(): string {
+    if (this.permission === 'denied') {
+      return 'To enable notifications, please:\n1. Click the lock/info icon in your browser\'s address bar\n2. Find "Notifications" in the site settings\n3. Change from "Block" to "Allow"\n4. Refresh the page';
+    }
+    return '';
   }
 
   /**

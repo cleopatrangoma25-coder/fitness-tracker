@@ -2,8 +2,8 @@
 
 import { Card, Button } from '@fitness-tracker/ui';
 import { useAuthStore } from '@fitness-tracker/store';
-import { ProfileDisplay } from '../components/profile/ProfileDisplay';
-import { NotificationSettings } from '../components/notifications/NotificationSettings';
+import { ProfileDisplay } from '../components/stacks/__index';
+import { NotificationSettings } from '../components/stacks/__index';
 
 export default function ProfilePage() {
   const { user } = useAuthStore();
@@ -15,7 +15,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-profile-50">
       {/* Hero Section */}
-      <div className="bg-black text-white relative overflow-hidden bg-profile-pattern bg-repeat">
+      <div className="bg-black text-white relative overflow-hidden bg-profile-pattern bg-repeat mx-4 mt-4 rounded-3xl">
         {/* Hero Background Image */}
         <div className="absolute inset-0 opacity-60">
           <div 
