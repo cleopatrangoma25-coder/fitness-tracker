@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button, Checkbox } from '@fitness-tracker/ui';
 import { notificationService } from '../../lib/notifications';
 
+type NotificationPermission = 'default' | 'granted' | 'denied';
+
 type NotificationSettings = {
   workoutReminders: boolean;
   goalUpdates: boolean;
@@ -12,7 +14,7 @@ type NotificationSettings = {
   stepGoals: boolean;
 };
 
-export const NotificationSettings: React.FC = () => {
+export const NotificationSettingsComponent: React.FC = () => {
   const [settings, setSettings] = useState<NotificationSettings>({
     workoutReminders: true,
     goalUpdates: true,
@@ -25,8 +27,8 @@ export const NotificationSettings: React.FC = () => {
   const [permissionStatus, setPermissionStatus] = useState<NotificationPermission>('default');
   const [isSupported, setIsSupported] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [workoutTime, setWorkoutTime] = useState('18:00');
-  const [workoutDays, setWorkoutDays] = useState<string[]>(['monday', 'tuesday', 'wednesday', 'thursday', 'friday']);
+  const [workoutTime] = useState('18:00');
+  const [workoutDays] = useState<string[]>(['monday', 'tuesday', 'wednesday', 'thursday', 'friday']);
 
   useEffect(() => {
     loadSettings();

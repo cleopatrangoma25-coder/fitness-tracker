@@ -230,7 +230,7 @@ export default function HomePage() {
               </Button>
             </div>
             <div className="space-y-4">
-              {recentWorkouts.slice(0, 3).map((workout, index) => (
+              {recentWorkouts.slice(0, 3).map((workout, _index) => (
                 <div key={workout.id} className="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-800/50 rounded-lg">
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-semibold">

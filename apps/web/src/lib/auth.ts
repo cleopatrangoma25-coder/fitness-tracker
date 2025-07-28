@@ -6,7 +6,6 @@ import {
   updateProfile,
   onAuthStateChanged,
 } from 'firebase/auth';
-import type { AuthError } from 'firebase/auth';
 import type { User as FirebaseUser } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from './firebase';

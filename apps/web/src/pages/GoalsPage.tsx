@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '@fitness-tracker/store';
-import { GoalSetting, type FitnessGoal } from '../components/stacks/__index';
-import { FitnessPlan, type FitnessPlan as FitnessPlanType } from '../components/stacks/__index';
+import { GoalSetting, type FitnessGoal, FitnessPlanComponent } from '../components/stacks/__index';
+import type { FitnessPlan as FitnessPlanType } from '../components/stacks/__index';
 import { GoalsService } from '../lib/goals';
 import { PlansService } from '../lib/plans';
 import type { Goal } from '@fitness-tracker/shared';
@@ -174,16 +174,7 @@ export default function GoalsPage() {
     }
   };
 
-  const handleUpdatePlan = async (planId: string, planData: Partial<FitnessPlanType>) => {
-    try {
-      const updatedPlan = await PlansService.updatePlan(planId, planData);
-      setPlans(prev => prev.map(plan => 
-        plan.id === planId ? updatedPlan as FitnessPlanType : plan
-      ));
-    } catch (error) {
-      console.error('Failed to update plan:', error);
-    }
-  };
+
 
   const handleDeletePlan = async (planId: string) => {
     try {
@@ -198,7 +189,7 @@ export default function GoalsPage() {
     if (!user?.userId) return;
     
     try {
-      const activatedPlan = await PlansService.activatePlan(planId, user.userId);
+      await PlansService.activatePlan(planId, user.userId);
       setPlans(prev => prev.map(plan => ({
         ...plan,
         isActive: plan.id === planId
@@ -360,10 +351,9 @@ export default function GoalsPage() {
             onDeleteGoal={handleDeleteGoal}
           />
         ) : (
-          <FitnessPlan
+          <FitnessPlanComponent
             plans={plans}
             onSavePlan={handleSavePlan}
-            onUpdatePlan={handleUpdatePlan}
             onDeletePlan={handleDeletePlan}
             onActivatePlan={handleActivatePlan}
           />

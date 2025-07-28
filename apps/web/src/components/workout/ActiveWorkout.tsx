@@ -13,7 +13,7 @@ import type { Workout, Exercise } from '@fitness-tracker/shared';
 
 export const ActiveWorkout: React.FC = () => {
   const navigate = useNavigate();
-  const { addWorkout, updateWorkout, currentWorkout, setCurrentWorkout } = useWorkoutStore();
+  const { addWorkout, currentWorkout, setCurrentWorkout } = useWorkoutStore();
   const { user } = useAuthStore();
   const [workoutName, setWorkoutName] = useState('');
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
@@ -430,7 +430,7 @@ export const ActiveWorkout: React.FC = () => {
                 </div>
                 <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center border border-white/30 shadow-lg">
                   <div className="text-2xl font-bold text-white drop-shadow-lg">
-                    {selectedExercises.reduce((total, exercise) => total + 3, 0)}
+                    {selectedExercises.reduce((total, _exercise) => total + 3, 0)}
                   </div>
                   <div className="text-sm text-white font-medium drop-shadow-md">Total Sets</div>
                 </div>
@@ -717,7 +717,7 @@ export const ActiveWorkout: React.FC = () => {
                   </div>
                   <div className="text-center bg-white rounded-xl p-4 shadow-sm">
                     <div className="text-3xl font-bold text-blue-600 mb-1">
-                      {selectedExercises.reduce((total, exercise) => total + 3, 0)}
+                      {selectedExercises.reduce((total, _exercise) => total + 3, 0)}
                     </div>
                     <div className="text-sm text-blue-700 font-medium">Total Sets</div>
                     <div className="text-xs text-blue-500 mt-1">3 sets each</div>
@@ -783,18 +783,17 @@ interface WorkoutTrackerProps {
 
 const WorkoutTracker: React.FC<WorkoutTrackerProps> = ({ workout }) => {
   const navigate = useNavigate();
-  const { updateWorkout } = useWorkoutStore();
   const { sendWorkoutCompletionNotification } = useNotifications();
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [currentSetIndex, setCurrentSetIndex] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
   const [weightInputs, setWeightInputs] = useState<{ [key: string]: number }>({});
   const [showRestTimer, setShowRestTimer] = useState(false);
-  const [restDuration, setRestDuration] = useState(90); // 90 seconds default
+  const [restDuration] = useState(90); // 90 seconds default
   const [showInstructions, setShowInstructions] = useState(false);
   const [showExerciseTimer, setShowExerciseTimer] = useState(false);
   const [exerciseTimerPaused, setExerciseTimerPaused] = useState(false);
-  const [exerciseDuration, setExerciseDuration] = useState(120); // 2 minutes default
+  const [exerciseDuration] = useState(120); // 2 minutes default
 
   const handleSetComplete = async (exerciseIndex: number, setIndex: number) => {
     if (!workout.exercises[exerciseIndex] || !workout.exercises[exerciseIndex].sets[setIndex]) {

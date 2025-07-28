@@ -242,9 +242,7 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
     return diffDays;
   };
 
-  const getGoalTypeInfo = (type: string) => {
-    return GOAL_TYPES.find(t => t.value === type);
-  };
+
 
   // Enhanced goal validation
   const validateGoal = (goalData: Omit<FitnessGoal, 'id' | 'createdAt'>) => {
@@ -281,19 +279,23 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case 'deadline':
+        case 'deadline': {
           const deadlineA = a.deadline instanceof Date ? a.deadline : new Date(a.deadline);
           const deadlineB = b.deadline instanceof Date ? b.deadline : new Date(b.deadline);
           return deadlineA.getTime() - deadlineB.getTime();
-        case 'priority':
+        }
+        case 'priority': {
           const priorityOrder = { high: 3, medium: 2, low: 1 };
           return priorityOrder[b.priority] - priorityOrder[a.priority];
-        case 'progress':
+        }
+        case 'progress': {
           return getProgressPercentage(b) - getProgressPercentage(a);
-        case 'created':
+        }
+        case 'created': {
           const createdA = a.createdAt instanceof Date ? a.createdAt : new Date(a.createdAt);
           const createdB = b.createdAt instanceof Date ? b.createdAt : new Date(b.createdAt);
           return createdB.getTime() - createdA.getTime();
+        }
         default:
           return 0;
       }
@@ -328,8 +330,6 @@ export const GoalSetting: React.FC<GoalSettingProps> = ({
   // Generate goal recommendations
   const getRecommendations = () => {
     const recommendations = [];
-    const completedGoals = goals.filter(g => g.completed || (g.current / g.target) >= 1);
-    const activeGoals = goals.filter(g => !g.completed && (g.current / g.target) < 1);
     
     // If no goals, recommend starting with basic goals
     if (goals.length === 0) {

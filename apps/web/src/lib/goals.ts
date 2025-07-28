@@ -9,8 +9,6 @@ import {
   query,
   where,
   orderBy,
-  limit,
-  Timestamp,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import type { Goal } from '@fitness-tracker/shared';

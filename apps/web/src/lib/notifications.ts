@@ -1,6 +1,18 @@
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import app from './firebase';
 
+type NotificationPermission = 'default' | 'granted' | 'denied';
+
+interface NotificationOptions {
+  body: string;
+  requireInteraction?: boolean;
+  silent?: boolean;
+  icon?: string;
+  badge?: string;
+  data?: any;
+  tag?: string;
+}
+
 export interface NotificationSettings {
   workoutReminders: boolean;
   goalUpdates: boolean;
@@ -233,8 +245,7 @@ class NotificationService {
   /**
    * Create time-based workout reminders
    */
-  createWorkoutReminder(time: string, days: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']): NotificationReminder {
-    const [hours, minutes] = time.split(':').map(Number);
+  createWorkoutReminder(_time: string, _days: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']): NotificationReminder {
     
     return {
       id: `workout-${Date.now()}`,
@@ -252,7 +263,6 @@ class NotificationService {
    * Create goal-based reminders
    */
   createGoalReminder(goal: GoalBasedReminder): NotificationReminder {
-    const progressPercentage = (goal.currentProgress / goal.targetProgress) * 100;
     
     return {
       id: `goal-${goal.goalId}-${Date.now()}`,

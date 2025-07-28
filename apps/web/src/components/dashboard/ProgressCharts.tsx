@@ -1,8 +1,6 @@
 import React from 'react';
 import { Card } from '@fitness-tracker/ui';
 import {
-  LineChart,
-  Line,
   BarChart,
   Bar,
   AreaChart,
@@ -45,7 +43,7 @@ interface ProgressChartsProps {
   }>;
 }
 
-const COLORS = ['#0ea5e9', '#f97316', '#22c55e', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+
 
 export const ProgressCharts: React.FC<ProgressChartsProps> = ({
   weeklyData,

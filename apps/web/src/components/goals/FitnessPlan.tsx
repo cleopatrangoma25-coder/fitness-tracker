@@ -35,15 +35,13 @@ export interface PlanExercise {
 interface FitnessPlanProps {
   plans: FitnessPlan[];
   onSavePlan: (plan: Omit<FitnessPlan, 'id' | 'createdAt'>) => void;
-  onUpdatePlan: (planId: string, plan: Partial<FitnessPlan>) => void;
   onDeletePlan: (planId: string) => void;
   onActivatePlan: (planId: string) => void;
 }
 
-export const FitnessPlan: React.FC<FitnessPlanProps> = ({
+export const FitnessPlanComponent: React.FC<FitnessPlanProps> = ({
   plans,
   onSavePlan,
-  onUpdatePlan,
   onDeletePlan,
   onActivatePlan
 }) => {

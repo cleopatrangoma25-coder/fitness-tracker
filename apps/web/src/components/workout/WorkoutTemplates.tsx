@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, Button } from '@fitness-tracker/ui';
 import type { Exercise } from '@fitness-tracker/shared';
 
 export interface WorkoutTemplate {

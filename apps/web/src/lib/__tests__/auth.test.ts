@@ -272,7 +272,6 @@ describe('AuthService', () => {
 
       testCases.forEach(({ error, expected }) => {
         // Access the private method through the class instance
-        const authService = new AuthService()
         const result = (AuthService as any).getAuthErrorMessage(error)
         expect(result).toBe(expected)
       })

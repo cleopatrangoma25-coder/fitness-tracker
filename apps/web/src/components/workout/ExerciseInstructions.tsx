@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Button } from '@fitness-tracker/ui';
 
 interface ExerciseInstructionsProps {
@@ -309,7 +309,6 @@ export const ExerciseInstructions: React.FC<ExerciseInstructionsProps> = ({
   exerciseName,
   onClose
 }) => {
-  const [currentStep, setCurrentStep] = useState(0);
   
   const instruction = EXERCISE_INSTRUCTIONS[exerciseName] || {
     name: exerciseName,

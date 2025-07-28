@@ -23,7 +23,7 @@ const requiredEnvVars = {
 
 // Check for missing environment variables
 const missingVars = Object.entries(requiredEnvVars)
-  .filter(([key, value]) => !value)
+  .filter(([_key, value]) => !value)
   .map(([key]) => `VITE_FIREBASE_${key.toUpperCase()}`);
 
 if (missingVars.length > 0) {
